@@ -1,6 +1,6 @@
 /****************************************************************************************
 *
-*   IWindow.hpp
+*   ILogicalDevice.hpp
 *
 *   Created by dmitry
 *   01.09.2021
@@ -9,22 +9,18 @@
 
 #pragma once
 
-
-#if defined(WIN32)
-#include <windows.h>
-#endif
+#include <HLGK/Core/Allocators/IAllocator.hpp>
 
 namespace HLGK
 {
 
-    class IWindow {
+    class ILogicalDevice
+    {
     public:
-        virtual ~IWindow() = default;
+        virtual ~ILogicalDevice() {}
 
-    public:
-#if defined(WIN32)
-        virtual HWND getHWND() const = 0;
-#endif
+        IAllocator* createAllocator() const;
+        //TODO implement
     };
 
 } // namespace HLGK

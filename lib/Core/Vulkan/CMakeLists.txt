@@ -15,10 +15,14 @@ project(HLGK_CORE)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_library(${PROJECT_NAME} Factory.cpp)
-target_include_directories(${PROJECT_NAME} PUBLIC ../../include)
+add_library(${PROJECT_NAME}
+        Instance.cpp
+        PhysicalDevice.cpp
+        )
+target_include_directories(${PROJECT_NAME} PUBLIC ../../../include)
 target_link_libraries(${PROJECT_NAME}
         Vulkan::Vulkan
         glfw
         ${X11_LIBRARIES}
+        glog::glog
         )

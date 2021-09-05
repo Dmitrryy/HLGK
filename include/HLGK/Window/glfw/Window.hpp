@@ -1,7 +1,14 @@
+/****************************************************************************************
+*
+*   Window.hpp
+*
+*   Created by dmitry
+*   01.09.2021
+*
+***/
+
 #pragma once
-//
-// Created by dadro on 03.09.2021.
-//
+
 
 #include <HLGK/Window/IWindow.hpp>
 #include "Instance.hpp"

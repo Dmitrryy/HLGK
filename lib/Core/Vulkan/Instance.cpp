@@ -1,14 +1,19 @@
-//
-// Created by dadro on 01.09.2021.
-//
+/****************************************************************************************
+*
+*   Instance.cpp
+*
+*   Created by dmitry
+*   01.09.2021
+*
+***/
 
-#include <HLGK/Core/Factory.hpp>
+#include <HLGK/Core/Vulkan/Instance.hpp>
 #include <algorithm>
 
 namespace HLGK
 {
 
-    Factory::Factory(const vk::ApplicationInfo &appInfo
+    Instance::Instance(const vk::ApplicationInfo &appInfo
                      , const std::vector< std::string > &extensions /*= {}*/
                      , const std::vector< std::string > &layers /*= {}*/
                      , const vk::DebugUtilsMessengerCreateInfoEXT &DUMCI /*= {}*/)
@@ -31,19 +36,21 @@ namespace HLGK
         if (DUMCI.pfnUserCallback) {
             instInfo.pNext = &DUMCI;
         }
-        m_instance.
         m_instance = vk::createInstance(instInfo, nullptr, m_dld);
         m_dld.init(m_instance);
     }
 
-    std::vector< vk::PhysicalDevice >
-    Factory::getPhysicalDevices() const
+    std::vector< PhysicalDevice >
+    Instance::getPhysicalDevices() const
     {
-        return m_instance.enumeratePhysicalDevices(m_dld);
+        auto&& tmp = m_instance.enumeratePhysicalDevices(m_dld);
+        std::vector< PhysicalDevice > result(tmp.size());
+        std::transform(tmp.begin(), tmp.end(), result.begin(), [&dld = m_dld](const auto& device) { return PhysicalDevice(device, dld); });
+        return result;
     }
 
 
-    vk::SurfaceKHR Factory::createSurface(const IWindow &window) const
+    vk::SurfaceKHR Instance::createSurface(const IWindow &window) const
     {
         vk::SurfaceKHR surface;
         //TODO other platforms

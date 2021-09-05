@@ -1,6 +1,11 @@
-//
-// Created by dadro on 03.09.2021.
-//
+/****************************************************************************************
+*
+*   Instance.cpp
+*
+*   Created by dmitry
+*   01.09.2021
+*
+***/
 
 #include <HLGK/Window/glfw/Instance.hpp>
 #include <system_error>
