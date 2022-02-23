@@ -9,13 +9,12 @@
 
 #pragma once
 
-
+#define GLFW_INCLUDE_VULKAN
 #include <HLGK/Window/IWindow.hpp>
 #include "Instance.hpp"
 #include <string>
 #include <vector>
 
-#define GLFW_EXPOSE_NATIVE_WIN32
 #include <GLFW/glfw3native.h>
 
 namespace HLGK::glfw
@@ -62,9 +61,5 @@ namespace HLGK::glfw
             double getCursorYPos() const;
 
             int getKey(int key) const;
-
-#if defined(WIN32)
-            virtual HWND getHWND() const { return glfwGetWin32Window(m_pWindow); };
-#endif
         };
     }

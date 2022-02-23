@@ -7,17 +7,17 @@
 *
 ***/
 
+#include <HLGK/Core/Vulkan/Error.hpp>
 #include <HLGK/Core/Vulkan/Instance.hpp>
 #include <algorithm>
 
 namespace HLGK
 {
 
-    Instance::Instance(const vk::ApplicationInfo &appInfo
+    Instance::Instance(const VkApplicationInfo &appInfo
                      , const std::vector< std::string > &extensions /*= {}*/
                      , const std::vector< std::string > &layers /*= {}*/
-                     , const vk::DebugUtilsMessengerCreateInfoEXT &DUMCI /*= {}*/)
-                     : m_dld(vkGetInstanceProcAddr)
+                     , const VkDebugUtilsMessengerCreateInfoEXT &DUMCI /*= {}*/)
     {
         std::vector< const char * > extC, layersC;
         std::transform(extensions.begin(), extensions.end()
@@ -27,7 +27,8 @@ namespace HLGK
                 , std::back_inserter(layersC)
                 , [](const auto& lay) { return lay.c_str(); });
 
-        vk::InstanceCreateInfo instInfo;
+        VkInstanceCreateInfo instInfo = {};
+        instInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
         instInfo.pApplicationInfo = &appInfo;
         instInfo.enabledExtensionCount = extC.size();
         instInfo.ppEnabledExtensionNames = extC.data();
@@ -36,39 +37,32 @@ namespace HLGK
         if (DUMCI.pfnUserCallback) {
             instInfo.pNext = &DUMCI;
         }
-        m_instance = vk::createInstance(instInfo, nullptr, m_dld);
-        m_dld.init(m_instance);
+
+        VK_CHECK_RESULT(vkCreateInstance(&instInfo, nullptr, &m_instance));
     }
 
     std::vector< PhysicalDevice >
-    Instance::getPhysicalDevices() const
-    {
-        auto&& tmp = m_instance.enumeratePhysicalDevices(m_dld);
-        std::vector< PhysicalDevice > result(tmp.size());
-        std::transform(tmp.begin(), tmp.end(), result.begin(), [&dld = m_dld](const auto& device) { return PhysicalDevice(device, dld); });
+    Instance::getPhysicalDevices() const {
+        uint32_t physical_device_count = 0;
+        VK_CHECK_RESULT(vkEnumeratePhysicalDevices(m_instance, &physical_device_count, nullptr));
+        std::vector<VkPhysicalDevice> devicesVk(physical_device_count);
+        VK_CHECK_RESULT(vkEnumeratePhysicalDevices(m_instance, &physical_device_count, devicesVk.data()));
+
+        std::vector< PhysicalDevice > result;
+        result.reserve(physical_device_count);
+        std::transform(devicesVk.begin(), devicesVk.end(), std::back_inserter(result),
+                       [inst = m_instance](const VkPhysicalDevice &D) {
+            return PhysicalDevice(D, inst);
+        });
+
         return result;
     }
 
+    VkSurfaceKHR Instance::createSurface(std::function<VkSurfaceKHR (VkInstance)> surfaceCreator) const {
+        return surfaceCreator(m_instance);
+    }
 
-    vk::SurfaceKHR Instance::createSurface(const IWindow &window) const
-    {
-        vk::SurfaceKHR surface;
-        //TODO other platforms
-#if defined( VK_USE_PLATFORM_ANDROID_KHR )
-#elif defined( VK_USE_PLATFORM_IOS_MVK )
-#elif defined( VK_USE_PLATFORM_MACOS_MVK )
-#elif defined( VK_USE_PLATFORM_MIR_KHR )
-#elif defined( VK_USE_PLATFORM_VI_NN )
-#elif defined( VK_USE_PLATFORM_WAYLAND_KHR )
-#elif defined( VK_USE_PLATFORM_WIN32_KHR )
-        vk::Win32SurfaceCreateInfoKHR info;
-        info.hinstance = GetModuleHandleA(NULL);
-        info.hwnd = window.getHWND();
-        surface = m_instance.createWin32SurfaceKHR(info, nullptr, m_dld);
-#elif defined( VK_USE_PLATFORM_XCB_KHR )
-#elif defined( VK_USE_PLATFORM_XLIB_KHR )
-#elif defined( VK_USE_PLATFORM_XLIB_XRANDR_EXT )
-#endif
-        return surface;
+    LogicalDevice Instance::createLogicalDevice(const PhysicalDevice &PD, VkDeviceCreateInfo &info) const {
+
     }
 } // namespace HLGK

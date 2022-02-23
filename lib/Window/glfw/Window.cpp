@@ -32,70 +32,57 @@ namespace HLGK::glfw
         }
     }
 
-    Window::~Window()
-    {
+    Window::~Window() {
         glfwDestroyWindow(m_pWindow);
     }
 
 
-    void Window::setUserPointer(void* pointer) const
-    {
+    void Window::setUserPointer(void* pointer) const {
         glfwSetWindowUserPointer(m_pWindow, pointer);
     }
 
-    void Window::setKeyCallback(GLFWkeyfun func) const
-    {
+    void Window::setKeyCallback(GLFWkeyfun func) const {
         glfwSetKeyCallback(m_pWindow, func);
     }
 
-    void Window::setInputMode(int mode, int value) const
-    {
+    void Window::setInputMode(int mode, int value) const {
         glfwSetInputMode(m_pWindow, mode, value);
     }
 
 
-    int Window::getHeight() const
-    {
+    int Window::getHeight() const {
         int height = 0, width = 0;
         glfwGetWindowSize(m_pWindow, &width, &height);
         return height;
     }
 
-    int Window::getWidth() const
-    {
+    int Window::getWidth() const {
         int height = 0, width = 0;
         glfwGetWindowSize(m_pWindow, &width, &height);
         return width;
     }
 
-    bool Window::shouldClose() const
-    {
+    bool Window::shouldClose() const {
         return glfwWindowShouldClose(m_pWindow);
     }
 
-
-    void Window::setCursorPosition(double xPos, double yPos) const
-    {
+    void Window::setCursorPosition(double xPos, double yPos) const {
         glfwSetCursorPos(m_pWindow, xPos, yPos);
     }
 
-
-    double Window::getCursorXPos() const
-    {
+    double Window::getCursorXPos() const {
         double x = 0, y = 0;
         glfwGetCursorPos(m_pWindow, &x, &y);
         return x;
     }
 
-    double Window::getCursorYPos() const
-    {
+    double Window::getCursorYPos() const {
         double x = 0, y = 0;
         glfwGetCursorPos(m_pWindow, &x, &y);
         return y;
     }
 
-    int Window::getKey(int key) const
-    {
+    int Window::getKey(int key) const {
         return glfwGetKey(m_pWindow, key);
     }
 

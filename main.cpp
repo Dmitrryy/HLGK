@@ -8,36 +8,12 @@
 ***/
 
 #include <iostream>
-#include <glog/logging.h>
-
 
 #include <HLGK/Core/Vulkan/Instance.hpp>
+#include <HLGK/Core/Vulkan/Error.hpp>
 #include <HLGK/Window/glfw/Window.hpp>
 
 int main(int argc, char* argv[]) {
-    gflags::ParseCommandLineFlags(&argc, &argv, true);
-    google::InitGoogleLogging(argv[0]);
-    LOG(INFO) << "Found " << 1 << " cookies";
-    LOG(WARNING) << "Found " << 2 << " cookies";
-    LOG(ERROR) << "Found " << 3 << " cookies";
-
-
-    vk::ApplicationInfo info;
-    info.pApplicationName = nullptr;
-    info.applicationVersion = VK_MAKE_VERSION(1, 0, 0);
-    info.pEngineName = "No Engine";
-    info.engineVersion = VK_MAKE_VERSION(1, 0, 0);
-    info.apiVersion = VK_API_VERSION_1_2;
-
-
-    std::vector< std::string > extensions = {
-            VK_KHR_WIN32_SURFACE_EXTENSION_NAME,
-            VK_KHR_SURFACE_EXTENSION_NAME
-    };
-    std::vector< std::string > validationLayers = {
-            "VK_LAYER_KHRONOS_validation"
-    };
-    HLGK::Instance factory(info, extensions, validationLayers);
 
     //-----------------------------------------------
     // create window
@@ -52,15 +28,39 @@ int main(int argc, char* argv[]) {
             , hints);
     // end create window
     //-----------------------------------------------
+    if (!glfwVulkanSupported()) {
+        throw std::runtime_error("glfw doesn't support Vulkan");
+    }
 
-    auto&& surface = factory.createSurface(window);
+    VkApplicationInfo info;
+    info.pApplicationName = nullptr;
+    info.applicationVersion = VK_MAKE_VERSION(1, 0, 0);
+    info.pEngineName = "No Engine";
+    info.engineVersion = VK_MAKE_VERSION(1, 0, 0);
+    info.apiVersion = VK_API_VERSION_1_2;
+
+    uint32_t glfwExtensionCount = 0;
+    const char** glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
+    std::vector<std::string> extensions(glfwExtensions, glfwExtensions + glfwExtensionCount);
+
+    std::vector< std::string > validationLayers = {
+            "VK_LAYER_KHRONOS_validation"
+    };
+    HLGK::Instance factory(info, extensions, validationLayers);
+
+    auto&& surfaceCreator = [w = window.get()](VkInstance instance) {
+        VkSurfaceKHR res = {};
+        VK_CHECK_RESULT(glfwCreateWindowSurface(instance, w, nullptr, &res));
+        return res;
+    };
+    auto&& surface = factory.createSurface(surfaceCreator);
 
     auto&& devices = factory.getPhysicalDevices();
 
     size_t i = 0;
     for (const auto& d : devices) {
         auto&& prop = d.getProperties();
-        std::cout << "[" << i++ << "] " << to_string(prop.deviceProperties.deviceType) << std::endl;
+        std::cout << "[" << i++ << "] " << std::to_string(prop.deviceProperties.deviceType) << std::endl;
         std::cout << "Name: " << prop.deviceProperties.deviceName << std::endl;
         std::cout << "ID: " << prop.deviceProperties.deviceID << std::endl;
         std::cout << "API version: " << VK_VERSION_MAJOR(prop.deviceProperties.apiVersion) << '.'

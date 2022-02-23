@@ -20,11 +20,6 @@ namespace HLGK
     class IWindow {
     public:
         virtual ~IWindow() = default;
-
-    public:
-#if defined(WIN32)
-        virtual HWND getHWND() const = 0;
-#endif
     };
 
 } // namespace HLGK

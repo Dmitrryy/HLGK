@@ -10,17 +10,38 @@
 #pragma once
 
 
-#include <vulkan/vulkan.hpp>
+#include <vulkan/vulkan.h>
 
 #include <HLGK/Core/Allocators/IAllocator.hpp>
 
 namespace HLGK
 {
+    class Instance;
 
     class LogicalDevice final : public IAllocator
     {
-        vk::PhysicalDevice m_physicalDevice;
-        vk::Device m_device;
+        VkPhysicalDevice m_physicalDevice;
+        VkDevice m_device;
+
+        // Класс может создать только Instance.
+        // TODO: норм ли такой дизайн
+        friend Instance;
+
+    public:
+        LogicalDevice(VkInstance instance, VkPhysicalDevice device, VkDeviceCreateInfo createInfo);
+
+        LogicalDevice(const LogicalDevice&) = delete;
+        LogicalDevice(LogicalDevice&&) = delete;
+        LogicalDevice &operator=(const LogicalDevice&) = delete;
+        LogicalDevice &operator=(LogicalDevice&&) = delete;
+
+        ~LogicalDevice();
+
+    public:
+        inline PFN_vkVoidFunction getProcAddr(const std::string &name) const {
+            return vkGetDeviceProcAddr(m_device, name.c_str());
+        }
+
 
         //TODO implement
     };

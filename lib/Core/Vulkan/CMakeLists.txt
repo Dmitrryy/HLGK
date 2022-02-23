@@ -9,20 +9,23 @@
 ***/
 ]]
 
-cmake_minimum_required(VERSION 3.20)
+cmake_minimum_required(VERSION 3.10)
+
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
 project(HLGK_CORE)
 
-set(CMAKE_CXX_STANDARD 20)
+find_package(Vulkan REQUIRED)
 
 add_library(${PROJECT_NAME}
         Instance.cpp
         PhysicalDevice.cpp
-        )
+        LogicalDevice.cpp Error.cpp)
 target_include_directories(${PROJECT_NAME} PUBLIC ../../../include)
 target_link_libraries(${PROJECT_NAME}
         Vulkan::Vulkan
-        glfw
-        ${X11_LIBRARIES}
-        glog::glog
+#        glfw
+#        ${X11_LIBRARIES}
         )
