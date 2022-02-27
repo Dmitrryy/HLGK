@@ -10,6 +10,9 @@
 #pragma once
 
 #include <HLGK/Core/ILogicalDevice.hpp>
+#include <HLGK/Core/Vulkan/Surface.hpp>
+
+
 
 #include <vulkan/vulkan.h>
 
@@ -20,6 +23,7 @@
 namespace HLGK
 {
     class Instance;
+    class LogicalDevice;
 
     class PhysicalDevice final
     {
@@ -64,8 +68,11 @@ namespace HLGK
 
     public:
         Properties getProperties(const std::string &layerName = {}) const;
-        SurfaceProperties getSurfaceProperties(const VkSurfaceKHR &surface) const;
-        ILogicalDevice* createLogicalDevice(const VkDeviceCreateInfo &info); //TODO implement
+        SurfaceProperties getSurfaceProperties(const Surface &surface) const;
+
+    protected:
+        friend LogicalDevice; // используется в конструкторе логического устройства
+        VkPhysicalDevice get() const { return m_vkPhysicalDevice; }
     };
 
 } // namespace HLGK

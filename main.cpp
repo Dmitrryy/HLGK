@@ -12,6 +12,7 @@
 #include <HLGK/Core/Vulkan/Instance.hpp>
 #include <HLGK/Core/Vulkan/Error.hpp>
 #include <HLGK/Window/glfw/Window.hpp>
+#include <HLGK/Core/Vulkan/Queue.hpp>
 
 int main(int argc, char* argv[]) {
 
@@ -63,6 +64,7 @@ int main(int argc, char* argv[]) {
     size_t i = 0;
     for (const auto& d : devices) {
         auto&& prop = d.getProperties();
+        auto&& surfaceProp = d.getSurfaceProperties(surface);
         std::cout << "[" << i++ << "] " << std::to_string(prop.deviceProperties.deviceType) << std::endl;
         std::cout << "Name: " << prop.deviceProperties.deviceName << std::endl;
         std::cout << "ID: " << prop.deviceProperties.deviceID << std::endl;
@@ -71,11 +73,11 @@ int main(int argc, char* argv[]) {
                                         << VK_VERSION_PATCH(prop.deviceProperties.apiVersion) << std::endl;
         std::cout << "Driver version: " << prop.deviceProperties.driverVersion << std::endl << std::endl;
         std::cout << "Queue props:" << std::endl;
-        unsigned i = 0;
+        unsigned k = 0;
         for(auto&& q : prop.queueFamilyProperties) {
             auto flags = q.queueFlags;
             printf("[Family %u]: Queue count %u, GFX %s, Compute %s, Transfer %s, Sparse binding %s\n"
-                   , i++, q.queueCount, (flags & VK_QUEUE_GRAPHICS_BIT) ? "Yes" : "No"
+                   , k++, q.queueCount, (flags & VK_QUEUE_GRAPHICS_BIT) ? "Yes" : "No"
                     , (flags & VK_QUEUE_COMPUTE_BIT) ? "Yes" : "No", (flags & VK_QUEUE_TRANSFER_BIT) ? "Yes" : "No"
                     , (flags & VK_QUEUE_SPARSE_BINDING_BIT) ? "Yes" : "No");
         }
@@ -92,6 +94,31 @@ int main(int argc, char* argv[]) {
         std::cout << "==--------------------------------------==" << std::endl;
     }
 
+    //TODO chose needed device
+    HLGK::PhysicalDevice device = devices.at(0);
+
+    std::vector< std::string > device_extensions = {};
+    VkPhysicalDeviceFeatures deviceFeatures = {};
+    //TODO chose needed queues
+    VkDeviceQueueCreateInfo graphicQueue = {};
+    graphicQueue.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
+    graphicQueue.queueFamilyIndex = 0;
+    graphicQueue.queueCount = 1;
+    float priorities = 1.f;
+    graphicQueue.pQueuePriorities = &priorities;
+
+
+    std::vector<VkDeviceQueueCreateInfo> deviceQueues = {
+            graphicQueue
+    };
+
+
+    HLGK::LogicalDevice logicalDevice(factory, device
+                                      , deviceFeatures
+                                      , device_extensions
+                                      , deviceQueues);
+
+    auto&& queue = logicalDevice.atQueue(0, 0);
 
     return 0;
 }

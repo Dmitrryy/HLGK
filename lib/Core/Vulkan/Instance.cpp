@@ -18,6 +18,8 @@ namespace HLGK
                      , const std::vector< std::string > &extensions /*= {}*/
                      , const std::vector< std::string > &layers /*= {}*/
                      , const VkDebugUtilsMessengerCreateInfoEXT &DUMCI /*= {}*/)
+                     : m_extensions(extensions)
+                     , m_layers(layers)
     {
         std::vector< const char * > extC, layersC;
         std::transform(extensions.begin(), extensions.end()
@@ -42,7 +44,12 @@ namespace HLGK
         VK_CHECK_RESULT(vkCreateInstance(&instInfo, nullptr, &m_instance));
     }
 
-    std::vector< PhysicalDevice >
+    Instance::~Instance() {
+        callInstanceProcAddr(*this, vkDestroyInstance, nullptr);
+    }
+
+
+std::vector< PhysicalDevice >
     Instance::getPhysicalDevices() const {
         uint32_t physical_device_count = 0;
         VK_CHECK_RESULT(vkEnumeratePhysicalDevices(m_instance, &physical_device_count, nullptr));
@@ -59,11 +66,8 @@ namespace HLGK
         return result;
     }
 
-    VkSurfaceKHR Instance::createSurface(std::function<VkSurfaceKHR (VkInstance)> surfaceCreator) const {
-        return surfaceCreator(m_instance);
+    Surface Instance::createSurface(std::function<VkSurfaceKHR (VkInstance)> surfaceCreator) const {
+        return {surfaceCreator(m_instance), *this};
     }
 
-    LogicalDevice Instance::createLogicalDevice(const PhysicalDevice &PD, VkDeviceCreateInfo &info) const {
-
-    }
 } // namespace HLGK

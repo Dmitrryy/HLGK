@@ -22,7 +22,7 @@ find_package(Vulkan REQUIRED)
 add_library(${PROJECT_NAME}
         Instance.cpp
         PhysicalDevice.cpp
-        LogicalDevice.cpp Error.cpp Surface.cpp)
+        LogicalDevice.cpp Error.cpp Surface.cpp Queue.cpp)
 target_include_directories(${PROJECT_NAME}
         PUBLIC ../../../include
         PUBLIC Vulkan::Headers)

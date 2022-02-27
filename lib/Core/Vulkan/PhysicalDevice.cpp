@@ -20,11 +20,10 @@ namespace HLGK
         Properties result;
 
         // в оболочке хронос логика получения адресов функций вынесена в Dispatch Loader
-        m_vkInstance.callProcAddrName<PFN_vkGetPhysicalDeviceProperties>(
-                "vkGetPhysicalDeviceProperties", m_vkPhysicalDevice, &result.deviceProperties);
+        callInstanceProcAddr(m_vkInstance, vkGetPhysicalDeviceProperties, m_vkPhysicalDevice, &result.deviceProperties);
 
         unsigned size = 0;
-        auto&& layerPropFunc = m_vkInstance.getProcAddr<PFN_vkEnumerateDeviceLayerProperties>("vkEnumerateDeviceLayerProperties");
+        auto&& layerPropFunc = getInstanceProcAddr(m_vkInstance, vkEnumerateDeviceLayerProperties);
         VK_CHECK_RESULT(layerPropFunc(m_vkPhysicalDevice, &size, nullptr));
         result.layerProperties.resize(size);
         VK_CHECK_RESULT(layerPropFunc(m_vkPhysicalDevice, &size, result.layerProperties.data()));
@@ -55,9 +54,10 @@ namespace HLGK
     }
 
     PhysicalDevice::SurfaceProperties
-    PhysicalDevice::getSurfaceProperties(const VkSurfaceKHR &surface) const
+    PhysicalDevice::getSurfaceProperties(const Surface &surface) const
     {
         SurfaceProperties result;
+        VkSurfaceKHR vkSurface = surface.get();
 
         unsigned queueCount = 0;
         vkGetPhysicalDeviceQueueFamilyProperties(m_vkPhysicalDevice, &queueCount, nullptr);
@@ -65,20 +65,20 @@ namespace HLGK
         result.surfaceSupport.resize(queueCount);
         for(size_t i = 0; i < queueCount; ++i) {
             VK_CHECK_RESULT(vkGetPhysicalDeviceSurfaceSupportKHR(
-                    m_vkPhysicalDevice, i, surface, &result.surfaceSupport.at(i)));
+                    m_vkPhysicalDevice, i, vkSurface, &result.surfaceSupport.at(i)));
         }
 
         unsigned size = 0;
-        VK_CHECK_RESULT(vkGetPhysicalDeviceSurfaceFormatsKHR(m_vkPhysicalDevice, surface, &size, nullptr));
+        VK_CHECK_RESULT(vkGetPhysicalDeviceSurfaceFormatsKHR(m_vkPhysicalDevice, vkSurface, &size, nullptr));
         result.formats.resize(size);
-        VK_CHECK_RESULT(vkGetPhysicalDeviceSurfaceFormatsKHR(m_vkPhysicalDevice, surface, &size, result.formats.data()));
+        VK_CHECK_RESULT(vkGetPhysicalDeviceSurfaceFormatsKHR(m_vkPhysicalDevice, vkSurface, &size, result.formats.data()));
 
-        VK_CHECK_RESULT(vkGetPhysicalDeviceSurfacePresentModesKHR(m_vkPhysicalDevice, surface, &size, nullptr));
+        VK_CHECK_RESULT(vkGetPhysicalDeviceSurfacePresentModesKHR(m_vkPhysicalDevice, vkSurface, &size, nullptr));
         result.presentModes.resize(size);
         VK_CHECK_RESULT(vkGetPhysicalDeviceSurfacePresentModesKHR(
-                m_vkPhysicalDevice, surface, &size, result.presentModes.data()));
+                m_vkPhysicalDevice, vkSurface, &size, result.presentModes.data()));
 
-        VK_CHECK_RESULT(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(m_vkPhysicalDevice, surface, &result.capabilities));
+        VK_CHECK_RESULT(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(m_vkPhysicalDevice, vkSurface, &result.capabilities));
 
         return result;
     }

@@ -16,6 +16,7 @@
 #include <HLGK/Window/IWindow.hpp>
 #include <HLGK/Core/Vulkan/PhysicalDevice.hpp>
 #include <HLGK/Core/Vulkan/LogicalDevice.hpp>
+#include <HLGK/Core/Vulkan/Surface.hpp>
 
 #include <vector>
 #include <string>
@@ -28,7 +29,9 @@ namespace HLGK
 
 
     class Instance final {
-        VkInstance m_instance;
+        VkInstance m_instance = {};
+        const std::vector< std::string > m_extensions;
+        const std::vector< std::string > m_layers;
 
     public:
         Instance(const VkApplicationInfo &appInfo
@@ -36,44 +39,61 @@ namespace HLGK
                 , const std::vector< std::string > &layers = {}
                 , const VkDebugUtilsMessengerCreateInfoEXT &DUMCI = {});
 
-        ~Instance() {
-            vkDestroyInstance(m_instance, nullptr);
-        }
+        Instance(const Instance &) = delete;
+        Instance &operator=(const Instance &) = delete;
+        Instance(Instance &&) = delete;
+        Instance &operator=(Instance &&) = delete;
+
+        ~Instance();
 
     public:
         // TODO: через функтор возможна утечка указателя на m_instance.
         // Для создани поверхности нужны дискрипторы окна(платформа зависимо) и знание оконной системы.
-        // TODO: Surface должен быть разрушен до вызова деструктора instance
-        // возможно решаемо аллокаторами, надо заботать
-        VkSurfaceKHR createSurface(std::function<VkSurfaceKHR (VkInstance)> surfaceCreator) const;
+        Surface createSurface(std::function<VkSurfaceKHR (VkInstance)> surfaceCreator) const;
+
         std::vector< PhysicalDevice > getPhysicalDevices() const;
 
+        //InstanceProcAddr support
+        //=-----------------------
+        /// interface for vkGetInstanceProcAddr
+        /// \tparam Func_T - the type to which the result will be reduced
+        /// \param name - function name
+        /// \return - pointer to required function or nullptr.
         template< typename Func_T = PFN_vkVoidFunction>
         inline Func_T getProcAddr(const std::string &name) const {
             return reinterpret_cast<Func_T>(vkGetInstanceProcAddr(m_instance, name.c_str()));
         }
 
-        template< typename Func_T
-                , bool firstArgIsInstance = false
-                , typename T
-                , typename Return_T = typename details::function_info<Func_T>::return_type
-                , typename ... Args_T>
-        inline Return_T callProcAddr(T f, Args_T... args) const {
-            if constexpr(firstArgIsInstance) {
+        /// allows calling functions that use a pointer to an instance (if required)
+        /// \tparam Func_T The type of function to which the pointer will be brought
+        /// \tparam T The type of the received function pointer
+        /// \tparam Args_T Types of arguments passed to the function
+        /// \param f Pointer to the function being called
+        /// \param args Arguments passed to the function
+        /// \return returns the result of the function being called
+        template< typename Func_T, typename T = void, typename ... Args_T>
+        inline details::function_info_rt<Func_T> callProcAddr(T f, Args_T... args) const {
+            // Checking whether the first argument is an instance
+            if constexpr(std::is_same_v< VkInstance, details::function_info_T0< Func_T > >)
                 return reinterpret_cast<Func_T>(f)(m_instance, args...);
-            }
-            return reinterpret_cast<Func_T>(f)(args...);
+            else
+                return reinterpret_cast<Func_T>(f)(args...);
         }
 
-        template< typename Func_T
-                , bool firstArgIsInstance = false
-                , typename Return_T = typename details::function_info<Func_T>::return_type
-                , typename ... Args_T>
-        inline Return_T callProcAddrName(const std::string &fName, Args_T... args) const {
-            return callProcAddr<Func_T, firstArgIsInstance>(getProcAddr<Func_T>(fName), args...);
+        /// Combination of getProcAddr and callProcAddr.
+        /// \param fName function name, which will be called
+        /// \param args Arguments passed to the function
+        /// \return returns the result of the function being called
+        template< typename Func_T, typename ... Args_T>
+        inline details::function_info_rt<Func_T> callProcAddrName(const std::string &fName, Args_T... args) const {
+            return callProcAddr<Func_T>(getProcAddr<Func_T>(fName), args...);
         }
-
-        LogicalDevice createLogicalDevice(const PhysicalDevice &PD, VkDeviceCreateInfo &info) const;
-    }; // class Instance
+/// the abbreviation of function Instance::callProcAddrName,
+/// which allows not to write the name of the called function twice
+#define callInstanceProcAddr(instance, func, ...) (instance).callProcAddrName<PFN_ ## func>(#func, __VA_ARGS__)
+/// the abbreviation of function Instance::getProcAddr,
+/// which allows not to write the name of the called function twice
+#define getInstanceProcAddr(instance, func) (instance).getProcAddr<PFN_ ## func>(#func)
+    };// class Instance
 
 } // namespace HLGK
