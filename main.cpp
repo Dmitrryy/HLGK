@@ -33,6 +33,8 @@ int main(int argc, char* argv[]) {
     }
 
     VkApplicationInfo info;
+    info.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
+    info.pNext = nullptr;
     info.pApplicationName = nullptr;
     info.applicationVersion = VK_MAKE_VERSION(1, 0, 0);
     info.pEngineName = "No Engine";
@@ -48,6 +50,7 @@ int main(int argc, char* argv[]) {
     };
     HLGK::Instance factory(info, extensions, validationLayers);
 
+    // FIXME: may be lek of instance
     auto&& surfaceCreator = [w = window.get()](VkInstance instance) {
         VkSurfaceKHR res = {};
         VK_CHECK_RESULT(glfwCreateWindowSurface(instance, w, nullptr, &res));
@@ -67,6 +70,15 @@ int main(int argc, char* argv[]) {
                                         << VK_VERSION_MINOR(prop.deviceProperties.apiVersion) << '.'
                                         << VK_VERSION_PATCH(prop.deviceProperties.apiVersion) << std::endl;
         std::cout << "Driver version: " << prop.deviceProperties.driverVersion << std::endl << std::endl;
+        std::cout << "Queue props:" << std::endl;
+        unsigned i = 0;
+        for(auto&& q : prop.queueFamilyProperties) {
+            auto flags = q.queueFlags;
+            printf("[Family %u]: Queue count %u, GFX %s, Compute %s, Transfer %s, Sparse binding %s\n"
+                   , i++, q.queueCount, (flags & VK_QUEUE_GRAPHICS_BIT) ? "Yes" : "No"
+                    , (flags & VK_QUEUE_COMPUTE_BIT) ? "Yes" : "No", (flags & VK_QUEUE_TRANSFER_BIT) ? "Yes" : "No"
+                    , (flags & VK_QUEUE_SPARSE_BINDING_BIT) ? "Yes" : "No");
+        }
 #if 0
         std::cout << "Extensions: " << std::endl;
         for(const auto& ext : prop.extensionProperties) {

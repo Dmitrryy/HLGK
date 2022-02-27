@@ -14,6 +14,7 @@
 #include <vulkan/vulkan.h>
 
 #include <vector>
+#include <string>
 #include <optional>
 
 namespace HLGK
@@ -27,7 +28,7 @@ namespace HLGK
         // быть разные физические девайсы. И для функций получения свойств
         // разные указатели
         // TODO: проверить
-        VkInstance m_vkInstance = {};
+        const Instance &m_vkInstance;
 
         // Класс может создать только Instance.
         // TODO: норм ли такой дизайн
@@ -35,7 +36,7 @@ namespace HLGK
 
     protected:
         PhysicalDevice() = default;
-        PhysicalDevice(const VkPhysicalDevice &device, const VkInstance &instance)
+        PhysicalDevice(const VkPhysicalDevice &device, const Instance &instance)
                 : m_vkPhysicalDevice(device)
                 , m_vkInstance(instance) {}
 

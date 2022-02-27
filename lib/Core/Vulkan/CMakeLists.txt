@@ -22,8 +22,10 @@ find_package(Vulkan REQUIRED)
 add_library(${PROJECT_NAME}
         Instance.cpp
         PhysicalDevice.cpp
-        LogicalDevice.cpp Error.cpp)
-target_include_directories(${PROJECT_NAME} PUBLIC ../../../include)
+        LogicalDevice.cpp Error.cpp Surface.cpp)
+target_include_directories(${PROJECT_NAME}
+        PUBLIC ../../../include
+        PUBLIC Vulkan::Headers)
 target_link_libraries(${PROJECT_NAME}
         Vulkan::Vulkan
 #        glfw

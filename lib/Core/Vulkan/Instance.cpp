@@ -29,6 +29,7 @@ namespace HLGK
 
         VkInstanceCreateInfo instInfo = {};
         instInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
+        instInfo.pNext = nullptr;
         instInfo.pApplicationInfo = &appInfo;
         instInfo.enabledExtensionCount = extC.size();
         instInfo.ppEnabledExtensionNames = extC.data();
@@ -51,8 +52,8 @@ namespace HLGK
         std::vector< PhysicalDevice > result;
         result.reserve(physical_device_count);
         std::transform(devicesVk.begin(), devicesVk.end(), std::back_inserter(result),
-                       [inst = m_instance](const VkPhysicalDevice &D) {
-            return PhysicalDevice(D, inst);
+                       [inst = this](const VkPhysicalDevice &D) {
+            return PhysicalDevice(D, *inst);
         });
 
         return result;

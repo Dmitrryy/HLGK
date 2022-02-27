@@ -13,6 +13,7 @@
 #include <vulkan/vulkan.h>
 
 #include <HLGK/Core/Allocators/IAllocator.hpp>
+#include <string>
 
 namespace HLGK
 {

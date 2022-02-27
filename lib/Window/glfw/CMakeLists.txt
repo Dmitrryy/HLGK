@@ -16,7 +16,9 @@ project(HLGK_WINDOW_GLFW)
 set(CMAKE_CXX_STANDARD 20)
 
 add_library(${PROJECT_NAME} Instance.cpp Window.cpp)
-target_include_directories(${PROJECT_NAME} PUBLIC ../../../include)
+target_include_directories(${PROJECT_NAME}
+        PUBLIC ../../../include
+        PUBLIC ${GLFW_INCLUDE_DIRS})
 target_link_libraries(${PROJECT_NAME}
-        glfw
+        ${GLFW_LIBRARIES}
         )

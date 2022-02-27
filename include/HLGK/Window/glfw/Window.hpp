@@ -9,7 +9,7 @@
 
 #pragma once
 
-#define GLFW_INCLUDE_VULKAN
+//#define GLFW_INCLUDE_VULKAN
 #include <HLGK/Window/IWindow.hpp>
 #include "Instance.hpp"
 #include <string>

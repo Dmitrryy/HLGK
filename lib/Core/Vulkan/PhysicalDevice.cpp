@@ -7,6 +7,7 @@
 *
 ***/
 
+#include <HLGK/Core/Vulkan/Instance.hpp>
 #include <HLGK/Core/Vulkan/PhysicalDevice.hpp>
 #include <HLGK/Core/Vulkan/Error.hpp>
 
@@ -18,14 +19,12 @@ namespace HLGK
     {
         Properties result;
 
-        // в оболочке хронос логика получения адрксов функций вынесена в Dispatch Loader
-        auto* propFunc = reinterpret_cast<PFN_vkGetPhysicalDeviceProperties>(
-                vkGetInstanceProcAddr(m_vkInstance, "vkGetPhysicalDeviceProperties"));
-        propFunc(m_vkPhysicalDevice, &result.deviceProperties);
+        // в оболочке хронос логика получения адресов функций вынесена в Dispatch Loader
+        m_vkInstance.callProcAddrName<PFN_vkGetPhysicalDeviceProperties>(
+                "vkGetPhysicalDeviceProperties", m_vkPhysicalDevice, &result.deviceProperties);
 
-        auto* layerPropFunc = reinterpret_cast<PFN_vkEnumerateDeviceLayerProperties>(
-                vkGetInstanceProcAddr(m_vkInstance, "vkEnumerateDeviceLayerProperties"));
         unsigned size = 0;
+        auto&& layerPropFunc = m_vkInstance.getProcAddr<PFN_vkEnumerateDeviceLayerProperties>("vkEnumerateDeviceLayerProperties");
         VK_CHECK_RESULT(layerPropFunc(m_vkPhysicalDevice, &size, nullptr));
         result.layerProperties.resize(size);
         VK_CHECK_RESULT(layerPropFunc(m_vkPhysicalDevice, &size, result.layerProperties.data()));

@@ -19,10 +19,16 @@ if( NOT CMAKE_BUILD_TYPE )
     set(CMAKE_BUILD_TYPE Release)
 endif()
 
+set(GLFW_USE_STATIC_LIBS 1)
+include(cmake/FindGLFW.cmake)
+
 add_subdirectory(lib)
 
 add_executable(${PROJECT_NAME} main.cpp)
 target_link_libraries(${PROJECT_NAME}
         HLGK_CORE
         HLGK_WINDOW_GLFW
+        )
+target_link_libraries(${PROJECT_NAME}
+        ${GLFW_LIBRARIES}
         )
