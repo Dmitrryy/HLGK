@@ -62,6 +62,18 @@ namespace HLGK::glfw
         return width;
     }
 
+    int Window::getFrameBufferWidth() const {
+        int width = 0;
+        glfwGetFramebufferSize(m_pWindow, &width, nullptr);
+        return width;
+    }
+    int Window::getFrameBufferHeight() const {
+        int height = 0;
+        glfwGetFramebufferSize(m_pWindow, nullptr, &height);
+        return height;
+    }
+
+
     bool Window::shouldClose() const {
         return glfwWindowShouldClose(m_pWindow);
     }

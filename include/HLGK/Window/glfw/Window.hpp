@@ -53,6 +53,9 @@ namespace HLGK::glfw
             int getHeight() const;
             int getWidth() const;
 
+            int getFrameBufferWidth() const;
+            int getFrameBufferHeight() const;
+
 
             bool shouldClose() const;
 

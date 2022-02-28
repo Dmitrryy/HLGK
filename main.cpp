@@ -13,6 +13,10 @@
 #include <HLGK/Core/Vulkan/Error.hpp>
 #include <HLGK/Window/glfw/Window.hpp>
 #include <HLGK/Core/Vulkan/Queue.hpp>
+#include <HLGK/Core/Vulkan/SwapChain.hpp>
+
+#include <assert.h>
+#include <limits>
 
 int main(int argc, char* argv[]) {
 
@@ -97,7 +101,12 @@ int main(int argc, char* argv[]) {
     //TODO chose needed device
     HLGK::PhysicalDevice device = devices.at(0);
 
-    std::vector< std::string > device_extensions = {};
+    ///------------------------------LogicalDevice--------------------------------------
+    // check for support
+    std::vector< std::string > device_extensions = {
+            VK_KHR_SWAPCHAIN_EXTENSION_NAME
+    };
+
     VkPhysicalDeviceFeatures deviceFeatures = {};
     //TODO chose needed queues
     VkDeviceQueueCreateInfo graphicQueue = {};
@@ -119,6 +128,48 @@ int main(int argc, char* argv[]) {
                                       , deviceQueues);
 
     auto&& queue = logicalDevice.atQueue(0, 0);
+
+    ///--------------------------------SwapChain-----------------------------------------
+    auto&& surfaceProp = device.getSurfaceProperties(surface);
+    assert(surfaceProp.surfaceSupport.at(graphicQueue.queueFamilyIndex));
+    bool swapChainAdequate = !surfaceProp.formats.empty() && !surfaceProp.presentModes.empty();
+    assert(swapChainAdequate);
+    assert(std::find(surfaceProp.presentModes.begin(), surfaceProp.presentModes.end(), VK_PRESENT_MODE_FIFO_KHR) != surfaceProp.presentModes.end());
+
+    VkExtent2D SwapExtent = surfaceProp.capabilities.currentExtent;
+    if (surfaceProp.capabilities.currentExtent.width == std::numeric_limits<uint32_t>::max()) {
+        int width = window.getFrameBufferWidth(), height = window.getFrameBufferHeight();
+
+        VkExtent2D SwapExtent = {
+                static_cast<uint32_t>(width),
+                static_cast<uint32_t>(height)
+        };
+        SwapExtent.width = std::clamp(SwapExtent.width, surfaceProp.capabilities.minImageExtent.width, surfaceProp.capabilities.maxImageExtent.width);
+        SwapExtent.height = std::clamp(SwapExtent.height, surfaceProp.capabilities.minImageExtent.height, surfaceProp.capabilities.maxImageExtent.height);
+    }
+    uint32_t imageCount = surfaceProp.capabilities.minImageCount + 1;
+    if (surfaceProp.capabilities.maxImageCount > 0 && imageCount > surfaceProp.capabilities.maxImageCount) {
+        imageCount = surfaceProp.capabilities.maxImageCount;
+    }
+    VkSwapchainCreateInfoKHR createInfo{};
+    createInfo.sType = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;
+    createInfo.surface = surface.get();
+    createInfo.minImageCount = imageCount;
+    createInfo.imageFormat = surfaceProp.formats.at(0).format;
+    createInfo.imageColorSpace = surfaceProp.formats.at(0).colorSpace;
+    createInfo.imageExtent = SwapExtent;
+    createInfo.imageArrayLayers = 1;
+    createInfo.imageUsage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
+    createInfo.imageSharingMode = VK_SHARING_MODE_EXCLUSIVE;
+    createInfo.queueFamilyIndexCount = 0; // Optional
+    createInfo.pQueueFamilyIndices = nullptr; // Optional
+    createInfo.preTransform = surfaceProp.capabilities.currentTransform;
+    createInfo.presentMode = VK_PRESENT_MODE_FIFO_KHR;
+    createInfo.clipped = VK_TRUE;
+    createInfo.oldSwapchain = VK_NULL_HANDLE;
+    createInfo.compositeAlpha = VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR;
+
+    HLGK::SwapChain swapChain(logicalDevice, createInfo);
 
     return 0;
 }
