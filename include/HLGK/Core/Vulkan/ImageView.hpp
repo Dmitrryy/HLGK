@@ -21,6 +21,11 @@ namespace HLGK {
                 , VkImageSubresourceRange subresourceRange
                 , VkImageViewCreateFlags flags);
 
+        ImageView(const ImageView &) = delete;
+        ImageView &operator=(const ImageView &) = delete;
+        ImageView(ImageView &&) noexcept;
+        ImageView &operator=(ImageView &&) = delete;
+
         ~ImageView();
 
     };

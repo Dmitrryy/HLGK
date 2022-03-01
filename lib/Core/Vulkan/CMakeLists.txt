@@ -28,7 +28,7 @@ add_library(${PROJECT_NAME}
         Queue.cpp
         SwapChain.cpp
         ImageView.cpp
-        Image.cpp)
+        Image.cpp Shader.cpp Pipeline.cpp RenderPass.cpp)
 target_include_directories(${PROJECT_NAME}
         PUBLIC ../../../include
         PUBLIC Vulkan::Headers)

@@ -14,9 +14,15 @@
 #include <HLGK/Window/glfw/Window.hpp>
 #include <HLGK/Core/Vulkan/Queue.hpp>
 #include <HLGK/Core/Vulkan/SwapChain.hpp>
+#include <HLGK/Core/Vulkan/Image.hpp>
+#include <HLGK/Core/Vulkan/ImageView.hpp>
+#include <HLGK/Core/Vulkan/Shader.hpp>
+#include <HLGK/Core/Vulkan/Pipeline.hpp>
+#include <HLGK/Core/Vulkan/RenderPass.hpp>
 
 #include <assert.h>
 #include <limits>
+#include <algorithm>
 
 int main(int argc, char* argv[]) {
 
@@ -170,6 +176,111 @@ int main(int argc, char* argv[]) {
     createInfo.compositeAlpha = VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR;
 
     HLGK::SwapChain swapChain(logicalDevice, createInfo);
+    auto&& swapImages = swapChain.getImages();
+
+    std::vector<HLGK::ImageView> swapImageViews;
+    swapImageViews.reserve(swapImages.size());
+    std::transform(swapImages.begin(), swapImages.end()
+                   , std::back_inserter(swapImageViews),
+                   [format = surfaceProp.formats.at(0).format](const HLGK::Image &im) {
+        return im.createView(VK_IMAGE_VIEW_TYPE_2D
+                , format
+                , {VK_COMPONENT_SWIZZLE_IDENTITY, VK_COMPONENT_SWIZZLE_IDENTITY
+                , VK_COMPONENT_SWIZZLE_IDENTITY, VK_COMPONENT_SWIZZLE_IDENTITY}
+                , {VK_IMAGE_ASPECT_COLOR_BIT, 0, 1, 0, 1}, 0);
+    });
+
+    ///--------------------------------Pipeline-----------------------------------------
+    auto&& vertShaderCode = HLGK::util::readFile("shaders/1.frag.spv");
+    auto&& fragShaderCode = HLGK::util::readFile("shaders/1.vert.spv");
+
+    HLGK::Shader vertShader(logicalDevice, vertShaderCode);
+    HLGK::Shader fragShader(logicalDevice, fragShaderCode);
+
+    vertShader.addStage({VK_SHADER_STAGE_VERTEX_BIT, "main"});
+    fragShader.addStage({VK_SHADER_STAGE_FRAGMENT_BIT, "main"});
+
+    HLGK::Pipeline::VertexInput vertexInputInfo;
+
+    HLGK::Pipeline::InputAssembly inputAssembly;
+    inputAssembly.topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;
+    inputAssembly.primitiveRestartEnable = VK_FALSE;
+
+    VkViewport viewport{};
+    viewport.x = 0.0f;
+    viewport.y = 0.0f;
+    viewport.width = (float) SwapExtent.width;
+    viewport.height = (float) SwapExtent.height;
+    viewport.minDepth = 0.0f;
+    viewport.maxDepth = 1.0f;
+
+    VkRect2D scissor{};
+    scissor.offset = {0, 0};
+    scissor.extent = SwapExtent;
+
+    HLGK::Pipeline::ViewportState viewportState;
+    viewportState.viewportCount = 1;
+    viewportState.pViewports = &viewport;
+    viewportState.scissorCount = 1;
+    viewportState.pScissors = &scissor;
+
+    HLGK::Pipeline::RasterizationState rasterizer;
+    rasterizer.depthClampEnable = VK_FALSE;
+    rasterizer.rasterizerDiscardEnable = VK_FALSE;
+    rasterizer.polygonMode = VK_POLYGON_MODE_FILL;
+    rasterizer.lineWidth = 1.0f;
+    rasterizer.cullMode = VK_CULL_MODE_BACK_BIT;
+    rasterizer.frontFace = VK_FRONT_FACE_CLOCKWISE;
+    rasterizer.depthBiasEnable = VK_FALSE;
+
+    HLGK::Pipeline::MultisampleState multisampling;
+    multisampling.sampleShadingEnable = VK_FALSE;
+    multisampling.rasterizationSamples = VK_SAMPLE_COUNT_1_BIT;
+    multisampling.minSampleShading = 1.0f;
+    multisampling.alphaToCoverageEnable = VK_FALSE;
+    multisampling.alphaToOneEnable = VK_FALSE;
+
+    VkPipelineColorBlendAttachmentState colorBlendAttachment{};
+    colorBlendAttachment.colorWriteMask = VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT | VK_COLOR_COMPONENT_B_BIT | VK_COLOR_COMPONENT_A_BIT;
+    colorBlendAttachment.blendEnable = VK_FALSE;
+
+    HLGK::Pipeline::ColorBlendState colorBlending;
+    colorBlending.logicOpEnable = VK_FALSE;
+    colorBlending.logicOp = VK_LOGIC_OP_COPY;
+    colorBlending.attachmentCount = 1;
+    colorBlending.pAttachments = &colorBlendAttachment;
+
+    VkDynamicState dynamicStates[] = {
+            VK_DYNAMIC_STATE_VIEWPORT,
+            VK_DYNAMIC_STATE_LINE_WIDTH
+    };
+    HLGK::Pipeline::DynamicState dynamicState;
+    dynamicState.dynamicStateCount = 2;
+    dynamicState.pDynamicStates = dynamicStates;
+
+    HLGK::PipelineLayout pipelineLayout(logicalDevice);
+
+    //renderpass
+    VkAttachmentDescription colorAttachment{};
+    colorAttachment.format = surfaceProp.formats.at(0).format;
+    colorAttachment.samples = VK_SAMPLE_COUNT_1_BIT;
+    colorAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
+    colorAttachment.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
+    colorAttachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
+    colorAttachment.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+    colorAttachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+    colorAttachment.finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
+
+    VkAttachmentReference colorAttachmentRef{};
+    colorAttachmentRef.attachment = 0;
+    colorAttachmentRef.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+
+    VkSubpassDescription subpass{};
+    subpass.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;
+    subpass.colorAttachmentCount = 1;
+    subpass.pColorAttachments = &colorAttachmentRef;
+
+    HLGK::RenderPass renderPass(logicalDevice, {colorAttachment}, {subpass});
 
     return 0;
 }

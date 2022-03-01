@@ -17,15 +17,20 @@ namespace HLGK {
         VkImageViewCreateInfo createInfo {
             .sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO,
             .pNext = nullptr,
+            .flags = flags,
             .image = image,
             .viewType = viewType,
             .format = format,
             .components = components,
-            .flags = flags,
             .subresourceRange = subresourceRange
         };
 
         VK_CHECK_RESULT(callDeviceProcAddr(m_device, vkCreateImageView, &createInfo, nullptr, &m_imageView));
+    }
+
+    ImageView::ImageView(ImageView &&that) noexcept
+        : m_device(that.m_device) {
+        std::swap(m_imageView, that.m_imageView);
     }
 
     ImageView::~ImageView() {
