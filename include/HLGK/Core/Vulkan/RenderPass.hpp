@@ -9,10 +9,13 @@
 namespace HLGK {
 
     class LogicalDevice;
+    class GraphicsPipeline;
 
     class RenderPass final {
         const LogicalDevice &m_device;
         VkRenderPass m_renderPass = {};
+
+        friend GraphicsPipeline;
 
     public:
         RenderPass(const LogicalDevice &device

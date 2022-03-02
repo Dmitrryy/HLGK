@@ -35,13 +35,11 @@ int main(int argc, char* argv[]) {
 
     HLGK::glfw::Window window(800, 800
             , "HLGK"
-            , nullptr, nullptr
-            , hints);
+            , nullptr, nullptr, hints);
     // end create window
     //-----------------------------------------------
-    if (!glfwVulkanSupported()) {
+    if (!glfwVulkanSupported())
         throw std::runtime_error("glfw doesn't support Vulkan");
-    }
 
     VkApplicationInfo info;
     info.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
@@ -122,17 +120,10 @@ int main(int argc, char* argv[]) {
     float priorities = 1.f;
     graphicQueue.pQueuePriorities = &priorities;
 
-
     std::vector<VkDeviceQueueCreateInfo> deviceQueues = {
             graphicQueue
     };
-
-
-    HLGK::LogicalDevice logicalDevice(factory, device
-                                      , deviceFeatures
-                                      , device_extensions
-                                      , deviceQueues);
-
+    HLGK::LogicalDevice logicalDevice(factory, device, deviceFeatures, device_extensions, deviceQueues);
     auto&& queue = logicalDevice.atQueue(0, 0);
 
     ///--------------------------------SwapChain-----------------------------------------
@@ -191,8 +182,8 @@ int main(int argc, char* argv[]) {
     });
 
     ///--------------------------------Pipeline-----------------------------------------
-    auto&& vertShaderCode = HLGK::util::readFile("shaders/1.frag.spv");
-    auto&& fragShaderCode = HLGK::util::readFile("shaders/1.vert.spv");
+    auto&& vertShaderCode = HLGK::util::readFile("shaders/1.vert.spv");
+    auto&& fragShaderCode = HLGK::util::readFile("shaders/1.frag.spv");
 
     HLGK::Shader vertShader(logicalDevice, vertShaderCode);
     HLGK::Shader fragShader(logicalDevice, fragShaderCode);
@@ -200,9 +191,9 @@ int main(int argc, char* argv[]) {
     vertShader.addStage({VK_SHADER_STAGE_VERTEX_BIT, "main"});
     fragShader.addStage({VK_SHADER_STAGE_FRAGMENT_BIT, "main"});
 
-    HLGK::Pipeline::VertexInput vertexInputInfo;
+    HLGK::GraphicsPipeline::VertexInputState vertexInputInfo;
 
-    HLGK::Pipeline::InputAssembly inputAssembly;
+    HLGK::GraphicsPipeline::InputAssemblyState inputAssembly;
     inputAssembly.topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;
     inputAssembly.primitiveRestartEnable = VK_FALSE;
 
@@ -218,13 +209,13 @@ int main(int argc, char* argv[]) {
     scissor.offset = {0, 0};
     scissor.extent = SwapExtent;
 
-    HLGK::Pipeline::ViewportState viewportState;
+    HLGK::GraphicsPipeline::ViewportState viewportState;
     viewportState.viewportCount = 1;
     viewportState.pViewports = &viewport;
     viewportState.scissorCount = 1;
     viewportState.pScissors = &scissor;
 
-    HLGK::Pipeline::RasterizationState rasterizer;
+    HLGK::GraphicsPipeline::RasterizationState rasterizer;
     rasterizer.depthClampEnable = VK_FALSE;
     rasterizer.rasterizerDiscardEnable = VK_FALSE;
     rasterizer.polygonMode = VK_POLYGON_MODE_FILL;
@@ -233,7 +224,7 @@ int main(int argc, char* argv[]) {
     rasterizer.frontFace = VK_FRONT_FACE_CLOCKWISE;
     rasterizer.depthBiasEnable = VK_FALSE;
 
-    HLGK::Pipeline::MultisampleState multisampling;
+    HLGK::GraphicsPipeline::MultisampleState multisampling;
     multisampling.sampleShadingEnable = VK_FALSE;
     multisampling.rasterizationSamples = VK_SAMPLE_COUNT_1_BIT;
     multisampling.minSampleShading = 1.0f;
@@ -244,7 +235,7 @@ int main(int argc, char* argv[]) {
     colorBlendAttachment.colorWriteMask = VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT | VK_COLOR_COMPONENT_B_BIT | VK_COLOR_COMPONENT_A_BIT;
     colorBlendAttachment.blendEnable = VK_FALSE;
 
-    HLGK::Pipeline::ColorBlendState colorBlending;
+    HLGK::GraphicsPipeline::ColorBlendState colorBlending;
     colorBlending.logicOpEnable = VK_FALSE;
     colorBlending.logicOp = VK_LOGIC_OP_COPY;
     colorBlending.attachmentCount = 1;
@@ -254,7 +245,7 @@ int main(int argc, char* argv[]) {
             VK_DYNAMIC_STATE_VIEWPORT,
             VK_DYNAMIC_STATE_LINE_WIDTH
     };
-    HLGK::Pipeline::DynamicState dynamicState;
+    HLGK::GraphicsPipeline::DynamicState dynamicState;
     dynamicState.dynamicStateCount = 2;
     dynamicState.pDynamicStates = dynamicStates;
 
@@ -281,6 +272,23 @@ int main(int argc, char* argv[]) {
     subpass.pColorAttachments = &colorAttachmentRef;
 
     HLGK::RenderPass renderPass(logicalDevice, {colorAttachment}, {subpass});
+
+    HLGK::GraphicsPipelineCreateInfo pipelineInfo;
+    pipelineInfo.pVertexInputState = &vertexInputInfo;
+    pipelineInfo.pInputAssemblyState = &inputAssembly;
+    pipelineInfo.pViewportState = &viewportState;
+    pipelineInfo.pRasterizationState = &rasterizer;
+    pipelineInfo.pMultisampleState = &multisampling;
+    pipelineInfo.pDepthStencilState = nullptr; // Optional
+    pipelineInfo.pColorBlendState = &colorBlending;
+    pipelineInfo.pDynamicState = nullptr; // Optional
+    pipelineInfo.subpass = 0;
+    pipelineInfo.basePipelineHandle = VK_NULL_HANDLE; // Optional
+    pipelineInfo.basePipelineIndex = -1; // Optional
+
+    HLGK::GraphicsPipeline pipeline(logicalDevice, pipelineInfo
+                                    , pipelineLayout, renderPass,
+                                    {&vertShader, &fragShader});
 
     return 0;
 }

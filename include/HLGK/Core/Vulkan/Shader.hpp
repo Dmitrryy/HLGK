@@ -11,6 +11,7 @@ namespace HLGK {
 
     class LogicalDevice;
     class Shader;
+    class GraphicsPipeline;
 
     //TODO VkSpecializationInfo
     //https://www.khronos.org/registry/vulkan/specs/1.3-extensions/html/vkspec.html#pipelines-specialization-constants
@@ -33,10 +34,16 @@ namespace HLGK {
         Shader(const LogicalDevice &device, std::vector<char> code, VkShaderModuleCreateFlags flags = 0);
         ~Shader();
 
+
+
     public:
         void addStage(const ShaderStage &stage);
         void clearStages();
         void setStages(const std::vector<ShaderStage> &stages);
+
+    protected:
+        friend GraphicsPipeline;
+        const std::vector<VkPipelineShaderStageCreateInfo> &getStages() const { return m_stages; }
     };
 
 }//namespace HLGK
