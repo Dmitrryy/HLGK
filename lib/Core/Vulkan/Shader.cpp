@@ -10,7 +10,7 @@
 namespace HLGK {
 
     Shader::Shader(const LogicalDevice &device, std::vector<char> code, VkShaderModuleCreateFlags flags /*= 0*/)
-        : m_device(device)
+        : m_device(&device)
         , m_code(std::move(code)) {
         VkShaderModuleCreateInfo createInfo = {};
         createInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
@@ -18,11 +18,11 @@ namespace HLGK {
         createInfo.pCode = reinterpret_cast<const uint32_t*>(m_code.data());
         createInfo.flags = flags;
 
-        VK_CHECK_RESULT(callDeviceProcAddr(m_device, vkCreateShaderModule, &createInfo, nullptr, &m_module));
+        VK_CHECK_RESULT(callDeviceProcAddr(*m_device, vkCreateShaderModule, &createInfo, nullptr, &m_module));
     }
 
     Shader::~Shader() {
-        callDeviceProcAddr(m_device, vkDestroyShaderModule, m_module, nullptr);
+        callDeviceProcAddr(*m_device, vkDestroyShaderModule, m_module, nullptr);
     }
 
     void Shader::addStage(const ShaderStage &stage) {

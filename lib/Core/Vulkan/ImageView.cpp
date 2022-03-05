@@ -8,7 +8,7 @@
 
 namespace HLGK {
 
-    ImageView::ImageView(const LogicalDevice &device, VkImage image
+    ImageView::ImageView(const LogicalDevice *device, VkImage image
             , VkImageViewType viewType, VkFormat format
             , VkComponentMapping components
             , VkImageSubresourceRange subresourceRange
@@ -25,7 +25,7 @@ namespace HLGK {
             .subresourceRange = subresourceRange
         };
 
-        VK_CHECK_RESULT(callDeviceProcAddr(m_device, vkCreateImageView, &createInfo, nullptr, &m_imageView));
+        VK_CHECK_RESULT(callDeviceProcAddr(*m_device, vkCreateImageView, &createInfo, nullptr, &m_imageView));
     }
 
     ImageView::ImageView(ImageView &&that) noexcept
@@ -34,7 +34,7 @@ namespace HLGK {
     }
 
     ImageView::~ImageView() {
-        callDeviceProcAddr(m_device, vkDestroyImageView, m_imageView, nullptr);
+        callDeviceProcAddr(*m_device, vkDestroyImageView, m_imageView, nullptr);
     }
 
 }// namespace HLGK

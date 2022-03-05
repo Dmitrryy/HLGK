@@ -10,20 +10,23 @@ namespace HLGK {
 
     RenderPass::RenderPass(const LogicalDevice &device
                            , const std::vector<VkAttachmentDescription> &attachments
-                           , const std::vector<VkSubpassDescription> &subpasses)
-        : m_device(device) {
+                           , const std::vector<VkSubpassDescription> &subpasses
+                           , const std::vector<VkSubpassDependency> &dependencies)
+        : m_device(&device) {
         VkRenderPassCreateInfo renderPassInfo{};
         renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO;
         renderPassInfo.attachmentCount = attachments.size();
         renderPassInfo.pAttachments = attachments.data();
         renderPassInfo.subpassCount = subpasses.size();
         renderPassInfo.pSubpasses = subpasses.data();
+        renderPassInfo.dependencyCount = dependencies.size();
+        renderPassInfo.pDependencies = dependencies.data();
 
-        VK_CHECK_RESULT(callDeviceProcAddr(m_device, vkCreateRenderPass, &renderPassInfo, nullptr, &m_renderPass));
+        VK_CHECK_RESULT(callDeviceProcAddr(*m_device, vkCreateRenderPass, &renderPassInfo, nullptr, &m_renderPass));
     }
 
     RenderPass::~RenderPass() {
-        callDeviceProcAddr(m_device, vkDestroyRenderPass, m_renderPass, nullptr);
+        callDeviceProcAddr(*m_device, vkDestroyRenderPass, m_renderPass, nullptr);
     }
 
 

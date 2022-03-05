@@ -9,13 +9,16 @@
 namespace HLGK {
 
     class LogicalDevice;
+    class Framebuffer;
 
     class ImageView final {
-        const LogicalDevice &m_device;
+        const LogicalDevice *m_device;
         VkImageView m_imageView = {};
 
+        friend Framebuffer;
+
     public:
-        ImageView(const LogicalDevice &device, VkImage image
+        ImageView(const LogicalDevice *device, VkImage image
                 , VkImageViewType viewType, VkFormat format
                 , VkComponentMapping components
                 , VkImageSubresourceRange subresourceRange

@@ -19,6 +19,10 @@
 #include <HLGK/Core/Vulkan/Shader.hpp>
 #include <HLGK/Core/Vulkan/Pipeline.hpp>
 #include <HLGK/Core/Vulkan/RenderPass.hpp>
+#include <HLGK/Core/Vulkan/Framebuffer.hpp>
+#include <HLGK/Core/Vulkan/CommandPool.hpp>
+#include <HLGK/Core/Vulkan/CommandBuffer.hpp>
+#include <HLGK/Core/Vulkan/Synchronization.hpp>
 
 #include <assert.h>
 #include <limits>
@@ -182,6 +186,7 @@ int main(int argc, char* argv[]) {
     });
 
     ///--------------------------------Pipeline-----------------------------------------
+
     auto&& vertShaderCode = HLGK::util::readFile("shaders/1.vert.spv");
     auto&& fragShaderCode = HLGK::util::readFile("shaders/1.frag.spv");
 
@@ -271,24 +276,90 @@ int main(int argc, char* argv[]) {
     subpass.colorAttachmentCount = 1;
     subpass.pColorAttachments = &colorAttachmentRef;
 
-    HLGK::RenderPass renderPass(logicalDevice, {colorAttachment}, {subpass});
+    VkSubpassDependency dependency{};
+    dependency.srcSubpass = VK_SUBPASS_EXTERNAL;
+    dependency.dstSubpass = 0;
+    dependency.srcStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
+    dependency.srcAccessMask = 0;
+    dependency.dstStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
+    dependency.dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
+
+    HLGK::RenderPass renderPass(logicalDevice, {colorAttachment}, {subpass}, {dependency});
 
     HLGK::GraphicsPipelineCreateInfo pipelineInfo;
-    pipelineInfo.pVertexInputState = &vertexInputInfo;
-    pipelineInfo.pInputAssemblyState = &inputAssembly;
-    pipelineInfo.pViewportState = &viewportState;
-    pipelineInfo.pRasterizationState = &rasterizer;
-    pipelineInfo.pMultisampleState = &multisampling;
+    pipelineInfo.pVertexInputState = &vertexInputInfo.getBase();
+    pipelineInfo.pInputAssemblyState = &inputAssembly.getBase();
+    pipelineInfo.pViewportState = &viewportState.getBase();
+    pipelineInfo.pRasterizationState = &rasterizer.getBase();
+    pipelineInfo.pMultisampleState = &multisampling.getBase();
     pipelineInfo.pDepthStencilState = nullptr; // Optional
-    pipelineInfo.pColorBlendState = &colorBlending;
-    pipelineInfo.pDynamicState = nullptr; // Optional
+    pipelineInfo.pColorBlendState = &colorBlending.getBase();
+    //pipelineInfo.pDynamicState = &dynamicState.getBase();
     pipelineInfo.subpass = 0;
-    pipelineInfo.basePipelineHandle = VK_NULL_HANDLE; // Optional
-    pipelineInfo.basePipelineIndex = -1; // Optional
 
     HLGK::GraphicsPipeline pipeline(logicalDevice, pipelineInfo
                                     , pipelineLayout, renderPass,
                                     {&vertShader, &fragShader});
+    ///------------------------------framebuffer-------------------------------
+    std::vector< HLGK::Framebuffer > frameBuffers;
+    frameBuffers.reserve(swapImageViews.size());
+    std::transform(swapImageViews.begin(), swapImageViews.end()
+            , std::back_inserter(frameBuffers),
+                   [&renderPass, &logicalDevice, &SwapExtent](HLGK::ImageView &im) {
+                       return HLGK::Framebuffer(logicalDevice, renderPass, {&im}, 1, SwapExtent);
+                   });
+    ///------------------------------commandPool-------------------------------
+    HLGK::CommandPool commandPool(logicalDevice, VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT, queue.familyIndex);
+    auto&& cmdBuffers = commandPool.createSeveralBuffers(frameBuffers.size(), VK_COMMAND_BUFFER_LEVEL_PRIMARY);
+    ///------------------------------drawing-------------------------------
+    {
+        std::vector< HLGK::Semaphore > imageAvailableSemaphore(frameBuffers.size());
+        std::generate(imageAvailableSemaphore.begin(), imageAvailableSemaphore.end(), [&logicalDevice]() {
+            return HLGK::Semaphore(logicalDevice);
+        });
 
+        std::vector< HLGK::Semaphore > renderFinishedSemaphore(frameBuffers.size());
+        std::generate(renderFinishedSemaphore.begin(), renderFinishedSemaphore.end(), [&logicalDevice]() {
+            return HLGK::Semaphore(logicalDevice);
+        });
+
+        std::vector< HLGK::Fence > inFlightFence(frameBuffers.size());
+        std::generate(inFlightFence.begin(), inFlightFence.end(), [&logicalDevice]() {
+             return HLGK::Fence(logicalDevice, VK_FENCE_CREATE_SIGNALED_BIT);
+        });
+
+        uint32_t currentFrame = 0;
+        uint32_t MAX_FRAMES_IN_FLIGHT = 2;
+        while (!window.shouldClose()) {
+            glfwPollEvents();
+
+            inFlightFence.at(currentFrame).wait();
+            inFlightFence.at(currentFrame).reset();
+
+            auto imageIndex = swapChain.acquireNextImage(imageAvailableSemaphore.at(currentFrame), {});
+
+            VkCommandBufferBeginInfo beginInfo{};
+            beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
+            beginInfo.flags = 0; // Optional
+            beginInfo.pInheritanceInfo = nullptr; // Optional
+
+            VK_CHECK_RESULT(cmdBuffers.at(currentFrame).callProcAddrName<PFN_vkResetCommandBuffer>("vkResetCommandBuffer", 0));
+            VK_CHECK_RESULT(cmdBuffers.at(currentFrame).callProcAddrName<PFN_vkBeginCommandBuffer>("vkBeginCommandBuffer", &beginInfo));
+            cmdBuffers.at(currentFrame).beginRenderPass(renderPass, frameBuffers.at(imageIndex), {{0, 0}, SwapExtent}, {{{0.0f, 0.0f, 0.0f, 1.0f}}}, VK_SUBPASS_CONTENTS_INLINE);
+            cmdBuffers.at(currentFrame).bindPipeline(pipeline, VK_PIPELINE_BIND_POINT_GRAPHICS);
+            cmdBuffers.at(currentFrame).draw(3, 1, 0, 0);
+            cmdBuffers.at(currentFrame).endRenderPass();
+            VK_CHECK_RESULT(cmdBuffers.at(currentFrame).callProcAddrName<PFN_vkEndCommandBuffer>("vkEndCommandBuffer"));
+
+            queue.submit({cmdBuffers.at(currentFrame)}, {&imageAvailableSemaphore.at(currentFrame)}, {VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT},
+                         {&renderFinishedSemaphore.at(currentFrame)}, inFlightFence.at(currentFrame));
+
+            queue.present({{&swapChain, imageIndex}}, {&renderFinishedSemaphore.at(currentFrame)});
+
+            currentFrame = (currentFrame + 1) % MAX_FRAMES_IN_FLIGHT;
+        }
+
+        logicalDevice.waitIdle();
+    }
     return 0;
 }

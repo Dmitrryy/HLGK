@@ -22,9 +22,14 @@ namespace HLGK {
         std::swap(m_isOwner, that.m_isOwner);
     }
 
+    Image::Image(const LogicalDevice &device, VkImage image, bool isOwner /*= true*/)
+            : m_device(&device)
+            , m_vkImage(image)
+            , m_isOwner(isOwner) { }
+
     Image::~Image() {
         if(m_isOwner) {
-            callDeviceProcAddr(m_device, vkDestroyImage, m_vkImage, nullptr);
+            callDeviceProcAddr(*m_device, vkDestroyImage, m_vkImage, nullptr);
         }
     }
 

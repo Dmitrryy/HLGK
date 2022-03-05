@@ -11,15 +11,12 @@ namespace HLGK {
     class ImageView;
 
     class Image final {
-        const LogicalDevice &m_device;
+        const LogicalDevice *m_device = {};
         VkImage m_vkImage = {};
         bool m_isOwner = false;
 
     public:
-        Image(const LogicalDevice &device, VkImage image, bool isOwner = true)
-            : m_device(device)
-            , m_vkImage(image)
-            , m_isOwner(isOwner) { }
+        Image(const LogicalDevice &device, VkImage image, bool isOwner = true);
         //TODO: нормальный конструктор.
 
         Image(const Image &) = delete;

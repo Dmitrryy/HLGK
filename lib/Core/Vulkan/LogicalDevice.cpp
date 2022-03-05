@@ -49,4 +49,8 @@ namespace HLGK {
         return m_queues.at({family, index});
     }
 
+    void LogicalDevice::waitIdle() const {
+        VK_CHECK_RESULT(callProcAddrName<PFN_vkDeviceWaitIdle>("vkDeviceWaitIdle"));
+    }
+
 }// namespace HLGK

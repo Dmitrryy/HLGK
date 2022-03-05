@@ -48,6 +48,8 @@ namespace HLGK
     public:
         Queue atQueue(uint32_t family, uint32_t index) const;
 
+        void waitIdle() const;
+
         //DeviceProcAddr support
         //=-----------------------
         /// interface for vkGetDeviceProcAddr

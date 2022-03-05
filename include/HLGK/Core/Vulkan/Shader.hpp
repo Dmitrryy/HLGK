@@ -23,7 +23,7 @@ namespace HLGK {
 
 
     class Shader final {
-        const LogicalDevice &m_device;
+        const LogicalDevice *m_device;
         VkShaderModule m_module = {};
         std::vector<char> m_code;
 
