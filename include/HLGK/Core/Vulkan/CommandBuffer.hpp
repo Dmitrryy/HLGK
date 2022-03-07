@@ -44,7 +44,6 @@ namespace HLGK {
         void draw(uint32_t vertexCount, uint32_t instanceCount, uint32_t firstVertex, uint32_t firstInstance) const;
 
 
-
         /// allows calling functions that use a pointer to an command buffer
         /// \tparam Func_T The type of function to which the pointer will be brought
         /// \tparam T The type of the received function pointer
