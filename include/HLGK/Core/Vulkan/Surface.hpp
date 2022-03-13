@@ -3,13 +3,15 @@
 //
 #pragma once
 
-#include <vulkan/vulkan.h>
-#include <HLGK/Core/Vulkan/gen/extensions.hpp>
+#include <HLGK/Core/Vulkan/gen/InstanceExt.hpp>
 
+#include <vulkan/vulkan.h>
+#include <vector>
 
 namespace HLGK {
 
     class Instance;
+    class PhysicalDevice;
 
     class Surface final {
         VkSurfaceKHR m_vkSurface = {};
@@ -31,6 +33,15 @@ namespace HLGK {
 
     public:
         VkSurfaceKHR get() const { return m_vkSurface; }
+
+        struct Properties
+        {
+            std::vector< VkBool32 > surfaceSupport;
+            std::vector< VkSurfaceFormatKHR > formats;
+            VkSurfaceCapabilitiesKHR capabilities;
+            std::vector< VkPresentModeKHR > presentModes;
+        };
+        Surface::Properties getProperties(const PhysicalDevice &surface) const;
     };
 
 }// namespace HLGK

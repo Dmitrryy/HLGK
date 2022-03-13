@@ -9,7 +9,7 @@
 
 #include <HLGK/Core/Vulkan/Error.hpp>
 #include <HLGK/Core/Vulkan/Instance.hpp>
-#include <HLGK/Core/Vulkan/gen/extensions.hpp>
+#include <HLGK/Core/Vulkan/gen/InstanceExt.hpp>
 #include <algorithm>
 
 namespace HLGK

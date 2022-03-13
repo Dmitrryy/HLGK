@@ -44,10 +44,11 @@ if __name__ == '__main__':
 
     # TODO сделать как аргументы
     reg_file_path = '../dependencies/Vulkan-Docs/xml/vk.xml'
-    dir_path_headers = '../../../../include/HLGK/Core/Vulkan/gen'
-    dir_path_cpp = '../../../../lib/Core/Vulkan/gen'
-    header_name = 'extensions.hpp'
-    cpp_name = 'extensions.cpp'
+    dir_path = {'cpp': '../../../../lib/Core/Vulkan/gen', 'header': '../../../../include/HLGK/Core/Vulkan/gen'}
+    instance_fName = 'InstanceExt'
+    device_fName = 'DeviceExt'
+    header_ext = '.hpp'
+    cpp_ext = '.cpp'
 
     # загрузка и парсинг
     reg = Registry()
@@ -56,18 +57,30 @@ if __name__ == '__main__':
     reg.parseTree()
 
     # временный файл, в который и будет записан хедер
-    headerFile = tempfile.NamedTemporaryFile(mode='w', encoding='utf-8', newline='\n', delete=False)
-    cppFile = tempfile.NamedTemporaryFile(mode='w', encoding='utf-8', newline='\n', delete=False)
+    outFiles = {'Instance':
+                    {'header': [instance_fName + header_ext,  # name
+                                tempfile.NamedTemporaryFile(mode='w', encoding='utf-8', newline='\n', delete=False)]
+                        , 'cpp': [instance_fName + cpp_ext,  # name
+                                  tempfile.NamedTemporaryFile(mode='w', encoding='utf-8', newline='\n', delete=False)]},
+                'Device':
+                    {'header': [device_fName + header_ext,  # name
+                                tempfile.NamedTemporaryFile(mode='w', encoding='utf-8', newline='\n', delete=False)]
+                        , 'cpp': [device_fName + cpp_ext,  # name
+                                  tempfile.NamedTemporaryFile(mode='w', encoding='utf-8', newline='\n', delete=False)]}
+                }
 
     # шапка
-    write('#pragma once\n\n'
-          '#include <vulkan/vulkan.h>\n'
-          '#include <memory>\n'
-          '#include <HLGK/Core/Vulkan/ExtensionBase.hpp>\n'
-          'namespace HLGK {\n', file=headerFile)
-
-    write('#include <HLGK/Core/Vulkan/gen/' + header_name + '>\n\n'
-          'namespace HLGK {\n', file=cppFile)
+    for t, n in outFiles.items():
+        for h, f in n.items():
+            if h == 'header':
+                write('#pragma once\n\n'
+                      '#include <vulkan/vulkan.h>\n'
+                      '#include <memory>\n'
+                      '#include <HLGK/Core/Vulkan/ExtensionBase.hpp>\n'
+                      'namespace HLGK {\n', file=f[1])
+            else:
+                write('#include <HLGK/Core/Vulkan/gen/' + n['header'][0] + '>\n\n'
+                                                                           'namespace HLGK {\n', file=f[1])
 
     # словарь, содержащий тела функций создания расширений (see sTmpExtensionMake & sTmpIfCase)
     IfCases = {'Device': '', 'Instance': ''}
@@ -96,7 +109,7 @@ if __name__ == '__main__':
         cName = reformatExtensionName(extName)
 
         # Вставляем проверку, что данное расширение включено в vulkan.h
-        write('#if defined({})\n'.format(extName), file=headerFile)
+        write('#if defined({})\n'.format(extName), file=outFiles[extType]['header'][1])
 
         # emit Extension class
         write(templates.sTemplateExtensionClass.substitute(cName=cName,
@@ -105,46 +118,42 @@ if __name__ == '__main__':
                                                            Type=extType,
                                                            NameSpace='',
                                                            mods='override',
-                                                           Functions=FunctionMembers), file=headerFile)
-        write('#endif //{}\n'.format(extName), file=headerFile)
+                                                           Functions=FunctionMembers), file=outFiles[extType]['header'][1])
+        write('#endif //{}\n'.format(extName), file=outFiles[extType]['header'][1])
 
         # запись реализаций в cpp
-        write('#if defined({})\n'.format(extName), file=cppFile)
+        write('#if defined({})\n'.format(extName), file=outFiles[extType]['cpp'][1])
 
         write(templates.sTmpConstructor.substitute(cName=cName
                                                    , Type=extType
-                                                   , BaseClass=BaseClassName), file=cppFile)
+                                                   , BaseClass=BaseClassName), file=outFiles[extType]['cpp'][1])
 
         write(templates.sTmpInitProt.substitute(NameSpace=cName + '::'
-                                                , Type=extType, mods=''), file=cppFile)
-        write(templates.sTmpInitBody.substitute(InitList=FunctionInit), file=cppFile)
+                                                , Type=extType, mods=''), file=outFiles[extType]['cpp'][1])
+        write(templates.sTmpInitBody.substitute(InitList=FunctionInit), file=outFiles[extType]['cpp'][1])
 
-        write('#endif //{}\n'.format(extName), file=cppFile)
+        write('#endif //{}\n'.format(extName), file=outFiles[extType]['cpp'][1])
 
         # fix it in make function
         IfCases[extType] += templates.sTmpIfCase.substitute(name=extName, cName=cName) + '\n'
 
     # emit make functions
-    for f in IfCases.items():
-        write(templates.sTmpExtensionMakeProt.substitute(Type=f[0]) + ';\n', file=headerFile)
-        write(templates.sTmpExtensionMakeProt.substitute(Type=f[0]), file=cppFile)
-        write(templates.sTmpExtensionMakeBody.substitute(Type=f[0], ifCases=f[1]), file=cppFile)
+    for t, cases in IfCases.items():
+        write(templates.sTmpExtensionMakeProt.substitute(Type=t) + ';\n', file=outFiles[t]['header'][1])
+        write(templates.sTmpExtensionMakeProt.substitute(Type=t), file=outFiles[t]['cpp'][1])
+        write(templates.sTmpExtensionMakeBody.substitute(Type=t, ifCases=cases), file=outFiles[t]['cpp'][1])
 
-    write('\n}//namespace HLGK\n', file=headerFile)
-    write('\n}//namespace HLGK\n', file=cppFile)
-    headerFile.close()
-    cppFile.close()
+    for t, n in outFiles.items():
+        for h, f in n.items():
+            write('\n}//namespace HLGK\n', file=f[1])
+            f[1].close()
 
-    if sys.platform == 'win32':
-        directory_h = Path(dir_path_headers)
-        if not Path.exists(directory_h):
-            os.makedirs(directory_h)
-        directory_cpp = Path(dir_path_cpp)
-        if not Path.exists(directory_cpp):
-            os.makedirs(directory_cpp)
+            if sys.platform == 'win32':
+                directory = Path(dir_path[h])
+                if not Path.exists(directory):
+                    os.makedirs(directory)
 
-        shutil.copy(headerFile.name, dir_path_headers + '/' + header_name)
-        shutil.copy(cppFile.name, dir_path_cpp + '/' + cpp_name)
+            shutil.copy(f[1].name, dir_path[h] + '/' + f[0])
+            os.remove(f[1].name)
 
-        os.remove(headerFile.name)
-        os.remove(cppFile.name)
+            

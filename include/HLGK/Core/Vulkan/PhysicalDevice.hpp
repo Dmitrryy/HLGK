@@ -58,19 +58,13 @@ namespace HLGK
             //std::vector< std::pair< std::vector< vk::PerformanceCounterKHR >, std::vector< vk::PerformanceCounterDescriptionKHR > > >
             //        queueFamilyPerformanceQueryCounters;
         };
-        struct SurfaceProperties
-        {
-            std::vector< VkBool32 > surfaceSupport;
-            std::vector< VkSurfaceFormatKHR > formats;
-            VkSurfaceCapabilitiesKHR capabilities;
-            std::vector< VkPresentModeKHR > presentModes;
-        };
+
 
     public:
         Properties getProperties(const std::string &layerName = {}) const;
-        SurfaceProperties getSurfaceProperties(const Surface &surface) const;
+        //SurfaceProperties getSurfaceProperties(const Surface &surface) const;
 
-    protected:
+    public:
         friend LogicalDevice; // используется в конструкторе логического устройства
         VkPhysicalDevice get() const { return m_vkPhysicalDevice; }
     };

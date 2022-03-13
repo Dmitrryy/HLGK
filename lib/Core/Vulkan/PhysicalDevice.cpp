@@ -53,34 +53,5 @@ namespace HLGK
         return result;
     }
 
-    PhysicalDevice::SurfaceProperties
-    PhysicalDevice::getSurfaceProperties(const Surface &surface) const
-    {
-        SurfaceProperties result;
-        VkSurfaceKHR vkSurface = surface.get();
-
-        unsigned queueCount = 0;
-        vkGetPhysicalDeviceQueueFamilyProperties(m_vkPhysicalDevice, &queueCount, nullptr);
-
-        result.surfaceSupport.resize(queueCount);
-        for(size_t i = 0; i < queueCount; ++i) {
-            VK_CHECK_RESULT(vkGetPhysicalDeviceSurfaceSupportKHR(
-                    m_vkPhysicalDevice, i, vkSurface, &result.surfaceSupport.at(i)));
-        }
-
-        unsigned size = 0;
-        VK_CHECK_RESULT(vkGetPhysicalDeviceSurfaceFormatsKHR(m_vkPhysicalDevice, vkSurface, &size, nullptr));
-        result.formats.resize(size);
-        VK_CHECK_RESULT(vkGetPhysicalDeviceSurfaceFormatsKHR(m_vkPhysicalDevice, vkSurface, &size, result.formats.data()));
-
-        VK_CHECK_RESULT(vkGetPhysicalDeviceSurfacePresentModesKHR(m_vkPhysicalDevice, vkSurface, &size, nullptr));
-        result.presentModes.resize(size);
-        VK_CHECK_RESULT(vkGetPhysicalDeviceSurfacePresentModesKHR(
-                m_vkPhysicalDevice, vkSurface, &size, result.presentModes.data()));
-
-        VK_CHECK_RESULT(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(m_vkPhysicalDevice, vkSurface, &result.capabilities));
-
-        return result;
-    }
 
 } // namespace HLGK

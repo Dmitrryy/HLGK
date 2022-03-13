@@ -23,7 +23,7 @@
 #include <HLGK/Core/Vulkan/CommandPool.hpp>
 #include <HLGK/Core/Vulkan/CommandBuffer.hpp>
 #include <HLGK/Core/Vulkan/Synchronization.hpp>
-#include <HLGK/Core/Vulkan/gen/extensions.hpp>
+#include <HLGK/Core/Vulkan/gen/InstanceExt.hpp>
 
 #include <assert.h>
 #include <limits>
@@ -79,7 +79,7 @@ int main(int argc, char* argv[]) {
     size_t i = 0;
     for (const auto& d : devices) {
         auto&& prop = d.getProperties();
-        auto&& surfaceProp = d.getSurfaceProperties(surface);
+        auto&& surfaceProp = surface.getProperties(d);
         std::cout << "[" << i++ << "] " << std::to_string(prop.deviceProperties.deviceType) << std::endl;
         std::cout << "Name: " << prop.deviceProperties.deviceName << std::endl;
         std::cout << "ID: " << prop.deviceProperties.deviceID << std::endl;
@@ -134,7 +134,7 @@ int main(int argc, char* argv[]) {
     auto&& queue = logicalDevice.atQueue(0, 0);
 
     ///--------------------------------SwapChain-----------------------------------------
-    auto&& surfaceProp = device.getSurfaceProperties(surface);
+    auto&& surfaceProp = surface.getProperties(device);
     assert(surfaceProp.surfaceSupport.at(graphicQueue.queueFamilyIndex));
     bool swapChainAdequate = !surfaceProp.formats.empty() && !surfaceProp.presentModes.empty();
     assert(swapChainAdequate);

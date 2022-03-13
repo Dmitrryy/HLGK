@@ -30,7 +30,9 @@ add_library(${PROJECT_NAME}
         ImageView.cpp
         Image.cpp Shader.cpp Pipeline.cpp RenderPass.cpp Framebuffer.cpp CommandPool.cpp CommandBuffer.cpp Synchronization.cpp
 
-        gen/extensions.cpp)
+        gen/DeviceExt.cpp
+        gen/InstanceExt.cpp
+        )
 target_include_directories(${PROJECT_NAME}
         PUBLIC ../../../include
         PUBLIC Vulkan::Headers)

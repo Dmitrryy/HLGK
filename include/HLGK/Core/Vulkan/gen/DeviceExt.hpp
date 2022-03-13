@@ -5,50 +5,13 @@
 #include <HLGK/Core/Vulkan/ExtensionBase.hpp>
 namespace HLGK {
 
-#if defined(VK_KHR_surface)
-
-class VkKhrSurface final : public InstanceExtensionBase { 
-public:
-    VkKhrSurface() = default;
-    VkKhrSurface(VkInstance handler)
-;
-    std::string name() const override { return "VK_KHR_surface"; }
-    static std::string str() { return "VK_KHR_surface"; }
-    void init(VkInstance handler) override;
-public:
-    PFN_vkGetPhysicalDeviceSurfaceSupportKHR vkGetPhysicalDeviceSurfaceSupportKHR = {};
-    PFN_vkGetPhysicalDeviceSurfaceCapabilitiesKHR vkGetPhysicalDeviceSurfaceCapabilitiesKHR = {};
-    PFN_vkDestroySurfaceKHR vkDestroySurfaceKHR = {};
-    PFN_vkGetPhysicalDeviceSurfaceFormatsKHR vkGetPhysicalDeviceSurfaceFormatsKHR = {};
-    PFN_vkGetPhysicalDeviceSurfacePresentModesKHR vkGetPhysicalDeviceSurfacePresentModesKHR = {};
-};//class VkKhrSurface
-
-#endif //VK_KHR_surface
-
-#if defined(VK_KHR_win32_surface)
-
-class VkKhrWin32Surface final : public InstanceExtensionBase { 
-public:
-    VkKhrWin32Surface() = default;
-    VkKhrWin32Surface(VkInstance handler)
-;
-    std::string name() const override { return "VK_KHR_win32_surface"; }
-    static std::string str() { return "VK_KHR_win32_surface"; }
-    void init(VkInstance handler) override;
-public:
-    PFN_vkGetPhysicalDeviceWin32PresentationSupportKHR vkGetPhysicalDeviceWin32PresentationSupportKHR = {};
-    PFN_vkCreateWin32SurfaceKHR vkCreateWin32SurfaceKHR = {};
-};//class VkKhrWin32Surface
-
-#endif //VK_KHR_win32_surface
-
 #if defined(VK_EXT_discard_rectangles)
 
 class VkExtDiscardRectangles final : public DeviceExtensionBase { 
 public:
     VkExtDiscardRectangles() = default;
-    VkExtDiscardRectangles(VkDevice handler)
-;
+    VkExtDiscardRectangles(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_discard_rectangles"; }
     static std::string str() { return "VK_EXT_discard_rectangles"; }
     void init(VkDevice handler) override;
@@ -63,8 +26,8 @@ public:
 class VkExtConservativeRasterization final : public DeviceExtensionBase { 
 public:
     VkExtConservativeRasterization() = default;
-    VkExtConservativeRasterization(VkDevice handler)
-;
+    VkExtConservativeRasterization(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_conservative_rasterization"; }
     static std::string str() { return "VK_EXT_conservative_rasterization"; }
     void init(VkDevice handler) override;
@@ -78,8 +41,8 @@ public:
 class VkExtDepthClipEnable final : public DeviceExtensionBase { 
 public:
     VkExtDepthClipEnable() = default;
-    VkExtDepthClipEnable(VkDevice handler)
-;
+    VkExtDepthClipEnable(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_depth_clip_enable"; }
     static std::string str() { return "VK_EXT_depth_clip_enable"; }
     void init(VkDevice handler) override;
@@ -88,28 +51,13 @@ public:
 
 #endif //VK_EXT_depth_clip_enable
 
-#if defined(VK_EXT_swapchain_colorspace)
-
-class VkExtSwapchainColorspace final : public InstanceExtensionBase { 
-public:
-    VkExtSwapchainColorspace() = default;
-    VkExtSwapchainColorspace(VkInstance handler)
-;
-    std::string name() const override { return "VK_EXT_swapchain_colorspace"; }
-    static std::string str() { return "VK_EXT_swapchain_colorspace"; }
-    void init(VkInstance handler) override;
-public:
-};//class VkExtSwapchainColorspace
-
-#endif //VK_EXT_swapchain_colorspace
-
 #if defined(VK_EXT_hdr_metadata)
 
 class VkExtHdrMetadata final : public DeviceExtensionBase { 
 public:
     VkExtHdrMetadata() = default;
-    VkExtHdrMetadata(VkDevice handler)
-;
+    VkExtHdrMetadata(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_hdr_metadata"; }
     static std::string str() { return "VK_EXT_hdr_metadata"; }
     void init(VkDevice handler) override;
@@ -124,8 +72,8 @@ public:
 class VkKhrImagelessFramebuffer final : public DeviceExtensionBase { 
 public:
     VkKhrImagelessFramebuffer() = default;
-    VkKhrImagelessFramebuffer(VkDevice handler)
-;
+    VkKhrImagelessFramebuffer(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_imageless_framebuffer"; }
     static std::string str() { return "VK_KHR_imageless_framebuffer"; }
     void init(VkDevice handler) override;
@@ -139,15 +87,15 @@ public:
 class VkAndroidNativeBuffer final : public DeviceExtensionBase { 
 public:
     VkAndroidNativeBuffer() = default;
-    VkAndroidNativeBuffer(VkDevice handler)
-;
+    VkAndroidNativeBuffer(VkDevice handler);
+
     std::string name() const override { return "VK_ANDROID_native_buffer"; }
     static std::string str() { return "VK_ANDROID_native_buffer"; }
     void init(VkDevice handler) override;
 public:
     PFN_vkQueueSignalReleaseImageANDROID vkQueueSignalReleaseImageANDROID = {};
-    PFN_vkGetSwapchainGrallocUsage2ANDROID vkGetSwapchainGrallocUsage2ANDROID = {};
     PFN_vkAcquireImageANDROID vkAcquireImageANDROID = {};
+    PFN_vkGetSwapchainGrallocUsage2ANDROID vkGetSwapchainGrallocUsage2ANDROID = {};
     PFN_vkGetSwapchainGrallocUsageANDROID vkGetSwapchainGrallocUsageANDROID = {};
 };//class VkAndroidNativeBuffer
 
@@ -158,16 +106,16 @@ public:
 class VkKhrCreateRenderpass2 final : public DeviceExtensionBase { 
 public:
     VkKhrCreateRenderpass2() = default;
-    VkKhrCreateRenderpass2(VkDevice handler)
-;
+    VkKhrCreateRenderpass2(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_create_renderpass2"; }
     static std::string str() { return "VK_KHR_create_renderpass2"; }
     void init(VkDevice handler) override;
 public:
-    PFN_vkCmdBeginRenderPass2KHR vkCmdBeginRenderPass2KHR = {};
     PFN_vkCmdEndRenderPass2KHR vkCmdEndRenderPass2KHR = {};
-    PFN_vkCmdNextSubpass2KHR vkCmdNextSubpass2KHR = {};
     PFN_vkCreateRenderPass2KHR vkCreateRenderPass2KHR = {};
+    PFN_vkCmdNextSubpass2KHR vkCmdNextSubpass2KHR = {};
+    PFN_vkCmdBeginRenderPass2KHR vkCmdBeginRenderPass2KHR = {};
 };//class VkKhrCreateRenderpass2
 
 #endif //VK_KHR_create_renderpass2
@@ -177,8 +125,8 @@ public:
 class VkKhrSharedPresentableImage final : public DeviceExtensionBase { 
 public:
     VkKhrSharedPresentableImage() = default;
-    VkKhrSharedPresentableImage(VkDevice handler)
-;
+    VkKhrSharedPresentableImage(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_shared_presentable_image"; }
     static std::string str() { return "VK_KHR_shared_presentable_image"; }
     void init(VkDevice handler) override;
@@ -188,29 +136,13 @@ public:
 
 #endif //VK_KHR_shared_presentable_image
 
-#if defined(VK_KHR_external_fence_capabilities)
-
-class VkKhrExternalFenceCapabilities final : public InstanceExtensionBase { 
-public:
-    VkKhrExternalFenceCapabilities() = default;
-    VkKhrExternalFenceCapabilities(VkInstance handler)
-;
-    std::string name() const override { return "VK_KHR_external_fence_capabilities"; }
-    static std::string str() { return "VK_KHR_external_fence_capabilities"; }
-    void init(VkInstance handler) override;
-public:
-    PFN_vkGetPhysicalDeviceExternalFencePropertiesKHR vkGetPhysicalDeviceExternalFencePropertiesKHR = {};
-};//class VkKhrExternalFenceCapabilities
-
-#endif //VK_KHR_external_fence_capabilities
-
 #if defined(VK_KHR_external_fence)
 
 class VkKhrExternalFence final : public DeviceExtensionBase { 
 public:
     VkKhrExternalFence() = default;
-    VkKhrExternalFence(VkDevice handler)
-;
+    VkKhrExternalFence(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_external_fence"; }
     static std::string str() { return "VK_KHR_external_fence"; }
     void init(VkDevice handler) override;
@@ -224,8 +156,8 @@ public:
 class VkKhrExternalFenceWin32 final : public DeviceExtensionBase { 
 public:
     VkKhrExternalFenceWin32() = default;
-    VkKhrExternalFenceWin32(VkDevice handler)
-;
+    VkKhrExternalFenceWin32(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_external_fence_win32"; }
     static std::string str() { return "VK_KHR_external_fence_win32"; }
     void init(VkDevice handler) override;
@@ -241,14 +173,14 @@ public:
 class VkKhrExternalFenceFd final : public DeviceExtensionBase { 
 public:
     VkKhrExternalFenceFd() = default;
-    VkKhrExternalFenceFd(VkDevice handler)
-;
+    VkKhrExternalFenceFd(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_external_fence_fd"; }
     static std::string str() { return "VK_KHR_external_fence_fd"; }
     void init(VkDevice handler) override;
 public:
-    PFN_vkGetFenceFdKHR vkGetFenceFdKHR = {};
     PFN_vkImportFenceFdKHR vkImportFenceFdKHR = {};
+    PFN_vkGetFenceFdKHR vkGetFenceFdKHR = {};
 };//class VkKhrExternalFenceFd
 
 #endif //VK_KHR_external_fence_fd
@@ -258,15 +190,15 @@ public:
 class VkKhrPerformanceQuery final : public DeviceExtensionBase { 
 public:
     VkKhrPerformanceQuery() = default;
-    VkKhrPerformanceQuery(VkDevice handler)
-;
+    VkKhrPerformanceQuery(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_performance_query"; }
     static std::string str() { return "VK_KHR_performance_query"; }
     void init(VkDevice handler) override;
 public:
     PFN_vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR = {};
-    PFN_vkReleaseProfilingLockKHR vkReleaseProfilingLockKHR = {};
     PFN_vkAcquireProfilingLockKHR vkAcquireProfilingLockKHR = {};
+    PFN_vkReleaseProfilingLockKHR vkReleaseProfilingLockKHR = {};
     PFN_vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR = {};
 };//class VkKhrPerformanceQuery
 
@@ -277,8 +209,8 @@ public:
 class VkKhrMaintenance2 final : public DeviceExtensionBase { 
 public:
     VkKhrMaintenance2() = default;
-    VkKhrMaintenance2(VkDevice handler)
-;
+    VkKhrMaintenance2(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_maintenance2"; }
     static std::string str() { return "VK_KHR_maintenance2"; }
     void init(VkDevice handler) override;
@@ -287,48 +219,13 @@ public:
 
 #endif //VK_KHR_maintenance2
 
-#if defined(VK_EXT_debug_report)
-
-class VkExtDebugReport final : public InstanceExtensionBase { 
-public:
-    VkExtDebugReport() = default;
-    VkExtDebugReport(VkInstance handler)
-;
-    std::string name() const override { return "VK_EXT_debug_report"; }
-    static std::string str() { return "VK_EXT_debug_report"; }
-    void init(VkInstance handler) override;
-public:
-    PFN_vkDestroyDebugReportCallbackEXT vkDestroyDebugReportCallbackEXT = {};
-    PFN_vkDebugReportMessageEXT vkDebugReportMessageEXT = {};
-    PFN_vkCreateDebugReportCallbackEXT vkCreateDebugReportCallbackEXT = {};
-};//class VkExtDebugReport
-
-#endif //VK_EXT_debug_report
-
-#if defined(VK_KHR_get_surface_capabilities2)
-
-class VkKhrGetSurfaceCapabilities2 final : public InstanceExtensionBase { 
-public:
-    VkKhrGetSurfaceCapabilities2() = default;
-    VkKhrGetSurfaceCapabilities2(VkInstance handler)
-;
-    std::string name() const override { return "VK_KHR_get_surface_capabilities2"; }
-    static std::string str() { return "VK_KHR_get_surface_capabilities2"; }
-    void init(VkInstance handler) override;
-public:
-    PFN_vkGetPhysicalDeviceSurfaceFormats2KHR vkGetPhysicalDeviceSurfaceFormats2KHR = {};
-    PFN_vkGetPhysicalDeviceSurfaceCapabilities2KHR vkGetPhysicalDeviceSurfaceCapabilities2KHR = {};
-};//class VkKhrGetSurfaceCapabilities2
-
-#endif //VK_KHR_get_surface_capabilities2
-
 #if defined(VK_KHR_variable_pointers)
 
 class VkKhrVariablePointers final : public DeviceExtensionBase { 
 public:
     VkKhrVariablePointers() = default;
-    VkKhrVariablePointers(VkDevice handler)
-;
+    VkKhrVariablePointers(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_variable_pointers"; }
     static std::string str() { return "VK_KHR_variable_pointers"; }
     void init(VkDevice handler) override;
@@ -337,79 +234,13 @@ public:
 
 #endif //VK_KHR_variable_pointers
 
-#if defined(VK_KHR_get_display_properties2)
-
-class VkKhrGetDisplayProperties2 final : public InstanceExtensionBase { 
-public:
-    VkKhrGetDisplayProperties2() = default;
-    VkKhrGetDisplayProperties2(VkInstance handler)
-;
-    std::string name() const override { return "VK_KHR_get_display_properties2"; }
-    static std::string str() { return "VK_KHR_get_display_properties2"; }
-    void init(VkInstance handler) override;
-public:
-    PFN_vkGetPhysicalDeviceDisplayProperties2KHR vkGetPhysicalDeviceDisplayProperties2KHR = {};
-    PFN_vkGetPhysicalDeviceDisplayPlaneProperties2KHR vkGetPhysicalDeviceDisplayPlaneProperties2KHR = {};
-    PFN_vkGetDisplayModeProperties2KHR vkGetDisplayModeProperties2KHR = {};
-    PFN_vkGetDisplayPlaneCapabilities2KHR vkGetDisplayPlaneCapabilities2KHR = {};
-};//class VkKhrGetDisplayProperties2
-
-#endif //VK_KHR_get_display_properties2
-
-#if defined(VK_MVK_ios_surface)
-
-class VkMvkIosSurface final : public InstanceExtensionBase { 
-public:
-    VkMvkIosSurface() = default;
-    VkMvkIosSurface(VkInstance handler)
-;
-    std::string name() const override { return "VK_MVK_ios_surface"; }
-    static std::string str() { return "VK_MVK_ios_surface"; }
-    void init(VkInstance handler) override;
-public:
-    PFN_vkCreateIOSSurfaceMVK vkCreateIOSSurfaceMVK = {};
-};//class VkMvkIosSurface
-
-#endif //VK_MVK_ios_surface
-
-#if defined(VK_MVK_macos_surface)
-
-class VkMvkMacosSurface final : public InstanceExtensionBase { 
-public:
-    VkMvkMacosSurface() = default;
-    VkMvkMacosSurface(VkInstance handler)
-;
-    std::string name() const override { return "VK_MVK_macos_surface"; }
-    static std::string str() { return "VK_MVK_macos_surface"; }
-    void init(VkInstance handler) override;
-public:
-    PFN_vkCreateMacOSSurfaceMVK vkCreateMacOSSurfaceMVK = {};
-};//class VkMvkMacosSurface
-
-#endif //VK_MVK_macos_surface
-
-#if defined(VK_MVK_moltenvk)
-
-class VkMvkMoltenvk final : public InstanceExtensionBase { 
-public:
-    VkMvkMoltenvk() = default;
-    VkMvkMoltenvk(VkInstance handler)
-;
-    std::string name() const override { return "VK_MVK_moltenvk"; }
-    static std::string str() { return "VK_MVK_moltenvk"; }
-    void init(VkInstance handler) override;
-public:
-};//class VkMvkMoltenvk
-
-#endif //VK_MVK_moltenvk
-
 #if defined(VK_EXT_external_memory_dma_buf)
 
 class VkExtExternalMemoryDmaBuf final : public DeviceExtensionBase { 
 public:
     VkExtExternalMemoryDmaBuf() = default;
-    VkExtExternalMemoryDmaBuf(VkDevice handler)
-;
+    VkExtExternalMemoryDmaBuf(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_external_memory_dma_buf"; }
     static std::string str() { return "VK_EXT_external_memory_dma_buf"; }
     void init(VkDevice handler) override;
@@ -423,8 +254,8 @@ public:
 class VkExtQueueFamilyForeign final : public DeviceExtensionBase { 
 public:
     VkExtQueueFamilyForeign() = default;
-    VkExtQueueFamilyForeign(VkDevice handler)
-;
+    VkExtQueueFamilyForeign(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_queue_family_foreign"; }
     static std::string str() { return "VK_EXT_queue_family_foreign"; }
     void init(VkDevice handler) override;
@@ -438,8 +269,8 @@ public:
 class VkKhrDedicatedAllocation final : public DeviceExtensionBase { 
 public:
     VkKhrDedicatedAllocation() = default;
-    VkKhrDedicatedAllocation(VkDevice handler)
-;
+    VkKhrDedicatedAllocation(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_dedicated_allocation"; }
     static std::string str() { return "VK_KHR_dedicated_allocation"; }
     void init(VkDevice handler) override;
@@ -448,39 +279,13 @@ public:
 
 #endif //VK_KHR_dedicated_allocation
 
-#if defined(VK_EXT_debug_utils)
-
-class VkExtDebugUtils final : public InstanceExtensionBase { 
-public:
-    VkExtDebugUtils() = default;
-    VkExtDebugUtils(VkInstance handler)
-;
-    std::string name() const override { return "VK_EXT_debug_utils"; }
-    static std::string str() { return "VK_EXT_debug_utils"; }
-    void init(VkInstance handler) override;
-public:
-    PFN_vkQueueBeginDebugUtilsLabelEXT vkQueueBeginDebugUtilsLabelEXT = {};
-    PFN_vkQueueEndDebugUtilsLabelEXT vkQueueEndDebugUtilsLabelEXT = {};
-    PFN_vkCmdInsertDebugUtilsLabelEXT vkCmdInsertDebugUtilsLabelEXT = {};
-    PFN_vkCreateDebugUtilsMessengerEXT vkCreateDebugUtilsMessengerEXT = {};
-    PFN_vkCmdEndDebugUtilsLabelEXT vkCmdEndDebugUtilsLabelEXT = {};
-    PFN_vkSetDebugUtilsObjectNameEXT vkSetDebugUtilsObjectNameEXT = {};
-    PFN_vkCmdBeginDebugUtilsLabelEXT vkCmdBeginDebugUtilsLabelEXT = {};
-    PFN_vkDestroyDebugUtilsMessengerEXT vkDestroyDebugUtilsMessengerEXT = {};
-    PFN_vkSubmitDebugUtilsMessageEXT vkSubmitDebugUtilsMessageEXT = {};
-    PFN_vkQueueInsertDebugUtilsLabelEXT vkQueueInsertDebugUtilsLabelEXT = {};
-    PFN_vkSetDebugUtilsObjectTagEXT vkSetDebugUtilsObjectTagEXT = {};
-};//class VkExtDebugUtils
-
-#endif //VK_EXT_debug_utils
-
 #if defined(VK_NV_glsl_shader)
 
 class VkNvGlslShader final : public DeviceExtensionBase { 
 public:
     VkNvGlslShader() = default;
-    VkNvGlslShader(VkDevice handler)
-;
+    VkNvGlslShader(VkDevice handler);
+
     std::string name() const override { return "VK_NV_glsl_shader"; }
     static std::string str() { return "VK_NV_glsl_shader"; }
     void init(VkDevice handler) override;
@@ -494,14 +299,14 @@ public:
 class VkAndroidExternalMemoryAndroidHardwareBuffer final : public DeviceExtensionBase { 
 public:
     VkAndroidExternalMemoryAndroidHardwareBuffer() = default;
-    VkAndroidExternalMemoryAndroidHardwareBuffer(VkDevice handler)
-;
+    VkAndroidExternalMemoryAndroidHardwareBuffer(VkDevice handler);
+
     std::string name() const override { return "VK_ANDROID_external_memory_android_hardware_buffer"; }
     static std::string str() { return "VK_ANDROID_external_memory_android_hardware_buffer"; }
     void init(VkDevice handler) override;
 public:
-    PFN_vkGetAndroidHardwareBufferPropertiesANDROID vkGetAndroidHardwareBufferPropertiesANDROID = {};
     PFN_vkGetMemoryAndroidHardwareBufferANDROID vkGetMemoryAndroidHardwareBufferANDROID = {};
+    PFN_vkGetAndroidHardwareBufferPropertiesANDROID vkGetAndroidHardwareBufferPropertiesANDROID = {};
 };//class VkAndroidExternalMemoryAndroidHardwareBuffer
 
 #endif //VK_ANDROID_external_memory_android_hardware_buffer
@@ -511,8 +316,8 @@ public:
 class VkExtSamplerFilterMinmax final : public DeviceExtensionBase { 
 public:
     VkExtSamplerFilterMinmax() = default;
-    VkExtSamplerFilterMinmax(VkDevice handler)
-;
+    VkExtSamplerFilterMinmax(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_sampler_filter_minmax"; }
     static std::string str() { return "VK_EXT_sampler_filter_minmax"; }
     void init(VkDevice handler) override;
@@ -526,8 +331,8 @@ public:
 class VkKhrStorageBufferStorageClass final : public DeviceExtensionBase { 
 public:
     VkKhrStorageBufferStorageClass() = default;
-    VkKhrStorageBufferStorageClass(VkDevice handler)
-;
+    VkKhrStorageBufferStorageClass(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_storage_buffer_storage_class"; }
     static std::string str() { return "VK_KHR_storage_buffer_storage_class"; }
     void init(VkDevice handler) override;
@@ -541,8 +346,8 @@ public:
 class VkAmdGpuShaderInt16 final : public DeviceExtensionBase { 
 public:
     VkAmdGpuShaderInt16() = default;
-    VkAmdGpuShaderInt16(VkDevice handler)
-;
+    VkAmdGpuShaderInt16(VkDevice handler);
+
     std::string name() const override { return "VK_AMD_gpu_shader_int16"; }
     static std::string str() { return "VK_AMD_gpu_shader_int16"; }
     void init(VkDevice handler) override;
@@ -556,8 +361,8 @@ public:
 class VkAmdMixedAttachmentSamples final : public DeviceExtensionBase { 
 public:
     VkAmdMixedAttachmentSamples() = default;
-    VkAmdMixedAttachmentSamples(VkDevice handler)
-;
+    VkAmdMixedAttachmentSamples(VkDevice handler);
+
     std::string name() const override { return "VK_AMD_mixed_attachment_samples"; }
     static std::string str() { return "VK_AMD_mixed_attachment_samples"; }
     void init(VkDevice handler) override;
@@ -571,8 +376,8 @@ public:
 class VkAmdShaderFragmentMask final : public DeviceExtensionBase { 
 public:
     VkAmdShaderFragmentMask() = default;
-    VkAmdShaderFragmentMask(VkDevice handler)
-;
+    VkAmdShaderFragmentMask(VkDevice handler);
+
     std::string name() const override { return "VK_AMD_shader_fragment_mask"; }
     static std::string str() { return "VK_AMD_shader_fragment_mask"; }
     void init(VkDevice handler) override;
@@ -586,8 +391,8 @@ public:
 class VkExtInlineUniformBlock final : public DeviceExtensionBase { 
 public:
     VkExtInlineUniformBlock() = default;
-    VkExtInlineUniformBlock(VkDevice handler)
-;
+    VkExtInlineUniformBlock(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_inline_uniform_block"; }
     static std::string str() { return "VK_EXT_inline_uniform_block"; }
     void init(VkDevice handler) override;
@@ -601,8 +406,8 @@ public:
 class VkExtDepthRangeUnrestricted final : public DeviceExtensionBase { 
 public:
     VkExtDepthRangeUnrestricted() = default;
-    VkExtDepthRangeUnrestricted(VkDevice handler)
-;
+    VkExtDepthRangeUnrestricted(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_depth_range_unrestricted"; }
     static std::string str() { return "VK_EXT_depth_range_unrestricted"; }
     void init(VkDevice handler) override;
@@ -616,8 +421,8 @@ public:
 class VkExtShaderStencilExport final : public DeviceExtensionBase { 
 public:
     VkExtShaderStencilExport() = default;
-    VkExtShaderStencilExport(VkDevice handler)
-;
+    VkExtShaderStencilExport(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_shader_stencil_export"; }
     static std::string str() { return "VK_EXT_shader_stencil_export"; }
     void init(VkDevice handler) override;
@@ -631,14 +436,14 @@ public:
 class VkExtSampleLocations final : public DeviceExtensionBase { 
 public:
     VkExtSampleLocations() = default;
-    VkExtSampleLocations(VkDevice handler)
-;
+    VkExtSampleLocations(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_sample_locations"; }
     static std::string str() { return "VK_EXT_sample_locations"; }
     void init(VkDevice handler) override;
 public:
-    PFN_vkCmdSetSampleLocationsEXT vkCmdSetSampleLocationsEXT = {};
     PFN_vkGetPhysicalDeviceMultisamplePropertiesEXT vkGetPhysicalDeviceMultisamplePropertiesEXT = {};
+    PFN_vkCmdSetSampleLocationsEXT vkCmdSetSampleLocationsEXT = {};
 };//class VkExtSampleLocations
 
 #endif //VK_EXT_sample_locations
@@ -648,8 +453,8 @@ public:
 class VkKhrRelaxedBlockLayout final : public DeviceExtensionBase { 
 public:
     VkKhrRelaxedBlockLayout() = default;
-    VkKhrRelaxedBlockLayout(VkDevice handler)
-;
+    VkKhrRelaxedBlockLayout(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_relaxed_block_layout"; }
     static std::string str() { return "VK_KHR_relaxed_block_layout"; }
     void init(VkDevice handler) override;
@@ -663,15 +468,15 @@ public:
 class VkKhrGetMemoryRequirements2 final : public DeviceExtensionBase { 
 public:
     VkKhrGetMemoryRequirements2() = default;
-    VkKhrGetMemoryRequirements2(VkDevice handler)
-;
+    VkKhrGetMemoryRequirements2(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_get_memory_requirements2"; }
     static std::string str() { return "VK_KHR_get_memory_requirements2"; }
     void init(VkDevice handler) override;
 public:
+    PFN_vkGetBufferMemoryRequirements2KHR vkGetBufferMemoryRequirements2KHR = {};
     PFN_vkGetImageMemoryRequirements2KHR vkGetImageMemoryRequirements2KHR = {};
     PFN_vkGetImageSparseMemoryRequirements2KHR vkGetImageSparseMemoryRequirements2KHR = {};
-    PFN_vkGetBufferMemoryRequirements2KHR vkGetBufferMemoryRequirements2KHR = {};
 };//class VkKhrGetMemoryRequirements2
 
 #endif //VK_KHR_get_memory_requirements2
@@ -681,8 +486,8 @@ public:
 class VkKhrImageFormatList final : public DeviceExtensionBase { 
 public:
     VkKhrImageFormatList() = default;
-    VkKhrImageFormatList(VkDevice handler)
-;
+    VkKhrImageFormatList(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_image_format_list"; }
     static std::string str() { return "VK_KHR_image_format_list"; }
     void init(VkDevice handler) override;
@@ -696,8 +501,8 @@ public:
 class VkExtBlendOperationAdvanced final : public DeviceExtensionBase { 
 public:
     VkExtBlendOperationAdvanced() = default;
-    VkExtBlendOperationAdvanced(VkDevice handler)
-;
+    VkExtBlendOperationAdvanced(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_blend_operation_advanced"; }
     static std::string str() { return "VK_EXT_blend_operation_advanced"; }
     void init(VkDevice handler) override;
@@ -711,8 +516,8 @@ public:
 class VkKhrSamplerMirrorClampToEdge final : public DeviceExtensionBase { 
 public:
     VkKhrSamplerMirrorClampToEdge() = default;
-    VkKhrSamplerMirrorClampToEdge(VkDevice handler)
-;
+    VkKhrSamplerMirrorClampToEdge(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_sampler_mirror_clamp_to_edge"; }
     static std::string str() { return "VK_KHR_sampler_mirror_clamp_to_edge"; }
     void init(VkDevice handler) override;
@@ -726,8 +531,8 @@ public:
 class VkNvFragmentCoverageToColor final : public DeviceExtensionBase { 
 public:
     VkNvFragmentCoverageToColor() = default;
-    VkNvFragmentCoverageToColor(VkDevice handler)
-;
+    VkNvFragmentCoverageToColor(VkDevice handler);
+
     std::string name() const override { return "VK_NV_fragment_coverage_to_color"; }
     static std::string str() { return "VK_NV_fragment_coverage_to_color"; }
     void init(VkDevice handler) override;
@@ -741,28 +546,28 @@ public:
 class VkKhrAccelerationStructure final : public DeviceExtensionBase { 
 public:
     VkKhrAccelerationStructure() = default;
-    VkKhrAccelerationStructure(VkDevice handler)
-;
+    VkKhrAccelerationStructure(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_acceleration_structure"; }
     static std::string str() { return "VK_KHR_acceleration_structure"; }
     void init(VkDevice handler) override;
 public:
-    PFN_vkGetAccelerationStructureDeviceAddressKHR vkGetAccelerationStructureDeviceAddressKHR = {};
     PFN_vkCmdCopyMemoryToAccelerationStructureKHR vkCmdCopyMemoryToAccelerationStructureKHR = {};
+    PFN_vkDestroyAccelerationStructureKHR vkDestroyAccelerationStructureKHR = {};
     PFN_vkGetAccelerationStructureBuildSizesKHR vkGetAccelerationStructureBuildSizesKHR = {};
-    PFN_vkGetDeviceAccelerationStructureCompatibilityKHR vkGetDeviceAccelerationStructureCompatibilityKHR = {};
-    PFN_vkCmdWriteAccelerationStructuresPropertiesKHR vkCmdWriteAccelerationStructuresPropertiesKHR = {};
     PFN_vkCopyAccelerationStructureKHR vkCopyAccelerationStructureKHR = {};
-    PFN_vkWriteAccelerationStructuresPropertiesKHR vkWriteAccelerationStructuresPropertiesKHR = {};
-    PFN_vkBuildAccelerationStructuresKHR vkBuildAccelerationStructuresKHR = {};
-    PFN_vkCmdBuildAccelerationStructuresIndirectKHR vkCmdBuildAccelerationStructuresIndirectKHR = {};
-    PFN_vkCmdCopyAccelerationStructureKHR vkCmdCopyAccelerationStructureKHR = {};
+    PFN_vkGetDeviceAccelerationStructureCompatibilityKHR vkGetDeviceAccelerationStructureCompatibilityKHR = {};
+    PFN_vkCreateAccelerationStructureKHR vkCreateAccelerationStructureKHR = {};
+    PFN_vkGetAccelerationStructureDeviceAddressKHR vkGetAccelerationStructureDeviceAddressKHR = {};
     PFN_vkCopyAccelerationStructureToMemoryKHR vkCopyAccelerationStructureToMemoryKHR = {};
+    PFN_vkCmdCopyAccelerationStructureKHR vkCmdCopyAccelerationStructureKHR = {};
+    PFN_vkBuildAccelerationStructuresKHR vkBuildAccelerationStructuresKHR = {};
     PFN_vkCmdBuildAccelerationStructuresKHR vkCmdBuildAccelerationStructuresKHR = {};
+    PFN_vkCmdWriteAccelerationStructuresPropertiesKHR vkCmdWriteAccelerationStructuresPropertiesKHR = {};
+    PFN_vkCmdBuildAccelerationStructuresIndirectKHR vkCmdBuildAccelerationStructuresIndirectKHR = {};
     PFN_vkCmdCopyAccelerationStructureToMemoryKHR vkCmdCopyAccelerationStructureToMemoryKHR = {};
     PFN_vkCopyMemoryToAccelerationStructureKHR vkCopyMemoryToAccelerationStructureKHR = {};
-    PFN_vkDestroyAccelerationStructureKHR vkDestroyAccelerationStructureKHR = {};
-    PFN_vkCreateAccelerationStructureKHR vkCreateAccelerationStructureKHR = {};
+    PFN_vkWriteAccelerationStructuresPropertiesKHR vkWriteAccelerationStructuresPropertiesKHR = {};
 };//class VkKhrAccelerationStructure
 
 #endif //VK_KHR_acceleration_structure
@@ -772,8 +577,8 @@ public:
 class VkNvFramebufferMixedSamples final : public DeviceExtensionBase { 
 public:
     VkNvFramebufferMixedSamples() = default;
-    VkNvFramebufferMixedSamples(VkDevice handler)
-;
+    VkNvFramebufferMixedSamples(VkDevice handler);
+
     std::string name() const override { return "VK_NV_framebuffer_mixed_samples"; }
     static std::string str() { return "VK_NV_framebuffer_mixed_samples"; }
     void init(VkDevice handler) override;
@@ -787,8 +592,8 @@ public:
 class VkNvFillRectangle final : public DeviceExtensionBase { 
 public:
     VkNvFillRectangle() = default;
-    VkNvFillRectangle(VkDevice handler)
-;
+    VkNvFillRectangle(VkDevice handler);
+
     std::string name() const override { return "VK_NV_fill_rectangle"; }
     static std::string str() { return "VK_NV_fill_rectangle"; }
     void init(VkDevice handler) override;
@@ -802,8 +607,8 @@ public:
 class VkNvShaderSmBuiltins final : public DeviceExtensionBase { 
 public:
     VkNvShaderSmBuiltins() = default;
-    VkNvShaderSmBuiltins(VkDevice handler)
-;
+    VkNvShaderSmBuiltins(VkDevice handler);
+
     std::string name() const override { return "VK_NV_shader_sm_builtins"; }
     static std::string str() { return "VK_NV_shader_sm_builtins"; }
     void init(VkDevice handler) override;
@@ -817,8 +622,8 @@ public:
 class VkExtPostDepthCoverage final : public DeviceExtensionBase { 
 public:
     VkExtPostDepthCoverage() = default;
-    VkExtPostDepthCoverage(VkDevice handler)
-;
+    VkExtPostDepthCoverage(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_post_depth_coverage"; }
     static std::string str() { return "VK_EXT_post_depth_coverage"; }
     void init(VkDevice handler) override;
@@ -832,14 +637,14 @@ public:
 class VkKhrSamplerYcbcrConversion final : public DeviceExtensionBase { 
 public:
     VkKhrSamplerYcbcrConversion() = default;
-    VkKhrSamplerYcbcrConversion(VkDevice handler)
-;
+    VkKhrSamplerYcbcrConversion(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_sampler_ycbcr_conversion"; }
     static std::string str() { return "VK_KHR_sampler_ycbcr_conversion"; }
     void init(VkDevice handler) override;
 public:
-    PFN_vkCreateSamplerYcbcrConversionKHR vkCreateSamplerYcbcrConversionKHR = {};
     PFN_vkDestroySamplerYcbcrConversionKHR vkDestroySamplerYcbcrConversionKHR = {};
+    PFN_vkCreateSamplerYcbcrConversionKHR vkCreateSamplerYcbcrConversionKHR = {};
 };//class VkKhrSamplerYcbcrConversion
 
 #endif //VK_KHR_sampler_ycbcr_conversion
@@ -849,14 +654,14 @@ public:
 class VkKhrBindMemory2 final : public DeviceExtensionBase { 
 public:
     VkKhrBindMemory2() = default;
-    VkKhrBindMemory2(VkDevice handler)
-;
+    VkKhrBindMemory2(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_bind_memory2"; }
     static std::string str() { return "VK_KHR_bind_memory2"; }
     void init(VkDevice handler) override;
 public:
-    PFN_vkBindBufferMemory2KHR vkBindBufferMemory2KHR = {};
     PFN_vkBindImageMemory2KHR vkBindImageMemory2KHR = {};
+    PFN_vkBindBufferMemory2KHR vkBindBufferMemory2KHR = {};
 };//class VkKhrBindMemory2
 
 #endif //VK_KHR_bind_memory2
@@ -866,8 +671,8 @@ public:
 class VkExtImageDrmFormatModifier final : public DeviceExtensionBase { 
 public:
     VkExtImageDrmFormatModifier() = default;
-    VkExtImageDrmFormatModifier(VkDevice handler)
-;
+    VkExtImageDrmFormatModifier(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_image_drm_format_modifier"; }
     static std::string str() { return "VK_EXT_image_drm_format_modifier"; }
     void init(VkDevice handler) override;
@@ -882,8 +687,8 @@ public:
 class VkImgFilterCubic final : public DeviceExtensionBase { 
 public:
     VkImgFilterCubic() = default;
-    VkImgFilterCubic(VkDevice handler)
-;
+    VkImgFilterCubic(VkDevice handler);
+
     std::string name() const override { return "VK_IMG_filter_cubic"; }
     static std::string str() { return "VK_IMG_filter_cubic"; }
     void init(VkDevice handler) override;
@@ -897,16 +702,16 @@ public:
 class VkExtValidationCache final : public DeviceExtensionBase { 
 public:
     VkExtValidationCache() = default;
-    VkExtValidationCache(VkDevice handler)
-;
+    VkExtValidationCache(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_validation_cache"; }
     static std::string str() { return "VK_EXT_validation_cache"; }
     void init(VkDevice handler) override;
 public:
+    PFN_vkMergeValidationCachesEXT vkMergeValidationCachesEXT = {};
+    PFN_vkDestroyValidationCacheEXT vkDestroyValidationCacheEXT = {};
     PFN_vkCreateValidationCacheEXT vkCreateValidationCacheEXT = {};
     PFN_vkGetValidationCacheDataEXT vkGetValidationCacheDataEXT = {};
-    PFN_vkDestroyValidationCacheEXT vkDestroyValidationCacheEXT = {};
-    PFN_vkMergeValidationCachesEXT vkMergeValidationCachesEXT = {};
 };//class VkExtValidationCache
 
 #endif //VK_EXT_validation_cache
@@ -916,8 +721,8 @@ public:
 class VkExtDescriptorIndexing final : public DeviceExtensionBase { 
 public:
     VkExtDescriptorIndexing() = default;
-    VkExtDescriptorIndexing(VkDevice handler)
-;
+    VkExtDescriptorIndexing(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_descriptor_indexing"; }
     static std::string str() { return "VK_EXT_descriptor_indexing"; }
     void init(VkDevice handler) override;
@@ -931,8 +736,8 @@ public:
 class VkExtShaderViewportIndexLayer final : public DeviceExtensionBase { 
 public:
     VkExtShaderViewportIndexLayer() = default;
-    VkExtShaderViewportIndexLayer(VkDevice handler)
-;
+    VkExtShaderViewportIndexLayer(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_shader_viewport_index_layer"; }
     static std::string str() { return "VK_EXT_shader_viewport_index_layer"; }
     void init(VkDevice handler) override;
@@ -946,8 +751,8 @@ public:
 class VkKhrPortabilitySubset final : public DeviceExtensionBase { 
 public:
     VkKhrPortabilitySubset() = default;
-    VkKhrPortabilitySubset(VkDevice handler)
-;
+    VkKhrPortabilitySubset(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_portability_subset"; }
     static std::string str() { return "VK_KHR_portability_subset"; }
     void init(VkDevice handler) override;
@@ -961,14 +766,14 @@ public:
 class VkNvShadingRateImage final : public DeviceExtensionBase { 
 public:
     VkNvShadingRateImage() = default;
-    VkNvShadingRateImage(VkDevice handler)
-;
+    VkNvShadingRateImage(VkDevice handler);
+
     std::string name() const override { return "VK_NV_shading_rate_image"; }
     static std::string str() { return "VK_NV_shading_rate_image"; }
     void init(VkDevice handler) override;
 public:
-    PFN_vkCmdBindShadingRateImageNV vkCmdBindShadingRateImageNV = {};
     PFN_vkCmdSetCoarseSampleOrderNV vkCmdSetCoarseSampleOrderNV = {};
+    PFN_vkCmdBindShadingRateImageNV vkCmdBindShadingRateImageNV = {};
     PFN_vkCmdSetViewportShadingRatePaletteNV vkCmdSetViewportShadingRatePaletteNV = {};
 };//class VkNvShadingRateImage
 
@@ -979,24 +784,24 @@ public:
 class VkNvRayTracing final : public DeviceExtensionBase { 
 public:
     VkNvRayTracing() = default;
-    VkNvRayTracing(VkDevice handler)
-;
+    VkNvRayTracing(VkDevice handler);
+
     std::string name() const override { return "VK_NV_ray_tracing"; }
     static std::string str() { return "VK_NV_ray_tracing"; }
     void init(VkDevice handler) override;
 public:
     PFN_vkDestroyAccelerationStructureNV vkDestroyAccelerationStructureNV = {};
-    PFN_vkCmdBuildAccelerationStructureNV vkCmdBuildAccelerationStructureNV = {};
-    PFN_vkCompileDeferredNV vkCompileDeferredNV = {};
-    PFN_vkGetAccelerationStructureHandleNV vkGetAccelerationStructureHandleNV = {};
-    PFN_vkGetAccelerationStructureMemoryRequirementsNV vkGetAccelerationStructureMemoryRequirementsNV = {};
     PFN_vkCreateRayTracingPipelinesNV vkCreateRayTracingPipelinesNV = {};
     PFN_vkGetRayTracingShaderGroupHandlesNV vkGetRayTracingShaderGroupHandlesNV = {};
     PFN_vkCmdWriteAccelerationStructuresPropertiesNV vkCmdWriteAccelerationStructuresPropertiesNV = {};
-    PFN_vkBindAccelerationStructureMemoryNV vkBindAccelerationStructureMemoryNV = {};
-    PFN_vkCmdTraceRaysNV vkCmdTraceRaysNV = {};
     PFN_vkCreateAccelerationStructureNV vkCreateAccelerationStructureNV = {};
+    PFN_vkCompileDeferredNV vkCompileDeferredNV = {};
+    PFN_vkGetAccelerationStructureHandleNV vkGetAccelerationStructureHandleNV = {};
+    PFN_vkGetAccelerationStructureMemoryRequirementsNV vkGetAccelerationStructureMemoryRequirementsNV = {};
     PFN_vkCmdCopyAccelerationStructureNV vkCmdCopyAccelerationStructureNV = {};
+    PFN_vkBindAccelerationStructureMemoryNV vkBindAccelerationStructureMemoryNV = {};
+    PFN_vkCmdBuildAccelerationStructureNV vkCmdBuildAccelerationStructureNV = {};
+    PFN_vkCmdTraceRaysNV vkCmdTraceRaysNV = {};
 };//class VkNvRayTracing
 
 #endif //VK_NV_ray_tracing
@@ -1006,8 +811,8 @@ public:
 class VkNvRepresentativeFragmentTest final : public DeviceExtensionBase { 
 public:
     VkNvRepresentativeFragmentTest() = default;
-    VkNvRepresentativeFragmentTest(VkDevice handler)
-;
+    VkNvRepresentativeFragmentTest(VkDevice handler);
+
     std::string name() const override { return "VK_NV_representative_fragment_test"; }
     static std::string str() { return "VK_NV_representative_fragment_test"; }
     void init(VkDevice handler) override;
@@ -1021,8 +826,8 @@ public:
 class VkKhrMaintenance3 final : public DeviceExtensionBase { 
 public:
     VkKhrMaintenance3() = default;
-    VkKhrMaintenance3(VkDevice handler)
-;
+    VkKhrMaintenance3(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_maintenance3"; }
     static std::string str() { return "VK_KHR_maintenance3"; }
     void init(VkDevice handler) override;
@@ -1037,8 +842,8 @@ public:
 class VkKhrDrawIndirectCount final : public DeviceExtensionBase { 
 public:
     VkKhrDrawIndirectCount() = default;
-    VkKhrDrawIndirectCount(VkDevice handler)
-;
+    VkKhrDrawIndirectCount(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_draw_indirect_count"; }
     static std::string str() { return "VK_KHR_draw_indirect_count"; }
     void init(VkDevice handler) override;
@@ -1054,8 +859,8 @@ public:
 class VkExtFilterCubic final : public DeviceExtensionBase { 
 public:
     VkExtFilterCubic() = default;
-    VkExtFilterCubic(VkDevice handler)
-;
+    VkExtFilterCubic(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_filter_cubic"; }
     static std::string str() { return "VK_EXT_filter_cubic"; }
     void init(VkDevice handler) override;
@@ -1069,8 +874,8 @@ public:
 class VkQcomRenderPassShaderResolve final : public DeviceExtensionBase { 
 public:
     VkQcomRenderPassShaderResolve() = default;
-    VkQcomRenderPassShaderResolve(VkDevice handler)
-;
+    VkQcomRenderPassShaderResolve(VkDevice handler);
+
     std::string name() const override { return "VK_QCOM_render_pass_shader_resolve"; }
     static std::string str() { return "VK_QCOM_render_pass_shader_resolve"; }
     void init(VkDevice handler) override;
@@ -1084,8 +889,8 @@ public:
 class VkExtGlobalPriority final : public DeviceExtensionBase { 
 public:
     VkExtGlobalPriority() = default;
-    VkExtGlobalPriority(VkDevice handler)
-;
+    VkExtGlobalPriority(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_global_priority"; }
     static std::string str() { return "VK_EXT_global_priority"; }
     void init(VkDevice handler) override;
@@ -1099,8 +904,8 @@ public:
 class VkKhrShaderSubgroupExtendedTypes final : public DeviceExtensionBase { 
 public:
     VkKhrShaderSubgroupExtendedTypes() = default;
-    VkKhrShaderSubgroupExtendedTypes(VkDevice handler)
-;
+    VkKhrShaderSubgroupExtendedTypes(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_shader_subgroup_extended_types"; }
     static std::string str() { return "VK_KHR_shader_subgroup_extended_types"; }
     void init(VkDevice handler) override;
@@ -1114,8 +919,8 @@ public:
 class VkKhr8bitStorage final : public DeviceExtensionBase { 
 public:
     VkKhr8bitStorage() = default;
-    VkKhr8bitStorage(VkDevice handler)
-;
+    VkKhr8bitStorage(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_8bit_storage"; }
     static std::string str() { return "VK_KHR_8bit_storage"; }
     void init(VkDevice handler) override;
@@ -1129,8 +934,8 @@ public:
 class VkExtExternalMemoryHost final : public DeviceExtensionBase { 
 public:
     VkExtExternalMemoryHost() = default;
-    VkExtExternalMemoryHost(VkDevice handler)
-;
+    VkExtExternalMemoryHost(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_external_memory_host"; }
     static std::string str() { return "VK_EXT_external_memory_host"; }
     void init(VkDevice handler) override;
@@ -1145,8 +950,8 @@ public:
 class VkAmdBufferMarker final : public DeviceExtensionBase { 
 public:
     VkAmdBufferMarker() = default;
-    VkAmdBufferMarker(VkDevice handler)
-;
+    VkAmdBufferMarker(VkDevice handler);
+
     std::string name() const override { return "VK_AMD_buffer_marker"; }
     static std::string str() { return "VK_AMD_buffer_marker"; }
     void init(VkDevice handler) override;
@@ -1161,8 +966,8 @@ public:
 class VkKhrShaderAtomicInt64 final : public DeviceExtensionBase { 
 public:
     VkKhrShaderAtomicInt64() = default;
-    VkKhrShaderAtomicInt64(VkDevice handler)
-;
+    VkKhrShaderAtomicInt64(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_shader_atomic_int64"; }
     static std::string str() { return "VK_KHR_shader_atomic_int64"; }
     void init(VkDevice handler) override;
@@ -1176,8 +981,8 @@ public:
 class VkKhrShaderClock final : public DeviceExtensionBase { 
 public:
     VkKhrShaderClock() = default;
-    VkKhrShaderClock(VkDevice handler)
-;
+    VkKhrShaderClock(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_shader_clock"; }
     static std::string str() { return "VK_KHR_shader_clock"; }
     void init(VkDevice handler) override;
@@ -1191,8 +996,8 @@ public:
 class VkAmdPipelineCompilerControl final : public DeviceExtensionBase { 
 public:
     VkAmdPipelineCompilerControl() = default;
-    VkAmdPipelineCompilerControl(VkDevice handler)
-;
+    VkAmdPipelineCompilerControl(VkDevice handler);
+
     std::string name() const override { return "VK_AMD_pipeline_compiler_control"; }
     static std::string str() { return "VK_AMD_pipeline_compiler_control"; }
     void init(VkDevice handler) override;
@@ -1206,8 +1011,8 @@ public:
 class VkExtCalibratedTimestamps final : public DeviceExtensionBase { 
 public:
     VkExtCalibratedTimestamps() = default;
-    VkExtCalibratedTimestamps(VkDevice handler)
-;
+    VkExtCalibratedTimestamps(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_calibrated_timestamps"; }
     static std::string str() { return "VK_EXT_calibrated_timestamps"; }
     void init(VkDevice handler) override;
@@ -1223,8 +1028,8 @@ public:
 class VkAmdShaderCoreProperties final : public DeviceExtensionBase { 
 public:
     VkAmdShaderCoreProperties() = default;
-    VkAmdShaderCoreProperties(VkDevice handler)
-;
+    VkAmdShaderCoreProperties(VkDevice handler);
+
     std::string name() const override { return "VK_AMD_shader_core_properties"; }
     static std::string str() { return "VK_AMD_shader_core_properties"; }
     void init(VkDevice handler) override;
@@ -1238,8 +1043,8 @@ public:
 class VkExtVideoDecodeH265 final : public DeviceExtensionBase { 
 public:
     VkExtVideoDecodeH265() = default;
-    VkExtVideoDecodeH265(VkDevice handler)
-;
+    VkExtVideoDecodeH265(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_video_decode_h265"; }
     static std::string str() { return "VK_EXT_video_decode_h265"; }
     void init(VkDevice handler) override;
@@ -1253,8 +1058,8 @@ public:
 class VkKhrGlobalPriority final : public DeviceExtensionBase { 
 public:
     VkKhrGlobalPriority() = default;
-    VkKhrGlobalPriority(VkDevice handler)
-;
+    VkKhrGlobalPriority(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_global_priority"; }
     static std::string str() { return "VK_KHR_global_priority"; }
     void init(VkDevice handler) override;
@@ -1268,8 +1073,8 @@ public:
 class VkAmdRasterizationOrder final : public DeviceExtensionBase { 
 public:
     VkAmdRasterizationOrder() = default;
-    VkAmdRasterizationOrder(VkDevice handler)
-;
+    VkAmdRasterizationOrder(VkDevice handler);
+
     std::string name() const override { return "VK_AMD_rasterization_order"; }
     static std::string str() { return "VK_AMD_rasterization_order"; }
     void init(VkDevice handler) override;
@@ -1283,8 +1088,8 @@ public:
 class VkAmdMemoryOverallocationBehavior final : public DeviceExtensionBase { 
 public:
     VkAmdMemoryOverallocationBehavior() = default;
-    VkAmdMemoryOverallocationBehavior(VkDevice handler)
-;
+    VkAmdMemoryOverallocationBehavior(VkDevice handler);
+
     std::string name() const override { return "VK_AMD_memory_overallocation_behavior"; }
     static std::string str() { return "VK_AMD_memory_overallocation_behavior"; }
     void init(VkDevice handler) override;
@@ -1298,8 +1103,8 @@ public:
 class VkExtVertexAttributeDivisor final : public DeviceExtensionBase { 
 public:
     VkExtVertexAttributeDivisor() = default;
-    VkExtVertexAttributeDivisor(VkDevice handler)
-;
+    VkExtVertexAttributeDivisor(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_vertex_attribute_divisor"; }
     static std::string str() { return "VK_EXT_vertex_attribute_divisor"; }
     void init(VkDevice handler) override;
@@ -1313,8 +1118,8 @@ public:
 class VkGgpFrameToken final : public DeviceExtensionBase { 
 public:
     VkGgpFrameToken() = default;
-    VkGgpFrameToken(VkDevice handler)
-;
+    VkGgpFrameToken(VkDevice handler);
+
     std::string name() const override { return "VK_GGP_frame_token"; }
     static std::string str() { return "VK_GGP_frame_token"; }
     void init(VkDevice handler) override;
@@ -1328,8 +1133,8 @@ public:
 class VkExtPipelineCreationFeedback final : public DeviceExtensionBase { 
 public:
     VkExtPipelineCreationFeedback() = default;
-    VkExtPipelineCreationFeedback(VkDevice handler)
-;
+    VkExtPipelineCreationFeedback(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_pipeline_creation_feedback"; }
     static std::string str() { return "VK_EXT_pipeline_creation_feedback"; }
     void init(VkDevice handler) override;
@@ -1343,8 +1148,8 @@ public:
 class VkKhrDriverProperties final : public DeviceExtensionBase { 
 public:
     VkKhrDriverProperties() = default;
-    VkKhrDriverProperties(VkDevice handler)
-;
+    VkKhrDriverProperties(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_driver_properties"; }
     static std::string str() { return "VK_KHR_driver_properties"; }
     void init(VkDevice handler) override;
@@ -1358,8 +1163,8 @@ public:
 class VkKhrShaderFloatControls final : public DeviceExtensionBase { 
 public:
     VkKhrShaderFloatControls() = default;
-    VkKhrShaderFloatControls(VkDevice handler)
-;
+    VkKhrShaderFloatControls(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_shader_float_controls"; }
     static std::string str() { return "VK_KHR_shader_float_controls"; }
     void init(VkDevice handler) override;
@@ -1373,8 +1178,8 @@ public:
 class VkNvShaderSubgroupPartitioned final : public DeviceExtensionBase { 
 public:
     VkNvShaderSubgroupPartitioned() = default;
-    VkNvShaderSubgroupPartitioned(VkDevice handler)
-;
+    VkNvShaderSubgroupPartitioned(VkDevice handler);
+
     std::string name() const override { return "VK_NV_shader_subgroup_partitioned"; }
     static std::string str() { return "VK_NV_shader_subgroup_partitioned"; }
     void init(VkDevice handler) override;
@@ -1388,21 +1193,21 @@ public:
 class VkKhrSwapchain final : public DeviceExtensionBase { 
 public:
     VkKhrSwapchain() = default;
-    VkKhrSwapchain(VkDevice handler)
-;
+    VkKhrSwapchain(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_swapchain"; }
     static std::string str() { return "VK_KHR_swapchain"; }
     void init(VkDevice handler) override;
 public:
-    PFN_vkGetDeviceGroupPresentCapabilitiesKHR vkGetDeviceGroupPresentCapabilitiesKHR = {};
-    PFN_vkCreateSwapchainKHR vkCreateSwapchainKHR = {};
     PFN_vkGetSwapchainImagesKHR vkGetSwapchainImagesKHR = {};
+    PFN_vkCreateSwapchainKHR vkCreateSwapchainKHR = {};
     PFN_vkGetPhysicalDevicePresentRectanglesKHR vkGetPhysicalDevicePresentRectanglesKHR = {};
-    PFN_vkAcquireNextImage2KHR vkAcquireNextImage2KHR = {};
-    PFN_vkAcquireNextImageKHR vkAcquireNextImageKHR = {};
-    PFN_vkGetDeviceGroupSurfacePresentModesKHR vkGetDeviceGroupSurfacePresentModesKHR = {};
-    PFN_vkQueuePresentKHR vkQueuePresentKHR = {};
     PFN_vkDestroySwapchainKHR vkDestroySwapchainKHR = {};
+    PFN_vkQueuePresentKHR vkQueuePresentKHR = {};
+    PFN_vkGetDeviceGroupSurfacePresentModesKHR vkGetDeviceGroupSurfacePresentModesKHR = {};
+    PFN_vkAcquireNextImageKHR vkAcquireNextImageKHR = {};
+    PFN_vkAcquireNextImage2KHR vkAcquireNextImage2KHR = {};
+    PFN_vkGetDeviceGroupPresentCapabilitiesKHR vkGetDeviceGroupPresentCapabilitiesKHR = {};
 };//class VkKhrSwapchain
 
 #endif //VK_KHR_swapchain
@@ -1412,8 +1217,8 @@ public:
 class VkKhrDepthStencilResolve final : public DeviceExtensionBase { 
 public:
     VkKhrDepthStencilResolve() = default;
-    VkKhrDepthStencilResolve(VkDevice handler)
-;
+    VkKhrDepthStencilResolve(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_depth_stencil_resolve"; }
     static std::string str() { return "VK_KHR_depth_stencil_resolve"; }
     void init(VkDevice handler) override;
@@ -1427,8 +1232,8 @@ public:
 class VkKhrSwapchainMutableFormat final : public DeviceExtensionBase { 
 public:
     VkKhrSwapchainMutableFormat() = default;
-    VkKhrSwapchainMutableFormat(VkDevice handler)
-;
+    VkKhrSwapchainMutableFormat(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_swapchain_mutable_format"; }
     static std::string str() { return "VK_KHR_swapchain_mutable_format"; }
     void init(VkDevice handler) override;
@@ -1442,8 +1247,8 @@ public:
 class VkNvComputeShaderDerivatives final : public DeviceExtensionBase { 
 public:
     VkNvComputeShaderDerivatives() = default;
-    VkNvComputeShaderDerivatives(VkDevice handler)
-;
+    VkNvComputeShaderDerivatives(VkDevice handler);
+
     std::string name() const override { return "VK_NV_compute_shader_derivatives"; }
     static std::string str() { return "VK_NV_compute_shader_derivatives"; }
     void init(VkDevice handler) override;
@@ -1457,15 +1262,15 @@ public:
 class VkNvMeshShader final : public DeviceExtensionBase { 
 public:
     VkNvMeshShader() = default;
-    VkNvMeshShader(VkDevice handler)
-;
+    VkNvMeshShader(VkDevice handler);
+
     std::string name() const override { return "VK_NV_mesh_shader"; }
     static std::string str() { return "VK_NV_mesh_shader"; }
     void init(VkDevice handler) override;
 public:
-    PFN_vkCmdDrawMeshTasksIndirectNV vkCmdDrawMeshTasksIndirectNV = {};
-    PFN_vkCmdDrawMeshTasksNV vkCmdDrawMeshTasksNV = {};
     PFN_vkCmdDrawMeshTasksIndirectCountNV vkCmdDrawMeshTasksIndirectCountNV = {};
+    PFN_vkCmdDrawMeshTasksNV vkCmdDrawMeshTasksNV = {};
+    PFN_vkCmdDrawMeshTasksIndirectNV vkCmdDrawMeshTasksIndirectNV = {};
 };//class VkNvMeshShader
 
 #endif //VK_NV_mesh_shader
@@ -1475,8 +1280,8 @@ public:
 class VkNvFragmentShaderBarycentric final : public DeviceExtensionBase { 
 public:
     VkNvFragmentShaderBarycentric() = default;
-    VkNvFragmentShaderBarycentric(VkDevice handler)
-;
+    VkNvFragmentShaderBarycentric(VkDevice handler);
+
     std::string name() const override { return "VK_NV_fragment_shader_barycentric"; }
     static std::string str() { return "VK_NV_fragment_shader_barycentric"; }
     void init(VkDevice handler) override;
@@ -1490,8 +1295,8 @@ public:
 class VkNvShaderImageFootprint final : public DeviceExtensionBase { 
 public:
     VkNvShaderImageFootprint() = default;
-    VkNvShaderImageFootprint(VkDevice handler)
-;
+    VkNvShaderImageFootprint(VkDevice handler);
+
     std::string name() const override { return "VK_NV_shader_image_footprint"; }
     static std::string str() { return "VK_NV_shader_image_footprint"; }
     void init(VkDevice handler) override;
@@ -1505,8 +1310,8 @@ public:
 class VkNvScissorExclusive final : public DeviceExtensionBase { 
 public:
     VkNvScissorExclusive() = default;
-    VkNvScissorExclusive(VkDevice handler)
-;
+    VkNvScissorExclusive(VkDevice handler);
+
     std::string name() const override { return "VK_NV_scissor_exclusive"; }
     static std::string str() { return "VK_NV_scissor_exclusive"; }
     void init(VkDevice handler) override;
@@ -1521,8 +1326,8 @@ public:
 class VkNvDeviceDiagnosticCheckpoints final : public DeviceExtensionBase { 
 public:
     VkNvDeviceDiagnosticCheckpoints() = default;
-    VkNvDeviceDiagnosticCheckpoints(VkDevice handler)
-;
+    VkNvDeviceDiagnosticCheckpoints(VkDevice handler);
+
     std::string name() const override { return "VK_NV_device_diagnostic_checkpoints"; }
     static std::string str() { return "VK_NV_device_diagnostic_checkpoints"; }
     void init(VkDevice handler) override;
@@ -1538,15 +1343,15 @@ public:
 class VkKhrTimelineSemaphore final : public DeviceExtensionBase { 
 public:
     VkKhrTimelineSemaphore() = default;
-    VkKhrTimelineSemaphore(VkDevice handler)
-;
+    VkKhrTimelineSemaphore(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_timeline_semaphore"; }
     static std::string str() { return "VK_KHR_timeline_semaphore"; }
     void init(VkDevice handler) override;
 public:
-    PFN_vkSignalSemaphoreKHR vkSignalSemaphoreKHR = {};
     PFN_vkWaitSemaphoresKHR vkWaitSemaphoresKHR = {};
     PFN_vkGetSemaphoreCounterValueKHR vkGetSemaphoreCounterValueKHR = {};
+    PFN_vkSignalSemaphoreKHR vkSignalSemaphoreKHR = {};
 };//class VkKhrTimelineSemaphore
 
 #endif //VK_KHR_timeline_semaphore
@@ -1556,8 +1361,8 @@ public:
 class VkKhrExtension209 final : public DeviceExtensionBase { 
 public:
     VkKhrExtension209() = default;
-    VkKhrExtension209(VkDevice handler)
-;
+    VkKhrExtension209(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_extension_209"; }
     static std::string str() { return "VK_KHR_extension_209"; }
     void init(VkDevice handler) override;
@@ -1571,8 +1376,8 @@ public:
 class VkAmdShaderTrinaryMinmax final : public DeviceExtensionBase { 
 public:
     VkAmdShaderTrinaryMinmax() = default;
-    VkAmdShaderTrinaryMinmax(VkDevice handler)
-;
+    VkAmdShaderTrinaryMinmax(VkDevice handler);
+
     std::string name() const override { return "VK_AMD_shader_trinary_minmax"; }
     static std::string str() { return "VK_AMD_shader_trinary_minmax"; }
     void init(VkDevice handler) override;
@@ -1586,8 +1391,8 @@ public:
 class VkIntelShaderIntegerFunctions2 final : public DeviceExtensionBase { 
 public:
     VkIntelShaderIntegerFunctions2() = default;
-    VkIntelShaderIntegerFunctions2(VkDevice handler)
-;
+    VkIntelShaderIntegerFunctions2(VkDevice handler);
+
     std::string name() const override { return "VK_INTEL_shader_integer_functions2"; }
     static std::string str() { return "VK_INTEL_shader_integer_functions2"; }
     void init(VkDevice handler) override;
@@ -1601,21 +1406,21 @@ public:
 class VkIntelPerformanceQuery final : public DeviceExtensionBase { 
 public:
     VkIntelPerformanceQuery() = default;
-    VkIntelPerformanceQuery(VkDevice handler)
-;
+    VkIntelPerformanceQuery(VkDevice handler);
+
     std::string name() const override { return "VK_INTEL_performance_query"; }
     static std::string str() { return "VK_INTEL_performance_query"; }
     void init(VkDevice handler) override;
 public:
     PFN_vkQueueSetPerformanceConfigurationINTEL vkQueueSetPerformanceConfigurationINTEL = {};
-    PFN_vkGetPerformanceParameterINTEL vkGetPerformanceParameterINTEL = {};
-    PFN_vkCmdSetPerformanceOverrideINTEL vkCmdSetPerformanceOverrideINTEL = {};
-    PFN_vkReleasePerformanceConfigurationINTEL vkReleasePerformanceConfigurationINTEL = {};
     PFN_vkAcquirePerformanceConfigurationINTEL vkAcquirePerformanceConfigurationINTEL = {};
-    PFN_vkUninitializePerformanceApiINTEL vkUninitializePerformanceApiINTEL = {};
+    PFN_vkReleasePerformanceConfigurationINTEL vkReleasePerformanceConfigurationINTEL = {};
     PFN_vkInitializePerformanceApiINTEL vkInitializePerformanceApiINTEL = {};
+    PFN_vkGetPerformanceParameterINTEL vkGetPerformanceParameterINTEL = {};
+    PFN_vkUninitializePerformanceApiINTEL vkUninitializePerformanceApiINTEL = {};
     PFN_vkCmdSetPerformanceStreamMarkerINTEL vkCmdSetPerformanceStreamMarkerINTEL = {};
     PFN_vkCmdSetPerformanceMarkerINTEL vkCmdSetPerformanceMarkerINTEL = {};
+    PFN_vkCmdSetPerformanceOverrideINTEL vkCmdSetPerformanceOverrideINTEL = {};
 };//class VkIntelPerformanceQuery
 
 #endif //VK_INTEL_performance_query
@@ -1625,8 +1430,8 @@ public:
 class VkKhrVulkanMemoryModel final : public DeviceExtensionBase { 
 public:
     VkKhrVulkanMemoryModel() = default;
-    VkKhrVulkanMemoryModel(VkDevice handler)
-;
+    VkKhrVulkanMemoryModel(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_vulkan_memory_model"; }
     static std::string str() { return "VK_KHR_vulkan_memory_model"; }
     void init(VkDevice handler) override;
@@ -1640,8 +1445,8 @@ public:
 class VkExtPciBusInfo final : public DeviceExtensionBase { 
 public:
     VkExtPciBusInfo() = default;
-    VkExtPciBusInfo(VkDevice handler)
-;
+    VkExtPciBusInfo(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_pci_bus_info"; }
     static std::string str() { return "VK_EXT_pci_bus_info"; }
     void init(VkDevice handler) override;
@@ -1655,8 +1460,8 @@ public:
 class VkAmdDisplayNativeHdr final : public DeviceExtensionBase { 
 public:
     VkAmdDisplayNativeHdr() = default;
-    VkAmdDisplayNativeHdr(VkDevice handler)
-;
+    VkAmdDisplayNativeHdr(VkDevice handler);
+
     std::string name() const override { return "VK_AMD_display_native_hdr"; }
     static std::string str() { return "VK_AMD_display_native_hdr"; }
     void init(VkDevice handler) override;
@@ -1666,29 +1471,13 @@ public:
 
 #endif //VK_AMD_display_native_hdr
 
-#if defined(VK_FUCHSIA_imagepipe_surface)
-
-class VkFuchsiaImagepipeSurface final : public InstanceExtensionBase { 
-public:
-    VkFuchsiaImagepipeSurface() = default;
-    VkFuchsiaImagepipeSurface(VkInstance handler)
-;
-    std::string name() const override { return "VK_FUCHSIA_imagepipe_surface"; }
-    static std::string str() { return "VK_FUCHSIA_imagepipe_surface"; }
-    void init(VkInstance handler) override;
-public:
-    PFN_vkCreateImagePipeSurfaceFUCHSIA vkCreateImagePipeSurfaceFUCHSIA = {};
-};//class VkFuchsiaImagepipeSurface
-
-#endif //VK_FUCHSIA_imagepipe_surface
-
 #if defined(VK_KHR_shader_terminate_invocation)
 
 class VkKhrShaderTerminateInvocation final : public DeviceExtensionBase { 
 public:
     VkKhrShaderTerminateInvocation() = default;
-    VkKhrShaderTerminateInvocation(VkDevice handler)
-;
+    VkKhrShaderTerminateInvocation(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_shader_terminate_invocation"; }
     static std::string str() { return "VK_KHR_shader_terminate_invocation"; }
     void init(VkDevice handler) override;
@@ -1697,29 +1486,13 @@ public:
 
 #endif //VK_KHR_shader_terminate_invocation
 
-#if defined(VK_EXT_metal_surface)
-
-class VkExtMetalSurface final : public InstanceExtensionBase { 
-public:
-    VkExtMetalSurface() = default;
-    VkExtMetalSurface(VkInstance handler)
-;
-    std::string name() const override { return "VK_EXT_metal_surface"; }
-    static std::string str() { return "VK_EXT_metal_surface"; }
-    void init(VkInstance handler) override;
-public:
-    PFN_vkCreateMetalSurfaceEXT vkCreateMetalSurfaceEXT = {};
-};//class VkExtMetalSurface
-
-#endif //VK_EXT_metal_surface
-
 #if defined(VK_EXT_fragment_density_map)
 
 class VkExtFragmentDensityMap final : public DeviceExtensionBase { 
 public:
     VkExtFragmentDensityMap() = default;
-    VkExtFragmentDensityMap(VkDevice handler)
-;
+    VkExtFragmentDensityMap(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_fragment_density_map"; }
     static std::string str() { return "VK_EXT_fragment_density_map"; }
     void init(VkDevice handler) override;
@@ -1733,8 +1506,8 @@ public:
 class VkAmdShaderExplicitVertexParameter final : public DeviceExtensionBase { 
 public:
     VkAmdShaderExplicitVertexParameter() = default;
-    VkAmdShaderExplicitVertexParameter(VkDevice handler)
-;
+    VkAmdShaderExplicitVertexParameter(VkDevice handler);
+
     std::string name() const override { return "VK_AMD_shader_explicit_vertex_parameter"; }
     static std::string str() { return "VK_AMD_shader_explicit_vertex_parameter"; }
     void init(VkDevice handler) override;
@@ -1748,8 +1521,8 @@ public:
 class VkExtScalarBlockLayout final : public DeviceExtensionBase { 
 public:
     VkExtScalarBlockLayout() = default;
-    VkExtScalarBlockLayout(VkDevice handler)
-;
+    VkExtScalarBlockLayout(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_scalar_block_layout"; }
     static std::string str() { return "VK_EXT_scalar_block_layout"; }
     void init(VkDevice handler) override;
@@ -1763,8 +1536,8 @@ public:
 class VkGoogleHlslFunctionality1 final : public DeviceExtensionBase { 
 public:
     VkGoogleHlslFunctionality1() = default;
-    VkGoogleHlslFunctionality1(VkDevice handler)
-;
+    VkGoogleHlslFunctionality1(VkDevice handler);
+
     std::string name() const override { return "VK_GOOGLE_hlsl_functionality1"; }
     static std::string str() { return "VK_GOOGLE_hlsl_functionality1"; }
     void init(VkDevice handler) override;
@@ -1778,8 +1551,8 @@ public:
 class VkGoogleDecorateString final : public DeviceExtensionBase { 
 public:
     VkGoogleDecorateString() = default;
-    VkGoogleDecorateString(VkDevice handler)
-;
+    VkGoogleDecorateString(VkDevice handler);
+
     std::string name() const override { return "VK_GOOGLE_decorate_string"; }
     static std::string str() { return "VK_GOOGLE_decorate_string"; }
     void init(VkDevice handler) override;
@@ -1793,8 +1566,8 @@ public:
 class VkExtSubgroupSizeControl final : public DeviceExtensionBase { 
 public:
     VkExtSubgroupSizeControl() = default;
-    VkExtSubgroupSizeControl(VkDevice handler)
-;
+    VkExtSubgroupSizeControl(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_subgroup_size_control"; }
     static std::string str() { return "VK_EXT_subgroup_size_control"; }
     void init(VkDevice handler) override;
@@ -1808,8 +1581,8 @@ public:
 class VkKhrFragmentShadingRate final : public DeviceExtensionBase { 
 public:
     VkKhrFragmentShadingRate() = default;
-    VkKhrFragmentShadingRate(VkDevice handler)
-;
+    VkKhrFragmentShadingRate(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_fragment_shading_rate"; }
     static std::string str() { return "VK_KHR_fragment_shading_rate"; }
     void init(VkDevice handler) override;
@@ -1825,8 +1598,8 @@ public:
 class VkAmdShaderCoreProperties2 final : public DeviceExtensionBase { 
 public:
     VkAmdShaderCoreProperties2() = default;
-    VkAmdShaderCoreProperties2(VkDevice handler)
-;
+    VkAmdShaderCoreProperties2(VkDevice handler);
+
     std::string name() const override { return "VK_AMD_shader_core_properties2"; }
     static std::string str() { return "VK_AMD_shader_core_properties2"; }
     void init(VkDevice handler) override;
@@ -1840,17 +1613,17 @@ public:
 class VkExtDebugMarker final : public DeviceExtensionBase { 
 public:
     VkExtDebugMarker() = default;
-    VkExtDebugMarker(VkDevice handler)
-;
+    VkExtDebugMarker(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_debug_marker"; }
     static std::string str() { return "VK_EXT_debug_marker"; }
     void init(VkDevice handler) override;
 public:
+    PFN_vkCmdDebugMarkerBeginEXT vkCmdDebugMarkerBeginEXT = {};
     PFN_vkCmdDebugMarkerEndEXT vkCmdDebugMarkerEndEXT = {};
     PFN_vkCmdDebugMarkerInsertEXT vkCmdDebugMarkerInsertEXT = {};
-    PFN_vkDebugMarkerSetObjectNameEXT vkDebugMarkerSetObjectNameEXT = {};
-    PFN_vkCmdDebugMarkerBeginEXT vkCmdDebugMarkerBeginEXT = {};
     PFN_vkDebugMarkerSetObjectTagEXT vkDebugMarkerSetObjectTagEXT = {};
+    PFN_vkDebugMarkerSetObjectNameEXT vkDebugMarkerSetObjectNameEXT = {};
 };//class VkExtDebugMarker
 
 #endif //VK_EXT_debug_marker
@@ -1860,8 +1633,8 @@ public:
 class VkAmdDeviceCoherentMemory final : public DeviceExtensionBase { 
 public:
     VkAmdDeviceCoherentMemory() = default;
-    VkAmdDeviceCoherentMemory(VkDevice handler)
-;
+    VkAmdDeviceCoherentMemory(VkDevice handler);
+
     std::string name() const override { return "VK_AMD_device_coherent_memory"; }
     static std::string str() { return "VK_AMD_device_coherent_memory"; }
     void init(VkDevice handler) override;
@@ -1875,8 +1648,8 @@ public:
 class VkExtShaderImageAtomicInt64 final : public DeviceExtensionBase { 
 public:
     VkExtShaderImageAtomicInt64() = default;
-    VkExtShaderImageAtomicInt64(VkDevice handler)
-;
+    VkExtShaderImageAtomicInt64(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_shader_image_atomic_int64"; }
     static std::string str() { return "VK_EXT_shader_image_atomic_int64"; }
     void init(VkDevice handler) override;
@@ -1890,8 +1663,8 @@ public:
 class VkKhrSpirv14 final : public DeviceExtensionBase { 
 public:
     VkKhrSpirv14() = default;
-    VkKhrSpirv14(VkDevice handler)
-;
+    VkKhrSpirv14(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_spirv_1_4"; }
     static std::string str() { return "VK_KHR_spirv_1_4"; }
     void init(VkDevice handler) override;
@@ -1905,8 +1678,8 @@ public:
 class VkExtMemoryBudget final : public DeviceExtensionBase { 
 public:
     VkExtMemoryBudget() = default;
-    VkExtMemoryBudget(VkDevice handler)
-;
+    VkExtMemoryBudget(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_memory_budget"; }
     static std::string str() { return "VK_EXT_memory_budget"; }
     void init(VkDevice handler) override;
@@ -1920,8 +1693,8 @@ public:
 class VkExtMemoryPriority final : public DeviceExtensionBase { 
 public:
     VkExtMemoryPriority() = default;
-    VkExtMemoryPriority(VkDevice handler)
-;
+    VkExtMemoryPriority(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_memory_priority"; }
     static std::string str() { return "VK_EXT_memory_priority"; }
     void init(VkDevice handler) override;
@@ -1935,50 +1708,35 @@ public:
 class VkKhrVideoQueue final : public DeviceExtensionBase { 
 public:
     VkKhrVideoQueue() = default;
-    VkKhrVideoQueue(VkDevice handler)
-;
+    VkKhrVideoQueue(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_video_queue"; }
     static std::string str() { return "VK_KHR_video_queue"; }
     void init(VkDevice handler) override;
 public:
-    PFN_vkCreateVideoSessionParametersKHR vkCreateVideoSessionParametersKHR = {};
-    PFN_vkDestroyVideoSessionParametersKHR vkDestroyVideoSessionParametersKHR = {};
-    PFN_vkCmdEndVideoCodingKHR vkCmdEndVideoCodingKHR = {};
     PFN_vkGetPhysicalDeviceVideoFormatPropertiesKHR vkGetPhysicalDeviceVideoFormatPropertiesKHR = {};
+    PFN_vkCmdEndVideoCodingKHR vkCmdEndVideoCodingKHR = {};
+    PFN_vkCmdBeginVideoCodingKHR vkCmdBeginVideoCodingKHR = {};
+    PFN_vkUpdateVideoSessionParametersKHR vkUpdateVideoSessionParametersKHR = {};
+    PFN_vkCreateVideoSessionParametersKHR vkCreateVideoSessionParametersKHR = {};
+    PFN_vkBindVideoSessionMemoryKHR vkBindVideoSessionMemoryKHR = {};
     PFN_vkCreateVideoSessionKHR vkCreateVideoSessionKHR = {};
     PFN_vkGetVideoSessionMemoryRequirementsKHR vkGetVideoSessionMemoryRequirementsKHR = {};
-    PFN_vkUpdateVideoSessionParametersKHR vkUpdateVideoSessionParametersKHR = {};
     PFN_vkGetPhysicalDeviceVideoCapabilitiesKHR vkGetPhysicalDeviceVideoCapabilitiesKHR = {};
-    PFN_vkCmdBeginVideoCodingKHR vkCmdBeginVideoCodingKHR = {};
-    PFN_vkBindVideoSessionMemoryKHR vkBindVideoSessionMemoryKHR = {};
-    PFN_vkCmdControlVideoCodingKHR vkCmdControlVideoCodingKHR = {};
     PFN_vkDestroyVideoSessionKHR vkDestroyVideoSessionKHR = {};
+    PFN_vkDestroyVideoSessionParametersKHR vkDestroyVideoSessionParametersKHR = {};
+    PFN_vkCmdControlVideoCodingKHR vkCmdControlVideoCodingKHR = {};
 };//class VkKhrVideoQueue
 
 #endif //VK_KHR_video_queue
-
-#if defined(VK_KHR_surface_protected_capabilities)
-
-class VkKhrSurfaceProtectedCapabilities final : public InstanceExtensionBase { 
-public:
-    VkKhrSurfaceProtectedCapabilities() = default;
-    VkKhrSurfaceProtectedCapabilities(VkInstance handler)
-;
-    std::string name() const override { return "VK_KHR_surface_protected_capabilities"; }
-    static std::string str() { return "VK_KHR_surface_protected_capabilities"; }
-    void init(VkInstance handler) override;
-public:
-};//class VkKhrSurfaceProtectedCapabilities
-
-#endif //VK_KHR_surface_protected_capabilities
 
 #if defined(VK_NV_dedicated_allocation_image_aliasing)
 
 class VkNvDedicatedAllocationImageAliasing final : public DeviceExtensionBase { 
 public:
     VkNvDedicatedAllocationImageAliasing() = default;
-    VkNvDedicatedAllocationImageAliasing(VkDevice handler)
-;
+    VkNvDedicatedAllocationImageAliasing(VkDevice handler);
+
     std::string name() const override { return "VK_NV_dedicated_allocation_image_aliasing"; }
     static std::string str() { return "VK_NV_dedicated_allocation_image_aliasing"; }
     void init(VkDevice handler) override;
@@ -1992,8 +1750,8 @@ public:
 class VkKhrSeparateDepthStencilLayouts final : public DeviceExtensionBase { 
 public:
     VkKhrSeparateDepthStencilLayouts() = default;
-    VkKhrSeparateDepthStencilLayouts(VkDevice handler)
-;
+    VkKhrSeparateDepthStencilLayouts(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_separate_depth_stencil_layouts"; }
     static std::string str() { return "VK_KHR_separate_depth_stencil_layouts"; }
     void init(VkDevice handler) override;
@@ -2007,8 +1765,8 @@ public:
 class VkExtBufferDeviceAddress final : public DeviceExtensionBase { 
 public:
     VkExtBufferDeviceAddress() = default;
-    VkExtBufferDeviceAddress(VkDevice handler)
-;
+    VkExtBufferDeviceAddress(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_buffer_device_address"; }
     static std::string str() { return "VK_EXT_buffer_device_address"; }
     void init(VkDevice handler) override;
@@ -2023,8 +1781,8 @@ public:
 class VkExtToolingInfo final : public DeviceExtensionBase { 
 public:
     VkExtToolingInfo() = default;
-    VkExtToolingInfo(VkDevice handler)
-;
+    VkExtToolingInfo(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_tooling_info"; }
     static std::string str() { return "VK_EXT_tooling_info"; }
     void init(VkDevice handler) override;
@@ -2039,8 +1797,8 @@ public:
 class VkExtSeparateStencilUsage final : public DeviceExtensionBase { 
 public:
     VkExtSeparateStencilUsage() = default;
-    VkExtSeparateStencilUsage(VkDevice handler)
-;
+    VkExtSeparateStencilUsage(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_separate_stencil_usage"; }
     static std::string str() { return "VK_EXT_separate_stencil_usage"; }
     void init(VkDevice handler) override;
@@ -2049,28 +1807,13 @@ public:
 
 #endif //VK_EXT_separate_stencil_usage
 
-#if defined(VK_EXT_validation_features)
-
-class VkExtValidationFeatures final : public InstanceExtensionBase { 
-public:
-    VkExtValidationFeatures() = default;
-    VkExtValidationFeatures(VkInstance handler)
-;
-    std::string name() const override { return "VK_EXT_validation_features"; }
-    static std::string str() { return "VK_EXT_validation_features"; }
-    void init(VkInstance handler) override;
-public:
-};//class VkExtValidationFeatures
-
-#endif //VK_EXT_validation_features
-
 #if defined(VK_KHR_present_wait)
 
 class VkKhrPresentWait final : public DeviceExtensionBase { 
 public:
     VkKhrPresentWait() = default;
-    VkKhrPresentWait(VkDevice handler)
-;
+    VkKhrPresentWait(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_present_wait"; }
     static std::string str() { return "VK_KHR_present_wait"; }
     void init(VkDevice handler) override;
@@ -2085,8 +1828,8 @@ public:
 class VkKhrVideoDecodeQueue final : public DeviceExtensionBase { 
 public:
     VkKhrVideoDecodeQueue() = default;
-    VkKhrVideoDecodeQueue(VkDevice handler)
-;
+    VkKhrVideoDecodeQueue(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_video_decode_queue"; }
     static std::string str() { return "VK_KHR_video_decode_queue"; }
     void init(VkDevice handler) override;
@@ -2101,8 +1844,8 @@ public:
 class VkNvCooperativeMatrix final : public DeviceExtensionBase { 
 public:
     VkNvCooperativeMatrix() = default;
-    VkNvCooperativeMatrix(VkDevice handler)
-;
+    VkNvCooperativeMatrix(VkDevice handler);
+
     std::string name() const override { return "VK_NV_cooperative_matrix"; }
     static std::string str() { return "VK_NV_cooperative_matrix"; }
     void init(VkDevice handler) override;
@@ -2117,8 +1860,8 @@ public:
 class VkNvCoverageReductionMode final : public DeviceExtensionBase { 
 public:
     VkNvCoverageReductionMode() = default;
-    VkNvCoverageReductionMode(VkDevice handler)
-;
+    VkNvCoverageReductionMode(VkDevice handler);
+
     std::string name() const override { return "VK_NV_coverage_reduction_mode"; }
     static std::string str() { return "VK_NV_coverage_reduction_mode"; }
     void init(VkDevice handler) override;
@@ -2133,8 +1876,8 @@ public:
 class VkExtFragmentShaderInterlock final : public DeviceExtensionBase { 
 public:
     VkExtFragmentShaderInterlock() = default;
-    VkExtFragmentShaderInterlock(VkDevice handler)
-;
+    VkExtFragmentShaderInterlock(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_fragment_shader_interlock"; }
     static std::string str() { return "VK_EXT_fragment_shader_interlock"; }
     void init(VkDevice handler) override;
@@ -2148,8 +1891,8 @@ public:
 class VkExtYcbcrImageArrays final : public DeviceExtensionBase { 
 public:
     VkExtYcbcrImageArrays() = default;
-    VkExtYcbcrImageArrays(VkDevice handler)
-;
+    VkExtYcbcrImageArrays(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_ycbcr_image_arrays"; }
     static std::string str() { return "VK_EXT_ycbcr_image_arrays"; }
     void init(VkDevice handler) override;
@@ -2163,8 +1906,8 @@ public:
 class VkKhrUniformBufferStandardLayout final : public DeviceExtensionBase { 
 public:
     VkKhrUniformBufferStandardLayout() = default;
-    VkKhrUniformBufferStandardLayout(VkDevice handler)
-;
+    VkKhrUniformBufferStandardLayout(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_uniform_buffer_standard_layout"; }
     static std::string str() { return "VK_KHR_uniform_buffer_standard_layout"; }
     void init(VkDevice handler) override;
@@ -2178,8 +1921,8 @@ public:
 class VkExtProvokingVertex final : public DeviceExtensionBase { 
 public:
     VkExtProvokingVertex() = default;
-    VkExtProvokingVertex(VkDevice handler)
-;
+    VkExtProvokingVertex(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_provoking_vertex"; }
     static std::string str() { return "VK_EXT_provoking_vertex"; }
     void init(VkDevice handler) override;
@@ -2193,49 +1936,33 @@ public:
 class VkExtFullScreenExclusive final : public DeviceExtensionBase { 
 public:
     VkExtFullScreenExclusive() = default;
-    VkExtFullScreenExclusive(VkDevice handler)
-;
+    VkExtFullScreenExclusive(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_full_screen_exclusive"; }
     static std::string str() { return "VK_EXT_full_screen_exclusive"; }
     void init(VkDevice handler) override;
 public:
-    PFN_vkReleaseFullScreenExclusiveModeEXT vkReleaseFullScreenExclusiveModeEXT = {};
-    PFN_vkGetPhysicalDeviceSurfacePresentModes2EXT vkGetPhysicalDeviceSurfacePresentModes2EXT = {};
     PFN_vkAcquireFullScreenExclusiveModeEXT vkAcquireFullScreenExclusiveModeEXT = {};
+    PFN_vkGetPhysicalDeviceSurfacePresentModes2EXT vkGetPhysicalDeviceSurfacePresentModes2EXT = {};
     PFN_vkGetDeviceGroupSurfacePresentModes2EXT vkGetDeviceGroupSurfacePresentModes2EXT = {};
+    PFN_vkReleaseFullScreenExclusiveModeEXT vkReleaseFullScreenExclusiveModeEXT = {};
 };//class VkExtFullScreenExclusive
 
 #endif //VK_EXT_full_screen_exclusive
-
-#if defined(VK_EXT_headless_surface)
-
-class VkExtHeadlessSurface final : public InstanceExtensionBase { 
-public:
-    VkExtHeadlessSurface() = default;
-    VkExtHeadlessSurface(VkInstance handler)
-;
-    std::string name() const override { return "VK_EXT_headless_surface"; }
-    static std::string str() { return "VK_EXT_headless_surface"; }
-    void init(VkInstance handler) override;
-public:
-    PFN_vkCreateHeadlessSurfaceEXT vkCreateHeadlessSurfaceEXT = {};
-};//class VkExtHeadlessSurface
-
-#endif //VK_EXT_headless_surface
 
 #if defined(VK_KHR_buffer_device_address)
 
 class VkKhrBufferDeviceAddress final : public DeviceExtensionBase { 
 public:
     VkKhrBufferDeviceAddress() = default;
-    VkKhrBufferDeviceAddress(VkDevice handler)
-;
+    VkKhrBufferDeviceAddress(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_buffer_device_address"; }
     static std::string str() { return "VK_KHR_buffer_device_address"; }
     void init(VkDevice handler) override;
 public:
-    PFN_vkGetBufferDeviceAddressKHR vkGetBufferDeviceAddressKHR = {};
     PFN_vkGetDeviceMemoryOpaqueCaptureAddressKHR vkGetDeviceMemoryOpaqueCaptureAddressKHR = {};
+    PFN_vkGetBufferDeviceAddressKHR vkGetBufferDeviceAddressKHR = {};
     PFN_vkGetBufferOpaqueCaptureAddressKHR vkGetBufferOpaqueCaptureAddressKHR = {};
 };//class VkKhrBufferDeviceAddress
 
@@ -2246,8 +1973,8 @@ public:
 class VkAmdGcnShader final : public DeviceExtensionBase { 
 public:
     VkAmdGcnShader() = default;
-    VkAmdGcnShader(VkDevice handler)
-;
+    VkAmdGcnShader(VkDevice handler);
+
     std::string name() const override { return "VK_AMD_gcn_shader"; }
     static std::string str() { return "VK_AMD_gcn_shader"; }
     void init(VkDevice handler) override;
@@ -2261,8 +1988,8 @@ public:
 class VkExtLineRasterization final : public DeviceExtensionBase { 
 public:
     VkExtLineRasterization() = default;
-    VkExtLineRasterization(VkDevice handler)
-;
+    VkExtLineRasterization(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_line_rasterization"; }
     static std::string str() { return "VK_EXT_line_rasterization"; }
     void init(VkDevice handler) override;
@@ -2277,8 +2004,8 @@ public:
 class VkExtShaderAtomicFloat final : public DeviceExtensionBase { 
 public:
     VkExtShaderAtomicFloat() = default;
-    VkExtShaderAtomicFloat(VkDevice handler)
-;
+    VkExtShaderAtomicFloat(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_shader_atomic_float"; }
     static std::string str() { return "VK_EXT_shader_atomic_float"; }
     void init(VkDevice handler) override;
@@ -2292,8 +2019,8 @@ public:
 class VkExtHostQueryReset final : public DeviceExtensionBase { 
 public:
     VkExtHostQueryReset() = default;
-    VkExtHostQueryReset(VkDevice handler)
-;
+    VkExtHostQueryReset(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_host_query_reset"; }
     static std::string str() { return "VK_EXT_host_query_reset"; }
     void init(VkDevice handler) override;
@@ -2308,8 +2035,8 @@ public:
 class VkExtIndexTypeUint8 final : public DeviceExtensionBase { 
 public:
     VkExtIndexTypeUint8() = default;
-    VkExtIndexTypeUint8(VkDevice handler)
-;
+    VkExtIndexTypeUint8(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_index_type_uint8"; }
     static std::string str() { return "VK_EXT_index_type_uint8"; }
     void init(VkDevice handler) override;
@@ -2323,8 +2050,8 @@ public:
 class VkExtExtension267 final : public DeviceExtensionBase { 
 public:
     VkExtExtension267() = default;
-    VkExtExtension267(VkDevice handler)
-;
+    VkExtExtension267(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_extension_267"; }
     static std::string str() { return "VK_EXT_extension_267"; }
     void init(VkDevice handler) override;
@@ -2338,24 +2065,24 @@ public:
 class VkExtExtendedDynamicState final : public DeviceExtensionBase { 
 public:
     VkExtExtendedDynamicState() = default;
-    VkExtExtendedDynamicState(VkDevice handler)
-;
+    VkExtExtendedDynamicState(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_extended_dynamic_state"; }
     static std::string str() { return "VK_EXT_extended_dynamic_state"; }
     void init(VkDevice handler) override;
 public:
-    PFN_vkCmdSetPrimitiveTopologyEXT vkCmdSetPrimitiveTopologyEXT = {};
     PFN_vkCmdSetCullModeEXT vkCmdSetCullModeEXT = {};
-    PFN_vkCmdSetFrontFaceEXT vkCmdSetFrontFaceEXT = {};
-    PFN_vkCmdBindVertexBuffers2EXT vkCmdBindVertexBuffers2EXT = {};
-    PFN_vkCmdSetStencilTestEnableEXT vkCmdSetStencilTestEnableEXT = {};
-    PFN_vkCmdSetScissorWithCountEXT vkCmdSetScissorWithCountEXT = {};
-    PFN_vkCmdSetDepthBoundsTestEnableEXT vkCmdSetDepthBoundsTestEnableEXT = {};
-    PFN_vkCmdSetDepthCompareOpEXT vkCmdSetDepthCompareOpEXT = {};
-    PFN_vkCmdSetDepthWriteEnableEXT vkCmdSetDepthWriteEnableEXT = {};
     PFN_vkCmdSetDepthTestEnableEXT vkCmdSetDepthTestEnableEXT = {};
-    PFN_vkCmdSetStencilOpEXT vkCmdSetStencilOpEXT = {};
     PFN_vkCmdSetViewportWithCountEXT vkCmdSetViewportWithCountEXT = {};
+    PFN_vkCmdSetStencilTestEnableEXT vkCmdSetStencilTestEnableEXT = {};
+    PFN_vkCmdSetDepthWriteEnableEXT vkCmdSetDepthWriteEnableEXT = {};
+    PFN_vkCmdSetScissorWithCountEXT vkCmdSetScissorWithCountEXT = {};
+    PFN_vkCmdSetStencilOpEXT vkCmdSetStencilOpEXT = {};
+    PFN_vkCmdSetPrimitiveTopologyEXT vkCmdSetPrimitiveTopologyEXT = {};
+    PFN_vkCmdSetDepthCompareOpEXT vkCmdSetDepthCompareOpEXT = {};
+    PFN_vkCmdBindVertexBuffers2EXT vkCmdBindVertexBuffers2EXT = {};
+    PFN_vkCmdSetDepthBoundsTestEnableEXT vkCmdSetDepthBoundsTestEnableEXT = {};
+    PFN_vkCmdSetFrontFaceEXT vkCmdSetFrontFaceEXT = {};
 };//class VkExtExtendedDynamicState
 
 #endif //VK_EXT_extended_dynamic_state
@@ -2365,17 +2092,17 @@ public:
 class VkKhrDeferredHostOperations final : public DeviceExtensionBase { 
 public:
     VkKhrDeferredHostOperations() = default;
-    VkKhrDeferredHostOperations(VkDevice handler)
-;
+    VkKhrDeferredHostOperations(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_deferred_host_operations"; }
     static std::string str() { return "VK_KHR_deferred_host_operations"; }
     void init(VkDevice handler) override;
 public:
-    PFN_vkDeferredOperationJoinKHR vkDeferredOperationJoinKHR = {};
-    PFN_vkCreateDeferredOperationKHR vkCreateDeferredOperationKHR = {};
+    PFN_vkDestroyDeferredOperationKHR vkDestroyDeferredOperationKHR = {};
     PFN_vkGetDeferredOperationResultKHR vkGetDeferredOperationResultKHR = {};
     PFN_vkGetDeferredOperationMaxConcurrencyKHR vkGetDeferredOperationMaxConcurrencyKHR = {};
-    PFN_vkDestroyDeferredOperationKHR vkDestroyDeferredOperationKHR = {};
+    PFN_vkDeferredOperationJoinKHR vkDeferredOperationJoinKHR = {};
+    PFN_vkCreateDeferredOperationKHR vkCreateDeferredOperationKHR = {};
 };//class VkKhrDeferredHostOperations
 
 #endif //VK_KHR_deferred_host_operations
@@ -2385,8 +2112,8 @@ public:
 class VkNvDedicatedAllocation final : public DeviceExtensionBase { 
 public:
     VkNvDedicatedAllocation() = default;
-    VkNvDedicatedAllocation(VkDevice handler)
-;
+    VkNvDedicatedAllocation(VkDevice handler);
+
     std::string name() const override { return "VK_NV_dedicated_allocation"; }
     static std::string str() { return "VK_NV_dedicated_allocation"; }
     void init(VkDevice handler) override;
@@ -2400,8 +2127,8 @@ public:
 class VkKhrPipelineExecutableProperties final : public DeviceExtensionBase { 
 public:
     VkKhrPipelineExecutableProperties() = default;
-    VkKhrPipelineExecutableProperties(VkDevice handler)
-;
+    VkKhrPipelineExecutableProperties(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_pipeline_executable_properties"; }
     static std::string str() { return "VK_KHR_pipeline_executable_properties"; }
     void init(VkDevice handler) override;
@@ -2418,8 +2145,8 @@ public:
 class VkIntelExtension271 final : public DeviceExtensionBase { 
 public:
     VkIntelExtension271() = default;
-    VkIntelExtension271(VkDevice handler)
-;
+    VkIntelExtension271(VkDevice handler);
+
     std::string name() const override { return "VK_INTEL_extension_271"; }
     static std::string str() { return "VK_INTEL_extension_271"; }
     void init(VkDevice handler) override;
@@ -2433,8 +2160,8 @@ public:
 class VkIntelExtension272 final : public DeviceExtensionBase { 
 public:
     VkIntelExtension272() = default;
-    VkIntelExtension272(VkDevice handler)
-;
+    VkIntelExtension272(VkDevice handler);
+
     std::string name() const override { return "VK_INTEL_extension_272"; }
     static std::string str() { return "VK_INTEL_extension_272"; }
     void init(VkDevice handler) override;
@@ -2448,8 +2175,8 @@ public:
 class VkIntelExtension273 final : public DeviceExtensionBase { 
 public:
     VkIntelExtension273() = default;
-    VkIntelExtension273(VkDevice handler)
-;
+    VkIntelExtension273(VkDevice handler);
+
     std::string name() const override { return "VK_INTEL_extension_273"; }
     static std::string str() { return "VK_INTEL_extension_273"; }
     void init(VkDevice handler) override;
@@ -2463,8 +2190,8 @@ public:
 class VkExtShaderAtomicFloat2 final : public DeviceExtensionBase { 
 public:
     VkExtShaderAtomicFloat2() = default;
-    VkExtShaderAtomicFloat2(VkDevice handler)
-;
+    VkExtShaderAtomicFloat2(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_shader_atomic_float2"; }
     static std::string str() { return "VK_EXT_shader_atomic_float2"; }
     void init(VkDevice handler) override;
@@ -2473,28 +2200,13 @@ public:
 
 #endif //VK_EXT_shader_atomic_float2
 
-#if defined(VK_KHR_extension_275)
-
-class VkKhrExtension275 final : public InstanceExtensionBase { 
-public:
-    VkKhrExtension275() = default;
-    VkKhrExtension275(VkInstance handler)
-;
-    std::string name() const override { return "VK_KHR_extension_275"; }
-    static std::string str() { return "VK_KHR_extension_275"; }
-    void init(VkInstance handler) override;
-public:
-};//class VkKhrExtension275
-
-#endif //VK_KHR_extension_275
-
 #if defined(VK_KHR_extension_276)
 
 class VkKhrExtension276 final : public DeviceExtensionBase { 
 public:
     VkKhrExtension276() = default;
-    VkKhrExtension276(VkDevice handler)
-;
+    VkKhrExtension276(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_extension_276"; }
     static std::string str() { return "VK_KHR_extension_276"; }
     void init(VkDevice handler) override;
@@ -2508,8 +2220,8 @@ public:
 class VkExtShaderDemoteToHelperInvocation final : public DeviceExtensionBase { 
 public:
     VkExtShaderDemoteToHelperInvocation() = default;
-    VkExtShaderDemoteToHelperInvocation(VkDevice handler)
-;
+    VkExtShaderDemoteToHelperInvocation(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_shader_demote_to_helper_invocation"; }
     static std::string str() { return "VK_EXT_shader_demote_to_helper_invocation"; }
     void init(VkDevice handler) override;
@@ -2523,18 +2235,18 @@ public:
 class VkNvDeviceGeneratedCommands final : public DeviceExtensionBase { 
 public:
     VkNvDeviceGeneratedCommands() = default;
-    VkNvDeviceGeneratedCommands(VkDevice handler)
-;
+    VkNvDeviceGeneratedCommands(VkDevice handler);
+
     std::string name() const override { return "VK_NV_device_generated_commands"; }
     static std::string str() { return "VK_NV_device_generated_commands"; }
     void init(VkDevice handler) override;
 public:
-    PFN_vkCmdBindPipelineShaderGroupNV vkCmdBindPipelineShaderGroupNV = {};
     PFN_vkGetGeneratedCommandsMemoryRequirementsNV vkGetGeneratedCommandsMemoryRequirementsNV = {};
-    PFN_vkCmdExecuteGeneratedCommandsNV vkCmdExecuteGeneratedCommandsNV = {};
     PFN_vkDestroyIndirectCommandsLayoutNV vkDestroyIndirectCommandsLayoutNV = {};
-    PFN_vkCmdPreprocessGeneratedCommandsNV vkCmdPreprocessGeneratedCommandsNV = {};
+    PFN_vkCmdExecuteGeneratedCommandsNV vkCmdExecuteGeneratedCommandsNV = {};
+    PFN_vkCmdBindPipelineShaderGroupNV vkCmdBindPipelineShaderGroupNV = {};
     PFN_vkCreateIndirectCommandsLayoutNV vkCreateIndirectCommandsLayoutNV = {};
+    PFN_vkCmdPreprocessGeneratedCommandsNV vkCmdPreprocessGeneratedCommandsNV = {};
 };//class VkNvDeviceGeneratedCommands
 
 #endif //VK_NV_device_generated_commands
@@ -2544,8 +2256,8 @@ public:
 class VkNvInheritedViewportScissor final : public DeviceExtensionBase { 
 public:
     VkNvInheritedViewportScissor() = default;
-    VkNvInheritedViewportScissor(VkDevice handler)
-;
+    VkNvInheritedViewportScissor(VkDevice handler);
+
     std::string name() const override { return "VK_NV_inherited_viewport_scissor"; }
     static std::string str() { return "VK_NV_inherited_viewport_scissor"; }
     void init(VkDevice handler) override;
@@ -2559,8 +2271,8 @@ public:
 class VkKhrExtension280 final : public DeviceExtensionBase { 
 public:
     VkKhrExtension280() = default;
-    VkKhrExtension280(VkDevice handler)
-;
+    VkKhrExtension280(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_extension_280"; }
     static std::string str() { return "VK_KHR_extension_280"; }
     void init(VkDevice handler) override;
@@ -2574,8 +2286,8 @@ public:
 class VkKhrShaderIntegerDotProduct final : public DeviceExtensionBase { 
 public:
     VkKhrShaderIntegerDotProduct() = default;
-    VkKhrShaderIntegerDotProduct(VkDevice handler)
-;
+    VkKhrShaderIntegerDotProduct(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_shader_integer_dot_product"; }
     static std::string str() { return "VK_KHR_shader_integer_dot_product"; }
     void init(VkDevice handler) override;
@@ -2589,8 +2301,8 @@ public:
 class VkExtTexelBufferAlignment final : public DeviceExtensionBase { 
 public:
     VkExtTexelBufferAlignment() = default;
-    VkExtTexelBufferAlignment(VkDevice handler)
-;
+    VkExtTexelBufferAlignment(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_texel_buffer_alignment"; }
     static std::string str() { return "VK_EXT_texel_buffer_alignment"; }
     void init(VkDevice handler) override;
@@ -2604,8 +2316,8 @@ public:
 class VkQcomRenderPassTransform final : public DeviceExtensionBase { 
 public:
     VkQcomRenderPassTransform() = default;
-    VkQcomRenderPassTransform(VkDevice handler)
-;
+    VkQcomRenderPassTransform(VkDevice handler);
+
     std::string name() const override { return "VK_QCOM_render_pass_transform"; }
     static std::string str() { return "VK_QCOM_render_pass_transform"; }
     void init(VkDevice handler) override;
@@ -2619,8 +2331,8 @@ public:
 class VkExtExtension284 final : public DeviceExtensionBase { 
 public:
     VkExtExtension284() = default;
-    VkExtExtension284(VkDevice handler)
-;
+    VkExtExtension284(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_extension_284"; }
     static std::string str() { return "VK_EXT_extension_284"; }
     void init(VkDevice handler) override;
@@ -2634,8 +2346,8 @@ public:
 class VkExtDeviceMemoryReport final : public DeviceExtensionBase { 
 public:
     VkExtDeviceMemoryReport() = default;
-    VkExtDeviceMemoryReport(VkDevice handler)
-;
+    VkExtDeviceMemoryReport(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_device_memory_report"; }
     static std::string str() { return "VK_EXT_device_memory_report"; }
     void init(VkDevice handler) override;
@@ -2644,30 +2356,13 @@ public:
 
 #endif //VK_EXT_device_memory_report
 
-#if defined(VK_EXT_acquire_drm_display)
-
-class VkExtAcquireDrmDisplay final : public InstanceExtensionBase { 
-public:
-    VkExtAcquireDrmDisplay() = default;
-    VkExtAcquireDrmDisplay(VkInstance handler)
-;
-    std::string name() const override { return "VK_EXT_acquire_drm_display"; }
-    static std::string str() { return "VK_EXT_acquire_drm_display"; }
-    void init(VkInstance handler) override;
-public:
-    PFN_vkGetDrmDisplayEXT vkGetDrmDisplayEXT = {};
-    PFN_vkAcquireDrmDisplayEXT vkAcquireDrmDisplayEXT = {};
-};//class VkExtAcquireDrmDisplay
-
-#endif //VK_EXT_acquire_drm_display
-
 #if defined(VK_EXT_robustness2)
 
 class VkExtRobustness2 final : public DeviceExtensionBase { 
 public:
     VkExtRobustness2() = default;
-    VkExtRobustness2(VkDevice handler)
-;
+    VkExtRobustness2(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_robustness2"; }
     static std::string str() { return "VK_EXT_robustness2"; }
     void init(VkDevice handler) override;
@@ -2681,8 +2376,8 @@ public:
 class VkExtCustomBorderColor final : public DeviceExtensionBase { 
 public:
     VkExtCustomBorderColor() = default;
-    VkExtCustomBorderColor(VkDevice handler)
-;
+    VkExtCustomBorderColor(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_custom_border_color"; }
     static std::string str() { return "VK_EXT_custom_border_color"; }
     void init(VkDevice handler) override;
@@ -2696,18 +2391,18 @@ public:
 class VkExtTransformFeedback final : public DeviceExtensionBase { 
 public:
     VkExtTransformFeedback() = default;
-    VkExtTransformFeedback(VkDevice handler)
-;
+    VkExtTransformFeedback(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_transform_feedback"; }
     static std::string str() { return "VK_EXT_transform_feedback"; }
     void init(VkDevice handler) override;
 public:
-    PFN_vkCmdBeginQueryIndexedEXT vkCmdBeginQueryIndexedEXT = {};
-    PFN_vkCmdEndQueryIndexedEXT vkCmdEndQueryIndexedEXT = {};
     PFN_vkCmdBindTransformFeedbackBuffersEXT vkCmdBindTransformFeedbackBuffersEXT = {};
     PFN_vkCmdDrawIndirectByteCountEXT vkCmdDrawIndirectByteCountEXT = {};
+    PFN_vkCmdBeginQueryIndexedEXT vkCmdBeginQueryIndexedEXT = {};
     PFN_vkCmdEndTransformFeedbackEXT vkCmdEndTransformFeedbackEXT = {};
     PFN_vkCmdBeginTransformFeedbackEXT vkCmdBeginTransformFeedbackEXT = {};
+    PFN_vkCmdEndQueryIndexedEXT vkCmdEndQueryIndexedEXT = {};
 };//class VkExtTransformFeedback
 
 #endif //VK_EXT_transform_feedback
@@ -2717,8 +2412,8 @@ public:
 class VkGoogleUserType final : public DeviceExtensionBase { 
 public:
     VkGoogleUserType() = default;
-    VkGoogleUserType(VkDevice handler)
-;
+    VkGoogleUserType(VkDevice handler);
+
     std::string name() const override { return "VK_GOOGLE_user_type"; }
     static std::string str() { return "VK_GOOGLE_user_type"; }
     void init(VkDevice handler) override;
@@ -2732,8 +2427,8 @@ public:
 class VkKhrPipelineLibrary final : public DeviceExtensionBase { 
 public:
     VkKhrPipelineLibrary() = default;
-    VkKhrPipelineLibrary(VkDevice handler)
-;
+    VkKhrPipelineLibrary(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_pipeline_library"; }
     static std::string str() { return "VK_KHR_pipeline_library"; }
     void init(VkDevice handler) override;
@@ -2747,8 +2442,8 @@ public:
 class VkKhrShaderNonSemanticInfo final : public DeviceExtensionBase { 
 public:
     VkKhrShaderNonSemanticInfo() = default;
-    VkKhrShaderNonSemanticInfo(VkDevice handler)
-;
+    VkKhrShaderNonSemanticInfo(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_shader_non_semantic_info"; }
     static std::string str() { return "VK_KHR_shader_non_semantic_info"; }
     void init(VkDevice handler) override;
@@ -2762,8 +2457,8 @@ public:
 class VkKhrPresentId final : public DeviceExtensionBase { 
 public:
     VkKhrPresentId() = default;
-    VkKhrPresentId(VkDevice handler)
-;
+    VkKhrPresentId(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_present_id"; }
     static std::string str() { return "VK_KHR_present_id"; }
     void init(VkDevice handler) override;
@@ -2777,16 +2472,16 @@ public:
 class VkExtPrivateData final : public DeviceExtensionBase { 
 public:
     VkExtPrivateData() = default;
-    VkExtPrivateData(VkDevice handler)
-;
+    VkExtPrivateData(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_private_data"; }
     static std::string str() { return "VK_EXT_private_data"; }
     void init(VkDevice handler) override;
 public:
-    PFN_vkGetPrivateDataEXT vkGetPrivateDataEXT = {};
-    PFN_vkSetPrivateDataEXT vkSetPrivateDataEXT = {};
     PFN_vkCreatePrivateDataSlotEXT vkCreatePrivateDataSlotEXT = {};
     PFN_vkDestroyPrivateDataSlotEXT vkDestroyPrivateDataSlotEXT = {};
+    PFN_vkGetPrivateDataEXT vkGetPrivateDataEXT = {};
+    PFN_vkSetPrivateDataEXT vkSetPrivateDataEXT = {};
 };//class VkExtPrivateData
 
 #endif //VK_EXT_private_data
@@ -2796,8 +2491,8 @@ public:
 class VkExtPipelineCreationCacheControl final : public DeviceExtensionBase { 
 public:
     VkExtPipelineCreationCacheControl() = default;
-    VkExtPipelineCreationCacheControl(VkDevice handler)
-;
+    VkExtPipelineCreationCacheControl(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_pipeline_creation_cache_control"; }
     static std::string str() { return "VK_EXT_pipeline_creation_cache_control"; }
     void init(VkDevice handler) override;
@@ -2806,44 +2501,22 @@ public:
 
 #endif //VK_EXT_pipeline_creation_cache_control
 
-#if defined(VK_KHR_display)
-
-class VkKhrDisplay final : public InstanceExtensionBase { 
-public:
-    VkKhrDisplay() = default;
-    VkKhrDisplay(VkInstance handler)
-;
-    std::string name() const override { return "VK_KHR_display"; }
-    static std::string str() { return "VK_KHR_display"; }
-    void init(VkInstance handler) override;
-public:
-    PFN_vkGetDisplayModePropertiesKHR vkGetDisplayModePropertiesKHR = {};
-    PFN_vkGetDisplayPlaneSupportedDisplaysKHR vkGetDisplayPlaneSupportedDisplaysKHR = {};
-    PFN_vkCreateDisplayModeKHR vkCreateDisplayModeKHR = {};
-    PFN_vkGetDisplayPlaneCapabilitiesKHR vkGetDisplayPlaneCapabilitiesKHR = {};
-    PFN_vkCreateDisplayPlaneSurfaceKHR vkCreateDisplayPlaneSurfaceKHR = {};
-    PFN_vkGetPhysicalDeviceDisplayPlanePropertiesKHR vkGetPhysicalDeviceDisplayPlanePropertiesKHR = {};
-    PFN_vkGetPhysicalDeviceDisplayPropertiesKHR vkGetPhysicalDeviceDisplayPropertiesKHR = {};
-};//class VkKhrDisplay
-
-#endif //VK_KHR_display
-
 #if defined(VK_NVX_binary_import)
 
 class VkNvxBinaryImport final : public DeviceExtensionBase { 
 public:
     VkNvxBinaryImport() = default;
-    VkNvxBinaryImport(VkDevice handler)
-;
+    VkNvxBinaryImport(VkDevice handler);
+
     std::string name() const override { return "VK_NVX_binary_import"; }
     static std::string str() { return "VK_NVX_binary_import"; }
     void init(VkDevice handler) override;
 public:
     PFN_vkCreateCuFunctionNVX vkCreateCuFunctionNVX = {};
-    PFN_vkCmdCuLaunchKernelNVX vkCmdCuLaunchKernelNVX = {};
-    PFN_vkDestroyCuModuleNVX vkDestroyCuModuleNVX = {};
-    PFN_vkCreateCuModuleNVX vkCreateCuModuleNVX = {};
     PFN_vkDestroyCuFunctionNVX vkDestroyCuFunctionNVX = {};
+    PFN_vkCmdCuLaunchKernelNVX vkCmdCuLaunchKernelNVX = {};
+    PFN_vkCreateCuModuleNVX vkCreateCuModuleNVX = {};
+    PFN_vkDestroyCuModuleNVX vkDestroyCuModuleNVX = {};
 };//class VkNvxBinaryImport
 
 #endif //VK_NVX_binary_import
@@ -2853,8 +2526,8 @@ public:
 class VkKhrVideoEncodeQueue final : public DeviceExtensionBase { 
 public:
     VkKhrVideoEncodeQueue() = default;
-    VkKhrVideoEncodeQueue(VkDevice handler)
-;
+    VkKhrVideoEncodeQueue(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_video_encode_queue"; }
     static std::string str() { return "VK_KHR_video_encode_queue"; }
     void init(VkDevice handler) override;
@@ -2869,8 +2542,8 @@ public:
 class VkNvDeviceDiagnosticsConfig final : public DeviceExtensionBase { 
 public:
     VkNvDeviceDiagnosticsConfig() = default;
-    VkNvDeviceDiagnosticsConfig(VkDevice handler)
-;
+    VkNvDeviceDiagnosticsConfig(VkDevice handler);
+
     std::string name() const override { return "VK_NV_device_diagnostics_config"; }
     static std::string str() { return "VK_NV_device_diagnostics_config"; }
     void init(VkDevice handler) override;
@@ -2884,8 +2557,8 @@ public:
 class VkQcomRenderPassStoreOps final : public DeviceExtensionBase { 
 public:
     VkQcomRenderPassStoreOps() = default;
-    VkQcomRenderPassStoreOps(VkDevice handler)
-;
+    VkQcomRenderPassStoreOps(VkDevice handler);
+
     std::string name() const override { return "VK_QCOM_render_pass_store_ops"; }
     static std::string str() { return "VK_QCOM_render_pass_store_ops"; }
     void init(VkDevice handler) override;
@@ -2899,8 +2572,8 @@ public:
 class VkNvExtension308 final : public DeviceExtensionBase { 
 public:
     VkNvExtension308() = default;
-    VkNvExtension308(VkDevice handler)
-;
+    VkNvExtension308(VkDevice handler);
+
     std::string name() const override { return "VK_NV_extension_308"; }
     static std::string str() { return "VK_NV_extension_308"; }
     void init(VkDevice handler) override;
@@ -2914,8 +2587,8 @@ public:
 class VkNvxImageViewHandle final : public DeviceExtensionBase { 
 public:
     VkNvxImageViewHandle() = default;
-    VkNvxImageViewHandle(VkDevice handler)
-;
+    VkNvxImageViewHandle(VkDevice handler);
+
     std::string name() const override { return "VK_NVX_image_view_handle"; }
     static std::string str() { return "VK_NVX_image_view_handle"; }
     void init(VkDevice handler) override;
@@ -2931,20 +2604,20 @@ public:
 class VkKhrSynchronization2 final : public DeviceExtensionBase { 
 public:
     VkKhrSynchronization2() = default;
-    VkKhrSynchronization2(VkDevice handler)
-;
+    VkKhrSynchronization2(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_synchronization2"; }
     static std::string str() { return "VK_KHR_synchronization2"; }
     void init(VkDevice handler) override;
 public:
     PFN_vkCmdWriteTimestamp2KHR vkCmdWriteTimestamp2KHR = {};
-    PFN_vkCmdSetEvent2KHR vkCmdSetEvent2KHR = {};
-    PFN_vkCmdWriteBufferMarker2AMD vkCmdWriteBufferMarker2AMD = {};
-    PFN_vkQueueSubmit2KHR vkQueueSubmit2KHR = {};
-    PFN_vkGetQueueCheckpointData2NV vkGetQueueCheckpointData2NV = {};
-    PFN_vkCmdResetEvent2KHR vkCmdResetEvent2KHR = {};
     PFN_vkCmdWaitEvents2KHR vkCmdWaitEvents2KHR = {};
     PFN_vkCmdPipelineBarrier2KHR vkCmdPipelineBarrier2KHR = {};
+    PFN_vkCmdSetEvent2KHR vkCmdSetEvent2KHR = {};
+    PFN_vkGetQueueCheckpointData2NV vkGetQueueCheckpointData2NV = {};
+    PFN_vkQueueSubmit2KHR vkQueueSubmit2KHR = {};
+    PFN_vkCmdResetEvent2KHR vkCmdResetEvent2KHR = {};
+    PFN_vkCmdWriteBufferMarker2AMD vkCmdWriteBufferMarker2AMD = {};
 };//class VkKhrSynchronization2
 
 #endif //VK_KHR_synchronization2
@@ -2954,8 +2627,8 @@ public:
 class VkKhrShaderSubgroupUniformControlFlow final : public DeviceExtensionBase { 
 public:
     VkKhrShaderSubgroupUniformControlFlow() = default;
-    VkKhrShaderSubgroupUniformControlFlow(VkDevice handler)
-;
+    VkKhrShaderSubgroupUniformControlFlow(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_shader_subgroup_uniform_control_flow"; }
     static std::string str() { return "VK_KHR_shader_subgroup_uniform_control_flow"; }
     void init(VkDevice handler) override;
@@ -2969,8 +2642,8 @@ public:
 class VkKhrZeroInitializeWorkgroupMemory final : public DeviceExtensionBase { 
 public:
     VkKhrZeroInitializeWorkgroupMemory() = default;
-    VkKhrZeroInitializeWorkgroupMemory(VkDevice handler)
-;
+    VkKhrZeroInitializeWorkgroupMemory(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_zero_initialize_workgroup_memory"; }
     static std::string str() { return "VK_KHR_zero_initialize_workgroup_memory"; }
     void init(VkDevice handler) override;
@@ -2984,8 +2657,8 @@ public:
 class VkNvFragmentShadingRateEnums final : public DeviceExtensionBase { 
 public:
     VkNvFragmentShadingRateEnums() = default;
-    VkNvFragmentShadingRateEnums(VkDevice handler)
-;
+    VkNvFragmentShadingRateEnums(VkDevice handler);
+
     std::string name() const override { return "VK_NV_fragment_shading_rate_enums"; }
     static std::string str() { return "VK_NV_fragment_shading_rate_enums"; }
     void init(VkDevice handler) override;
@@ -3000,8 +2673,8 @@ public:
 class VkNvRayTracingMotionBlur final : public DeviceExtensionBase { 
 public:
     VkNvRayTracingMotionBlur() = default;
-    VkNvRayTracingMotionBlur(VkDevice handler)
-;
+    VkNvRayTracingMotionBlur(VkDevice handler);
+
     std::string name() const override { return "VK_NV_ray_tracing_motion_blur"; }
     static std::string str() { return "VK_NV_ray_tracing_motion_blur"; }
     void init(VkDevice handler) override;
@@ -3015,8 +2688,8 @@ public:
 class VkExtYcbcr2plane444Formats final : public DeviceExtensionBase { 
 public:
     VkExtYcbcr2plane444Formats() = default;
-    VkExtYcbcr2plane444Formats(VkDevice handler)
-;
+    VkExtYcbcr2plane444Formats(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_ycbcr_2plane_444_formats"; }
     static std::string str() { return "VK_EXT_ycbcr_2plane_444_formats"; }
     void init(VkDevice handler) override;
@@ -3030,8 +2703,8 @@ public:
 class VkExtFragmentDensityMap2 final : public DeviceExtensionBase { 
 public:
     VkExtFragmentDensityMap2() = default;
-    VkExtFragmentDensityMap2(VkDevice handler)
-;
+    VkExtFragmentDensityMap2(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_fragment_density_map2"; }
     static std::string str() { return "VK_EXT_fragment_density_map2"; }
     void init(VkDevice handler) override;
@@ -3045,8 +2718,8 @@ public:
 class VkQcomRotatedCopyCommands final : public DeviceExtensionBase { 
 public:
     VkQcomRotatedCopyCommands() = default;
-    VkQcomRotatedCopyCommands(VkDevice handler)
-;
+    VkQcomRotatedCopyCommands(VkDevice handler);
+
     std::string name() const override { return "VK_QCOM_rotated_copy_commands"; }
     static std::string str() { return "VK_QCOM_rotated_copy_commands"; }
     void init(VkDevice handler) override;
@@ -3060,8 +2733,8 @@ public:
 class VkExtImageRobustness final : public DeviceExtensionBase { 
 public:
     VkExtImageRobustness() = default;
-    VkExtImageRobustness(VkDevice handler)
-;
+    VkExtImageRobustness(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_image_robustness"; }
     static std::string str() { return "VK_EXT_image_robustness"; }
     void init(VkDevice handler) override;
@@ -3075,8 +2748,8 @@ public:
 class VkKhrWorkgroupMemoryExplicitLayout final : public DeviceExtensionBase { 
 public:
     VkKhrWorkgroupMemoryExplicitLayout() = default;
-    VkKhrWorkgroupMemoryExplicitLayout(VkDevice handler)
-;
+    VkKhrWorkgroupMemoryExplicitLayout(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_workgroup_memory_explicit_layout"; }
     static std::string str() { return "VK_KHR_workgroup_memory_explicit_layout"; }
     void init(VkDevice handler) override;
@@ -3090,18 +2763,18 @@ public:
 class VkKhrCopyCommands2 final : public DeviceExtensionBase { 
 public:
     VkKhrCopyCommands2() = default;
-    VkKhrCopyCommands2(VkDevice handler)
-;
+    VkKhrCopyCommands2(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_copy_commands2"; }
     static std::string str() { return "VK_KHR_copy_commands2"; }
     void init(VkDevice handler) override;
 public:
+    PFN_vkCmdBlitImage2KHR vkCmdBlitImage2KHR = {};
+    PFN_vkCmdCopyImageToBuffer2KHR vkCmdCopyImageToBuffer2KHR = {};
     PFN_vkCmdResolveImage2KHR vkCmdResolveImage2KHR = {};
     PFN_vkCmdCopyBufferToImage2KHR vkCmdCopyBufferToImage2KHR = {};
-    PFN_vkCmdCopyImage2KHR vkCmdCopyImage2KHR = {};
-    PFN_vkCmdCopyImageToBuffer2KHR vkCmdCopyImageToBuffer2KHR = {};
-    PFN_vkCmdBlitImage2KHR vkCmdBlitImage2KHR = {};
     PFN_vkCmdCopyBuffer2KHR vkCmdCopyBuffer2KHR = {};
+    PFN_vkCmdCopyImage2KHR vkCmdCopyImage2KHR = {};
 };//class VkKhrCopyCommands2
 
 #endif //VK_KHR_copy_commands2
@@ -3111,14 +2784,14 @@ public:
 class VkAmdDrawIndirectCount final : public DeviceExtensionBase { 
 public:
     VkAmdDrawIndirectCount() = default;
-    VkAmdDrawIndirectCount(VkDevice handler)
-;
+    VkAmdDrawIndirectCount(VkDevice handler);
+
     std::string name() const override { return "VK_AMD_draw_indirect_count"; }
     static std::string str() { return "VK_AMD_draw_indirect_count"; }
     void init(VkDevice handler) override;
 public:
-    PFN_vkCmdDrawIndirectCountAMD vkCmdDrawIndirectCountAMD = {};
     PFN_vkCmdDrawIndexedIndirectCountAMD vkCmdDrawIndexedIndirectCountAMD = {};
+    PFN_vkCmdDrawIndirectCountAMD vkCmdDrawIndirectCountAMD = {};
 };//class VkAmdDrawIndirectCount
 
 #endif //VK_AMD_draw_indirect_count
@@ -3128,8 +2801,8 @@ public:
 class VkExt4444Formats final : public DeviceExtensionBase { 
 public:
     VkExt4444Formats() = default;
-    VkExt4444Formats(VkDevice handler)
-;
+    VkExt4444Formats(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_4444_formats"; }
     static std::string str() { return "VK_EXT_4444_formats"; }
     void init(VkDevice handler) override;
@@ -3143,8 +2816,8 @@ public:
 class VkArmRasterizationOrderAttachmentAccess final : public DeviceExtensionBase { 
 public:
     VkArmRasterizationOrderAttachmentAccess() = default;
-    VkArmRasterizationOrderAttachmentAccess(VkDevice handler)
-;
+    VkArmRasterizationOrderAttachmentAccess(VkDevice handler);
+
     std::string name() const override { return "VK_ARM_rasterization_order_attachment_access"; }
     static std::string str() { return "VK_ARM_rasterization_order_attachment_access"; }
     void init(VkDevice handler) override;
@@ -3158,8 +2831,8 @@ public:
 class VkExtRgba10x6Formats final : public DeviceExtensionBase { 
 public:
     VkExtRgba10x6Formats() = default;
-    VkExtRgba10x6Formats(VkDevice handler)
-;
+    VkExtRgba10x6Formats(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_rgba10x6_formats"; }
     static std::string str() { return "VK_EXT_rgba10x6_formats"; }
     void init(VkDevice handler) override;
@@ -3173,53 +2846,36 @@ public:
 class VkNvAcquireWinrtDisplay final : public DeviceExtensionBase { 
 public:
     VkNvAcquireWinrtDisplay() = default;
-    VkNvAcquireWinrtDisplay(VkDevice handler)
-;
+    VkNvAcquireWinrtDisplay(VkDevice handler);
+
     std::string name() const override { return "VK_NV_acquire_winrt_display"; }
     static std::string str() { return "VK_NV_acquire_winrt_display"; }
     void init(VkDevice handler) override;
 public:
-    PFN_vkAcquireWinrtDisplayNV vkAcquireWinrtDisplayNV = {};
     PFN_vkGetWinrtDisplayNV vkGetWinrtDisplayNV = {};
+    PFN_vkAcquireWinrtDisplayNV vkAcquireWinrtDisplayNV = {};
 };//class VkNvAcquireWinrtDisplay
 
 #endif //VK_NV_acquire_winrt_display
-
-#if defined(VK_EXT_directfb_surface)
-
-class VkExtDirectfbSurface final : public InstanceExtensionBase { 
-public:
-    VkExtDirectfbSurface() = default;
-    VkExtDirectfbSurface(VkInstance handler)
-;
-    std::string name() const override { return "VK_EXT_directfb_surface"; }
-    static std::string str() { return "VK_EXT_directfb_surface"; }
-    void init(VkInstance handler) override;
-public:
-    PFN_vkGetPhysicalDeviceDirectFBPresentationSupportEXT vkGetPhysicalDeviceDirectFBPresentationSupportEXT = {};
-    PFN_vkCreateDirectFBSurfaceEXT vkCreateDirectFBSurfaceEXT = {};
-};//class VkExtDirectfbSurface
-
-#endif //VK_EXT_directfb_surface
 
 #if defined(VK_KHR_ray_tracing_pipeline)
 
 class VkKhrRayTracingPipeline final : public DeviceExtensionBase { 
 public:
     VkKhrRayTracingPipeline() = default;
-    VkKhrRayTracingPipeline(VkDevice handler)
-;
+    VkKhrRayTracingPipeline(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_ray_tracing_pipeline"; }
     static std::string str() { return "VK_KHR_ray_tracing_pipeline"; }
     void init(VkDevice handler) override;
 public:
-    PFN_vkGetRayTracingShaderGroupStackSizeKHR vkGetRayTracingShaderGroupStackSizeKHR = {};
+    PFN_vkCmdTraceRaysIndirectKHR vkCmdTraceRaysIndirectKHR = {};
     PFN_vkCreateRayTracingPipelinesKHR vkCreateRayTracingPipelinesKHR = {};
     PFN_vkCmdSetRayTracingPipelineStackSizeKHR vkCmdSetRayTracingPipelineStackSizeKHR = {};
     PFN_vkGetRayTracingCaptureReplayShaderGroupHandlesKHR vkGetRayTracingCaptureReplayShaderGroupHandlesKHR = {};
-    PFN_vkGetRayTracingShaderGroupHandlesKHR vkGetRayTracingShaderGroupHandlesKHR = {};
+    PFN_vkGetRayTracingShaderGroupStackSizeKHR vkGetRayTracingShaderGroupStackSizeKHR = {};
     PFN_vkCmdTraceRaysKHR vkCmdTraceRaysKHR = {};
-    PFN_vkCmdTraceRaysIndirectKHR vkCmdTraceRaysIndirectKHR = {};
+    PFN_vkGetRayTracingShaderGroupHandlesKHR vkGetRayTracingShaderGroupHandlesKHR = {};
 };//class VkKhrRayTracingPipeline
 
 #endif //VK_KHR_ray_tracing_pipeline
@@ -3229,8 +2885,8 @@ public:
 class VkKhrRayQuery final : public DeviceExtensionBase { 
 public:
     VkKhrRayQuery() = default;
-    VkKhrRayQuery(VkDevice handler)
-;
+    VkKhrRayQuery(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_ray_query"; }
     static std::string str() { return "VK_KHR_ray_query"; }
     void init(VkDevice handler) override;
@@ -3244,8 +2900,8 @@ public:
 class VkValveMutableDescriptorType final : public DeviceExtensionBase { 
 public:
     VkValveMutableDescriptorType() = default;
-    VkValveMutableDescriptorType(VkDevice handler)
-;
+    VkValveMutableDescriptorType(VkDevice handler);
+
     std::string name() const override { return "VK_VALVE_mutable_descriptor_type"; }
     static std::string str() { return "VK_VALVE_mutable_descriptor_type"; }
     void init(VkDevice handler) override;
@@ -3259,8 +2915,8 @@ public:
 class VkExtVertexInputDynamicState final : public DeviceExtensionBase { 
 public:
     VkExtVertexInputDynamicState() = default;
-    VkExtVertexInputDynamicState(VkDevice handler)
-;
+    VkExtVertexInputDynamicState(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_vertex_input_dynamic_state"; }
     static std::string str() { return "VK_EXT_vertex_input_dynamic_state"; }
     void init(VkDevice handler) override;
@@ -3275,8 +2931,8 @@ public:
 class VkExtPhysicalDeviceDrm final : public DeviceExtensionBase { 
 public:
     VkExtPhysicalDeviceDrm() = default;
-    VkExtPhysicalDeviceDrm(VkDevice handler)
-;
+    VkExtPhysicalDeviceDrm(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_physical_device_drm"; }
     static std::string str() { return "VK_EXT_physical_device_drm"; }
     void init(VkDevice handler) override;
@@ -3290,8 +2946,8 @@ public:
 class VkExtDepthClipControl final : public DeviceExtensionBase { 
 public:
     VkExtDepthClipControl() = default;
-    VkExtDepthClipControl(VkDevice handler)
-;
+    VkExtDepthClipControl(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_depth_clip_control"; }
     static std::string str() { return "VK_EXT_depth_clip_control"; }
     void init(VkDevice handler) override;
@@ -3305,8 +2961,8 @@ public:
 class VkExtPrimitiveTopologyListRestart final : public DeviceExtensionBase { 
 public:
     VkExtPrimitiveTopologyListRestart() = default;
-    VkExtPrimitiveTopologyListRestart(VkDevice handler)
-;
+    VkExtPrimitiveTopologyListRestart(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_primitive_topology_list_restart"; }
     static std::string str() { return "VK_EXT_primitive_topology_list_restart"; }
     void init(VkDevice handler) override;
@@ -3320,8 +2976,8 @@ public:
 class VkAmdNegativeViewportHeight final : public DeviceExtensionBase { 
 public:
     VkAmdNegativeViewportHeight() = default;
-    VkAmdNegativeViewportHeight(VkDevice handler)
-;
+    VkAmdNegativeViewportHeight(VkDevice handler);
+
     std::string name() const override { return "VK_AMD_negative_viewport_height"; }
     static std::string str() { return "VK_AMD_negative_viewport_height"; }
     void init(VkDevice handler) override;
@@ -3335,8 +2991,8 @@ public:
 class VkKhrFormatFeatureFlags2 final : public DeviceExtensionBase { 
 public:
     VkKhrFormatFeatureFlags2() = default;
-    VkKhrFormatFeatureFlags2(VkDevice handler)
-;
+    VkKhrFormatFeatureFlags2(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_format_feature_flags2"; }
     static std::string str() { return "VK_KHR_format_feature_flags2"; }
     void init(VkDevice handler) override;
@@ -3350,14 +3006,14 @@ public:
 class VkFuchsiaExternalMemory final : public DeviceExtensionBase { 
 public:
     VkFuchsiaExternalMemory() = default;
-    VkFuchsiaExternalMemory(VkDevice handler)
-;
+    VkFuchsiaExternalMemory(VkDevice handler);
+
     std::string name() const override { return "VK_FUCHSIA_external_memory"; }
     static std::string str() { return "VK_FUCHSIA_external_memory"; }
     void init(VkDevice handler) override;
 public:
-    PFN_vkGetMemoryZirconHandleFUCHSIA vkGetMemoryZirconHandleFUCHSIA = {};
     PFN_vkGetMemoryZirconHandlePropertiesFUCHSIA vkGetMemoryZirconHandlePropertiesFUCHSIA = {};
+    PFN_vkGetMemoryZirconHandleFUCHSIA vkGetMemoryZirconHandleFUCHSIA = {};
 };//class VkFuchsiaExternalMemory
 
 #endif //VK_FUCHSIA_external_memory
@@ -3367,8 +3023,8 @@ public:
 class VkFuchsiaExternalSemaphore final : public DeviceExtensionBase { 
 public:
     VkFuchsiaExternalSemaphore() = default;
-    VkFuchsiaExternalSemaphore(VkDevice handler)
-;
+    VkFuchsiaExternalSemaphore(VkDevice handler);
+
     std::string name() const override { return "VK_FUCHSIA_external_semaphore"; }
     static std::string str() { return "VK_FUCHSIA_external_semaphore"; }
     void init(VkDevice handler) override;
@@ -3384,17 +3040,17 @@ public:
 class VkFuchsiaBufferCollection final : public DeviceExtensionBase { 
 public:
     VkFuchsiaBufferCollection() = default;
-    VkFuchsiaBufferCollection(VkDevice handler)
-;
+    VkFuchsiaBufferCollection(VkDevice handler);
+
     std::string name() const override { return "VK_FUCHSIA_buffer_collection"; }
     static std::string str() { return "VK_FUCHSIA_buffer_collection"; }
     void init(VkDevice handler) override;
 public:
-    PFN_vkSetBufferCollectionImageConstraintsFUCHSIA vkSetBufferCollectionImageConstraintsFUCHSIA = {};
-    PFN_vkSetBufferCollectionBufferConstraintsFUCHSIA vkSetBufferCollectionBufferConstraintsFUCHSIA = {};
-    PFN_vkCreateBufferCollectionFUCHSIA vkCreateBufferCollectionFUCHSIA = {};
     PFN_vkGetBufferCollectionPropertiesFUCHSIA vkGetBufferCollectionPropertiesFUCHSIA = {};
     PFN_vkDestroyBufferCollectionFUCHSIA vkDestroyBufferCollectionFUCHSIA = {};
+    PFN_vkCreateBufferCollectionFUCHSIA vkCreateBufferCollectionFUCHSIA = {};
+    PFN_vkSetBufferCollectionImageConstraintsFUCHSIA vkSetBufferCollectionImageConstraintsFUCHSIA = {};
+    PFN_vkSetBufferCollectionBufferConstraintsFUCHSIA vkSetBufferCollectionBufferConstraintsFUCHSIA = {};
 };//class VkFuchsiaBufferCollection
 
 #endif //VK_FUCHSIA_buffer_collection
@@ -3404,8 +3060,8 @@ public:
 class VkAmdGpuShaderHalfFloat final : public DeviceExtensionBase { 
 public:
     VkAmdGpuShaderHalfFloat() = default;
-    VkAmdGpuShaderHalfFloat(VkDevice handler)
-;
+    VkAmdGpuShaderHalfFloat(VkDevice handler);
+
     std::string name() const override { return "VK_AMD_gpu_shader_half_float"; }
     static std::string str() { return "VK_AMD_gpu_shader_half_float"; }
     void init(VkDevice handler) override;
@@ -3419,14 +3075,14 @@ public:
 class VkHuaweiSubpassShading final : public DeviceExtensionBase { 
 public:
     VkHuaweiSubpassShading() = default;
-    VkHuaweiSubpassShading(VkDevice handler)
-;
+    VkHuaweiSubpassShading(VkDevice handler);
+
     std::string name() const override { return "VK_HUAWEI_subpass_shading"; }
     static std::string str() { return "VK_HUAWEI_subpass_shading"; }
     void init(VkDevice handler) override;
 public:
-    PFN_vkCmdSubpassShadingHUAWEI vkCmdSubpassShadingHUAWEI = {};
     PFN_vkGetDeviceSubpassShadingMaxWorkgroupSizeHUAWEI vkGetDeviceSubpassShadingMaxWorkgroupSizeHUAWEI = {};
+    PFN_vkCmdSubpassShadingHUAWEI vkCmdSubpassShadingHUAWEI = {};
 };//class VkHuaweiSubpassShading
 
 #endif //VK_HUAWEI_subpass_shading
@@ -3436,8 +3092,8 @@ public:
 class VkHuaweiInvocationMask final : public DeviceExtensionBase { 
 public:
     VkHuaweiInvocationMask() = default;
-    VkHuaweiInvocationMask(VkDevice handler)
-;
+    VkHuaweiInvocationMask(VkDevice handler);
+
     std::string name() const override { return "VK_HUAWEI_invocation_mask"; }
     static std::string str() { return "VK_HUAWEI_invocation_mask"; }
     void init(VkDevice handler) override;
@@ -3452,8 +3108,8 @@ public:
 class VkNvExternalMemoryRdma final : public DeviceExtensionBase { 
 public:
     VkNvExternalMemoryRdma() = default;
-    VkNvExternalMemoryRdma(VkDevice handler)
-;
+    VkNvExternalMemoryRdma(VkDevice handler);
+
     std::string name() const override { return "VK_NV_external_memory_rdma"; }
     static std::string str() { return "VK_NV_external_memory_rdma"; }
     void init(VkDevice handler) override;
@@ -3468,45 +3124,28 @@ public:
 class VkExtExtendedDynamicState2 final : public DeviceExtensionBase { 
 public:
     VkExtExtendedDynamicState2() = default;
-    VkExtExtendedDynamicState2(VkDevice handler)
-;
+    VkExtExtendedDynamicState2(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_extended_dynamic_state2"; }
     static std::string str() { return "VK_EXT_extended_dynamic_state2"; }
     void init(VkDevice handler) override;
 public:
+    PFN_vkCmdSetPatchControlPointsEXT vkCmdSetPatchControlPointsEXT = {};
     PFN_vkCmdSetLogicOpEXT vkCmdSetLogicOpEXT = {};
+    PFN_vkCmdSetPrimitiveRestartEnableEXT vkCmdSetPrimitiveRestartEnableEXT = {};
     PFN_vkCmdSetRasterizerDiscardEnableEXT vkCmdSetRasterizerDiscardEnableEXT = {};
     PFN_vkCmdSetDepthBiasEnableEXT vkCmdSetDepthBiasEnableEXT = {};
-    PFN_vkCmdSetPrimitiveRestartEnableEXT vkCmdSetPrimitiveRestartEnableEXT = {};
-    PFN_vkCmdSetPatchControlPointsEXT vkCmdSetPatchControlPointsEXT = {};
 };//class VkExtExtendedDynamicState2
 
 #endif //VK_EXT_extended_dynamic_state2
-
-#if defined(VK_QNX_screen_surface)
-
-class VkQnxScreenSurface final : public InstanceExtensionBase { 
-public:
-    VkQnxScreenSurface() = default;
-    VkQnxScreenSurface(VkInstance handler)
-;
-    std::string name() const override { return "VK_QNX_screen_surface"; }
-    static std::string str() { return "VK_QNX_screen_surface"; }
-    void init(VkInstance handler) override;
-public:
-    PFN_vkGetPhysicalDeviceScreenPresentationSupportQNX vkGetPhysicalDeviceScreenPresentationSupportQNX = {};
-    PFN_vkCreateScreenSurfaceQNX vkCreateScreenSurfaceQNX = {};
-};//class VkQnxScreenSurface
-
-#endif //VK_QNX_screen_surface
 
 #if defined(VK_AMD_shader_ballot)
 
 class VkAmdShaderBallot final : public DeviceExtensionBase { 
 public:
     VkAmdShaderBallot() = default;
-    VkAmdShaderBallot(VkDevice handler)
-;
+    VkAmdShaderBallot(VkDevice handler);
+
     std::string name() const override { return "VK_AMD_shader_ballot"; }
     static std::string str() { return "VK_AMD_shader_ballot"; }
     void init(VkDevice handler) override;
@@ -3520,8 +3159,8 @@ public:
 class VkExtColorWriteEnable final : public DeviceExtensionBase { 
 public:
     VkExtColorWriteEnable() = default;
-    VkExtColorWriteEnable(VkDevice handler)
-;
+    VkExtColorWriteEnable(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_color_write_enable"; }
     static std::string str() { return "VK_EXT_color_write_enable"; }
     void init(VkDevice handler) override;
@@ -3531,43 +3170,13 @@ public:
 
 #endif //VK_EXT_color_write_enable
 
-#if defined(VK_EXT_extension_384)
-
-class VkExtExtension384 final : public InstanceExtensionBase { 
-public:
-    VkExtExtension384() = default;
-    VkExtExtension384(VkInstance handler)
-;
-    std::string name() const override { return "VK_EXT_extension_384"; }
-    static std::string str() { return "VK_EXT_extension_384"; }
-    void init(VkInstance handler) override;
-public:
-};//class VkExtExtension384
-
-#endif //VK_EXT_extension_384
-
-#if defined(VK_MESA_extension_385)
-
-class VkMesaExtension385 final : public InstanceExtensionBase { 
-public:
-    VkMesaExtension385() = default;
-    VkMesaExtension385(VkInstance handler)
-;
-    std::string name() const override { return "VK_MESA_extension_385"; }
-    static std::string str() { return "VK_MESA_extension_385"; }
-    void init(VkInstance handler) override;
-public:
-};//class VkMesaExtension385
-
-#endif //VK_MESA_extension_385
-
 #if defined(VK_EXT_global_priority_query)
 
 class VkExtGlobalPriorityQuery final : public DeviceExtensionBase { 
 public:
     VkExtGlobalPriorityQuery() = default;
-    VkExtGlobalPriorityQuery(VkDevice handler)
-;
+    VkExtGlobalPriorityQuery(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_global_priority_query"; }
     static std::string str() { return "VK_EXT_global_priority_query"; }
     void init(VkDevice handler) override;
@@ -3581,8 +3190,8 @@ public:
 class VkExtVideoEncodeH264 final : public DeviceExtensionBase { 
 public:
     VkExtVideoEncodeH264() = default;
-    VkExtVideoEncodeH264(VkDevice handler)
-;
+    VkExtVideoEncodeH264(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_video_encode_h264"; }
     static std::string str() { return "VK_EXT_video_encode_h264"; }
     void init(VkDevice handler) override;
@@ -3596,8 +3205,8 @@ public:
 class VkExtImageViewMinLod final : public DeviceExtensionBase { 
 public:
     VkExtImageViewMinLod() = default;
-    VkExtImageViewMinLod(VkDevice handler)
-;
+    VkExtImageViewMinLod(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_image_view_min_lod"; }
     static std::string str() { return "VK_EXT_image_view_min_lod"; }
     void init(VkDevice handler) override;
@@ -3611,8 +3220,8 @@ public:
 class VkExtMultiDraw final : public DeviceExtensionBase { 
 public:
     VkExtMultiDraw() = default;
-    VkExtMultiDraw(VkDevice handler)
-;
+    VkExtMultiDraw(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_multi_draw"; }
     static std::string str() { return "VK_EXT_multi_draw"; }
     void init(VkDevice handler) override;
@@ -3628,8 +3237,8 @@ public:
 class VkExtExtension394 final : public DeviceExtensionBase { 
 public:
     VkExtExtension394() = default;
-    VkExtExtension394(VkDevice handler)
-;
+    VkExtExtension394(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_extension_394"; }
     static std::string str() { return "VK_EXT_extension_394"; }
     void init(VkDevice handler) override;
@@ -3643,8 +3252,8 @@ public:
 class VkKhrDisplaySwapchain final : public DeviceExtensionBase { 
 public:
     VkKhrDisplaySwapchain() = default;
-    VkKhrDisplaySwapchain(VkDevice handler)
-;
+    VkKhrDisplaySwapchain(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_display_swapchain"; }
     static std::string str() { return "VK_KHR_display_swapchain"; }
     void init(VkDevice handler) override;
@@ -3659,8 +3268,8 @@ public:
 class VkExtVideoEncodeH265 final : public DeviceExtensionBase { 
 public:
     VkExtVideoEncodeH265() = default;
-    VkExtVideoEncodeH265(VkDevice handler)
-;
+    VkExtVideoEncodeH265(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_video_encode_h265"; }
     static std::string str() { return "VK_EXT_video_encode_h265"; }
     void init(VkDevice handler) override;
@@ -3674,8 +3283,8 @@ public:
 class VkExtLoadStoreOpNone final : public DeviceExtensionBase { 
 public:
     VkExtLoadStoreOpNone() = default;
-    VkExtLoadStoreOpNone(VkDevice handler)
-;
+    VkExtLoadStoreOpNone(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_load_store_op_none"; }
     static std::string str() { return "VK_EXT_load_store_op_none"; }
     void init(VkDevice handler) override;
@@ -3689,8 +3298,8 @@ public:
 class VkExtVideoDecodeH264 final : public DeviceExtensionBase { 
 public:
     VkExtVideoDecodeH264() = default;
-    VkExtVideoDecodeH264(VkDevice handler)
-;
+    VkExtVideoDecodeH264(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_video_decode_h264"; }
     static std::string str() { return "VK_EXT_video_decode_h264"; }
     void init(VkDevice handler) override;
@@ -3704,8 +3313,8 @@ public:
 class VkExtBorderColorSwizzle final : public DeviceExtensionBase { 
 public:
     VkExtBorderColorSwizzle() = default;
-    VkExtBorderColorSwizzle(VkDevice handler)
-;
+    VkExtBorderColorSwizzle(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_border_color_swizzle"; }
     static std::string str() { return "VK_EXT_border_color_swizzle"; }
     void init(VkDevice handler) override;
@@ -3719,8 +3328,8 @@ public:
 class VkExtPageableDeviceLocalMemory final : public DeviceExtensionBase { 
 public:
     VkExtPageableDeviceLocalMemory() = default;
-    VkExtPageableDeviceLocalMemory(VkDevice handler)
-;
+    VkExtPageableDeviceLocalMemory(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_pageable_device_local_memory"; }
     static std::string str() { return "VK_EXT_pageable_device_local_memory"; }
     void init(VkDevice handler) override;
@@ -3735,15 +3344,15 @@ public:
 class VkKhrMaintenance4 final : public DeviceExtensionBase { 
 public:
     VkKhrMaintenance4() = default;
-    VkKhrMaintenance4(VkDevice handler)
-;
+    VkKhrMaintenance4(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_maintenance4"; }
     static std::string str() { return "VK_KHR_maintenance4"; }
     void init(VkDevice handler) override;
 public:
+    PFN_vkGetDeviceImageMemoryRequirementsKHR vkGetDeviceImageMemoryRequirementsKHR = {};
     PFN_vkGetDeviceImageSparseMemoryRequirementsKHR vkGetDeviceImageSparseMemoryRequirementsKHR = {};
     PFN_vkGetDeviceBufferMemoryRequirementsKHR vkGetDeviceBufferMemoryRequirementsKHR = {};
-    PFN_vkGetDeviceImageMemoryRequirementsKHR vkGetDeviceImageMemoryRequirementsKHR = {};
 };//class VkKhrMaintenance4
 
 #endif //VK_KHR_maintenance4
@@ -3753,8 +3362,8 @@ public:
 class VkExtExtension419 final : public DeviceExtensionBase { 
 public:
     VkExtExtension419() = default;
-    VkExtExtension419(VkDevice handler)
-;
+    VkExtExtension419(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_extension_419"; }
     static std::string str() { return "VK_EXT_extension_419"; }
     void init(VkDevice handler) override;
@@ -3768,8 +3377,8 @@ public:
 class VkAmdTextureGatherBiasLod final : public DeviceExtensionBase { 
 public:
     VkAmdTextureGatherBiasLod() = default;
-    VkAmdTextureGatherBiasLod(VkDevice handler)
-;
+    VkAmdTextureGatherBiasLod(VkDevice handler);
+
     std::string name() const override { return "VK_AMD_texture_gather_bias_lod"; }
     static std::string str() { return "VK_AMD_texture_gather_bias_lod"; }
     void init(VkDevice handler) override;
@@ -3783,8 +3392,8 @@ public:
 class VkExtExtension420 final : public DeviceExtensionBase { 
 public:
     VkExtExtension420() = default;
-    VkExtExtension420(VkDevice handler)
-;
+    VkExtExtension420(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_extension_420"; }
     static std::string str() { return "VK_EXT_extension_420"; }
     void init(VkDevice handler) override;
@@ -3798,8 +3407,8 @@ public:
 class VkQcomFragmentDensityMapOffset final : public DeviceExtensionBase { 
 public:
     VkQcomFragmentDensityMapOffset() = default;
-    VkQcomFragmentDensityMapOffset(VkDevice handler)
-;
+    VkQcomFragmentDensityMapOffset(VkDevice handler);
+
     std::string name() const override { return "VK_QCOM_fragment_density_map_offset"; }
     static std::string str() { return "VK_QCOM_fragment_density_map_offset"; }
     void init(VkDevice handler) override;
@@ -3813,8 +3422,8 @@ public:
 class VkAmdShaderInfo final : public DeviceExtensionBase { 
 public:
     VkAmdShaderInfo() = default;
-    VkAmdShaderInfo(VkDevice handler)
-;
+    VkAmdShaderInfo(VkDevice handler);
+
     std::string name() const override { return "VK_AMD_shader_info"; }
     static std::string str() { return "VK_AMD_shader_info"; }
     void init(VkDevice handler) override;
@@ -3829,8 +3438,8 @@ public:
 class VkNvLinearColorAttachment final : public DeviceExtensionBase { 
 public:
     VkNvLinearColorAttachment() = default;
-    VkNvLinearColorAttachment(VkDevice handler)
-;
+    VkNvLinearColorAttachment(VkDevice handler);
+
     std::string name() const override { return "VK_NV_linear_color_attachment"; }
     static std::string str() { return "VK_NV_linear_color_attachment"; }
     void init(VkDevice handler) override;
@@ -3839,34 +3448,19 @@ public:
 
 #endif //VK_NV_linear_color_attachment
 
-#if defined(VK_GOOGLE_surfaceless_query)
-
-class VkGoogleSurfacelessQuery final : public InstanceExtensionBase { 
-public:
-    VkGoogleSurfacelessQuery() = default;
-    VkGoogleSurfacelessQuery(VkInstance handler)
-;
-    std::string name() const override { return "VK_GOOGLE_surfaceless_query"; }
-    static std::string str() { return "VK_GOOGLE_surfaceless_query"; }
-    void init(VkInstance handler) override;
-public:
-};//class VkGoogleSurfacelessQuery
-
-#endif //VK_GOOGLE_surfaceless_query
-
 #if defined(VK_KHR_dynamic_rendering)
 
 class VkKhrDynamicRendering final : public DeviceExtensionBase { 
 public:
     VkKhrDynamicRendering() = default;
-    VkKhrDynamicRendering(VkDevice handler)
-;
+    VkKhrDynamicRendering(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_dynamic_rendering"; }
     static std::string str() { return "VK_KHR_dynamic_rendering"; }
     void init(VkDevice handler) override;
 public:
-    PFN_vkCmdEndRenderingKHR vkCmdEndRenderingKHR = {};
     PFN_vkCmdBeginRenderingKHR vkCmdBeginRenderingKHR = {};
+    PFN_vkCmdEndRenderingKHR vkCmdEndRenderingKHR = {};
 };//class VkKhrDynamicRendering
 
 #endif //VK_KHR_dynamic_rendering
@@ -3876,8 +3470,8 @@ public:
 class VkAmdShaderImageLoadStoreLod final : public DeviceExtensionBase { 
 public:
     VkAmdShaderImageLoadStoreLod() = default;
-    VkAmdShaderImageLoadStoreLod(VkDevice handler)
-;
+    VkAmdShaderImageLoadStoreLod(VkDevice handler);
+
     std::string name() const override { return "VK_AMD_shader_image_load_store_lod"; }
     static std::string str() { return "VK_AMD_shader_image_load_store_lod"; }
     void init(VkDevice handler) override;
@@ -3886,46 +3480,13 @@ public:
 
 #endif //VK_AMD_shader_image_load_store_lod
 
-#if defined(VK_KHR_xlib_surface)
-
-class VkKhrXlibSurface final : public InstanceExtensionBase { 
-public:
-    VkKhrXlibSurface() = default;
-    VkKhrXlibSurface(VkInstance handler)
-;
-    std::string name() const override { return "VK_KHR_xlib_surface"; }
-    static std::string str() { return "VK_KHR_xlib_surface"; }
-    void init(VkInstance handler) override;
-public:
-    PFN_vkCreateXlibSurfaceKHR vkCreateXlibSurfaceKHR = {};
-    PFN_vkGetPhysicalDeviceXlibPresentationSupportKHR vkGetPhysicalDeviceXlibPresentationSupportKHR = {};
-};//class VkKhrXlibSurface
-
-#endif //VK_KHR_xlib_surface
-
-#if defined(VK_GGP_stream_descriptor_surface)
-
-class VkGgpStreamDescriptorSurface final : public InstanceExtensionBase { 
-public:
-    VkGgpStreamDescriptorSurface() = default;
-    VkGgpStreamDescriptorSurface(VkInstance handler)
-;
-    std::string name() const override { return "VK_GGP_stream_descriptor_surface"; }
-    static std::string str() { return "VK_GGP_stream_descriptor_surface"; }
-    void init(VkInstance handler) override;
-public:
-    PFN_vkCreateStreamDescriptorSurfaceGGP vkCreateStreamDescriptorSurfaceGGP = {};
-};//class VkGgpStreamDescriptorSurface
-
-#endif //VK_GGP_stream_descriptor_surface
-
 #if defined(VK_NV_corner_sampled_image)
 
 class VkNvCornerSampledImage final : public DeviceExtensionBase { 
 public:
     VkNvCornerSampledImage() = default;
-    VkNvCornerSampledImage(VkDevice handler)
-;
+    VkNvCornerSampledImage(VkDevice handler);
+
     std::string name() const override { return "VK_NV_corner_sampled_image"; }
     static std::string str() { return "VK_NV_corner_sampled_image"; }
     void init(VkDevice handler) override;
@@ -3939,8 +3500,8 @@ public:
 class VkKhrMultiview final : public DeviceExtensionBase { 
 public:
     VkKhrMultiview() = default;
-    VkKhrMultiview(VkDevice handler)
-;
+    VkKhrMultiview(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_multiview"; }
     static std::string str() { return "VK_KHR_multiview"; }
     void init(VkDevice handler) override;
@@ -3954,8 +3515,8 @@ public:
 class VkImgFormatPvrtc final : public DeviceExtensionBase { 
 public:
     VkImgFormatPvrtc() = default;
-    VkImgFormatPvrtc(VkDevice handler)
-;
+    VkImgFormatPvrtc(VkDevice handler);
+
     std::string name() const override { return "VK_IMG_format_pvrtc"; }
     static std::string str() { return "VK_IMG_format_pvrtc"; }
     void init(VkDevice handler) override;
@@ -3964,29 +3525,13 @@ public:
 
 #endif //VK_IMG_format_pvrtc
 
-#if defined(VK_NV_external_memory_capabilities)
-
-class VkNvExternalMemoryCapabilities final : public InstanceExtensionBase { 
-public:
-    VkNvExternalMemoryCapabilities() = default;
-    VkNvExternalMemoryCapabilities(VkInstance handler)
-;
-    std::string name() const override { return "VK_NV_external_memory_capabilities"; }
-    static std::string str() { return "VK_NV_external_memory_capabilities"; }
-    void init(VkInstance handler) override;
-public:
-    PFN_vkGetPhysicalDeviceExternalImageFormatPropertiesNV vkGetPhysicalDeviceExternalImageFormatPropertiesNV = {};
-};//class VkNvExternalMemoryCapabilities
-
-#endif //VK_NV_external_memory_capabilities
-
 #if defined(VK_NV_external_memory)
 
 class VkNvExternalMemory final : public DeviceExtensionBase { 
 public:
     VkNvExternalMemory() = default;
-    VkNvExternalMemory(VkDevice handler)
-;
+    VkNvExternalMemory(VkDevice handler);
+
     std::string name() const override { return "VK_NV_external_memory"; }
     static std::string str() { return "VK_NV_external_memory"; }
     void init(VkDevice handler) override;
@@ -4000,8 +3545,8 @@ public:
 class VkNvExternalMemoryWin32 final : public DeviceExtensionBase { 
 public:
     VkNvExternalMemoryWin32() = default;
-    VkNvExternalMemoryWin32(VkDevice handler)
-;
+    VkNvExternalMemoryWin32(VkDevice handler);
+
     std::string name() const override { return "VK_NV_external_memory_win32"; }
     static std::string str() { return "VK_NV_external_memory_win32"; }
     void init(VkDevice handler) override;
@@ -4016,8 +3561,8 @@ public:
 class VkNvWin32KeyedMutex final : public DeviceExtensionBase { 
 public:
     VkNvWin32KeyedMutex() = default;
-    VkNvWin32KeyedMutex(VkDevice handler)
-;
+    VkNvWin32KeyedMutex(VkDevice handler);
+
     std::string name() const override { return "VK_NV_win32_keyed_mutex"; }
     static std::string str() { return "VK_NV_win32_keyed_mutex"; }
     void init(VkDevice handler) override;
@@ -4026,105 +3571,35 @@ public:
 
 #endif //VK_NV_win32_keyed_mutex
 
-#if defined(VK_KHR_xcb_surface)
-
-class VkKhrXcbSurface final : public InstanceExtensionBase { 
-public:
-    VkKhrXcbSurface() = default;
-    VkKhrXcbSurface(VkInstance handler)
-;
-    std::string name() const override { return "VK_KHR_xcb_surface"; }
-    static std::string str() { return "VK_KHR_xcb_surface"; }
-    void init(VkInstance handler) override;
-public:
-    PFN_vkCreateXcbSurfaceKHR vkCreateXcbSurfaceKHR = {};
-    PFN_vkGetPhysicalDeviceXcbPresentationSupportKHR vkGetPhysicalDeviceXcbPresentationSupportKHR = {};
-};//class VkKhrXcbSurface
-
-#endif //VK_KHR_xcb_surface
-
-#if defined(VK_KHR_get_physical_device_properties2)
-
-class VkKhrGetPhysicalDeviceProperties2 final : public InstanceExtensionBase { 
-public:
-    VkKhrGetPhysicalDeviceProperties2() = default;
-    VkKhrGetPhysicalDeviceProperties2(VkInstance handler)
-;
-    std::string name() const override { return "VK_KHR_get_physical_device_properties2"; }
-    static std::string str() { return "VK_KHR_get_physical_device_properties2"; }
-    void init(VkInstance handler) override;
-public:
-    PFN_vkGetPhysicalDeviceImageFormatProperties2KHR vkGetPhysicalDeviceImageFormatProperties2KHR = {};
-    PFN_vkGetPhysicalDeviceQueueFamilyProperties2KHR vkGetPhysicalDeviceQueueFamilyProperties2KHR = {};
-    PFN_vkGetPhysicalDeviceMemoryProperties2KHR vkGetPhysicalDeviceMemoryProperties2KHR = {};
-    PFN_vkGetPhysicalDeviceFeatures2KHR vkGetPhysicalDeviceFeatures2KHR = {};
-    PFN_vkGetPhysicalDeviceProperties2KHR vkGetPhysicalDeviceProperties2KHR = {};
-    PFN_vkGetPhysicalDeviceFormatProperties2KHR vkGetPhysicalDeviceFormatProperties2KHR = {};
-    PFN_vkGetPhysicalDeviceSparseImageFormatProperties2KHR vkGetPhysicalDeviceSparseImageFormatProperties2KHR = {};
-};//class VkKhrGetPhysicalDeviceProperties2
-
-#endif //VK_KHR_get_physical_device_properties2
-
 #if defined(VK_KHR_device_group)
 
 class VkKhrDeviceGroup final : public DeviceExtensionBase { 
 public:
     VkKhrDeviceGroup() = default;
-    VkKhrDeviceGroup(VkDevice handler)
-;
+    VkKhrDeviceGroup(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_device_group"; }
     static std::string str() { return "VK_KHR_device_group"; }
     void init(VkDevice handler) override;
 public:
-    PFN_vkGetDeviceGroupPresentCapabilitiesKHR vkGetDeviceGroupPresentCapabilitiesKHR = {};
-    PFN_vkGetDeviceGroupPeerMemoryFeaturesKHR vkGetDeviceGroupPeerMemoryFeaturesKHR = {};
     PFN_vkGetPhysicalDevicePresentRectanglesKHR vkGetPhysicalDevicePresentRectanglesKHR = {};
+    PFN_vkGetDeviceGroupSurfacePresentModesKHR vkGetDeviceGroupSurfacePresentModesKHR = {};
     PFN_vkCmdSetDeviceMaskKHR vkCmdSetDeviceMaskKHR = {};
     PFN_vkAcquireNextImage2KHR vkAcquireNextImage2KHR = {};
-    PFN_vkGetDeviceGroupSurfacePresentModesKHR vkGetDeviceGroupSurfacePresentModesKHR = {};
     PFN_vkCmdDispatchBaseKHR vkCmdDispatchBaseKHR = {};
+    PFN_vkGetDeviceGroupPresentCapabilitiesKHR vkGetDeviceGroupPresentCapabilitiesKHR = {};
+    PFN_vkGetDeviceGroupPeerMemoryFeaturesKHR vkGetDeviceGroupPeerMemoryFeaturesKHR = {};
 };//class VkKhrDeviceGroup
 
 #endif //VK_KHR_device_group
-
-#if defined(VK_EXT_validation_flags)
-
-class VkExtValidationFlags final : public InstanceExtensionBase { 
-public:
-    VkExtValidationFlags() = default;
-    VkExtValidationFlags(VkInstance handler)
-;
-    std::string name() const override { return "VK_EXT_validation_flags"; }
-    static std::string str() { return "VK_EXT_validation_flags"; }
-    void init(VkInstance handler) override;
-public:
-};//class VkExtValidationFlags
-
-#endif //VK_EXT_validation_flags
-
-#if defined(VK_NN_vi_surface)
-
-class VkNnViSurface final : public InstanceExtensionBase { 
-public:
-    VkNnViSurface() = default;
-    VkNnViSurface(VkInstance handler)
-;
-    std::string name() const override { return "VK_NN_vi_surface"; }
-    static std::string str() { return "VK_NN_vi_surface"; }
-    void init(VkInstance handler) override;
-public:
-    PFN_vkCreateViSurfaceNN vkCreateViSurfaceNN = {};
-};//class VkNnViSurface
-
-#endif //VK_NN_vi_surface
 
 #if defined(VK_KHR_shader_draw_parameters)
 
 class VkKhrShaderDrawParameters final : public DeviceExtensionBase { 
 public:
     VkKhrShaderDrawParameters() = default;
-    VkKhrShaderDrawParameters(VkDevice handler)
-;
+    VkKhrShaderDrawParameters(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_shader_draw_parameters"; }
     static std::string str() { return "VK_KHR_shader_draw_parameters"; }
     void init(VkDevice handler) override;
@@ -4138,8 +3613,8 @@ public:
 class VkExtShaderSubgroupBallot final : public DeviceExtensionBase { 
 public:
     VkExtShaderSubgroupBallot() = default;
-    VkExtShaderSubgroupBallot(VkDevice handler)
-;
+    VkExtShaderSubgroupBallot(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_shader_subgroup_ballot"; }
     static std::string str() { return "VK_EXT_shader_subgroup_ballot"; }
     void init(VkDevice handler) override;
@@ -4153,8 +3628,8 @@ public:
 class VkExtShaderSubgroupVote final : public DeviceExtensionBase { 
 public:
     VkExtShaderSubgroupVote() = default;
-    VkExtShaderSubgroupVote(VkDevice handler)
-;
+    VkExtShaderSubgroupVote(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_shader_subgroup_vote"; }
     static std::string str() { return "VK_EXT_shader_subgroup_vote"; }
     void init(VkDevice handler) override;
@@ -4168,8 +3643,8 @@ public:
 class VkExtTextureCompressionAstcHdr final : public DeviceExtensionBase { 
 public:
     VkExtTextureCompressionAstcHdr() = default;
-    VkExtTextureCompressionAstcHdr(VkDevice handler)
-;
+    VkExtTextureCompressionAstcHdr(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_texture_compression_astc_hdr"; }
     static std::string str() { return "VK_EXT_texture_compression_astc_hdr"; }
     void init(VkDevice handler) override;
@@ -4183,8 +3658,8 @@ public:
 class VkExtAstcDecodeMode final : public DeviceExtensionBase { 
 public:
     VkExtAstcDecodeMode() = default;
-    VkExtAstcDecodeMode(VkDevice handler)
-;
+    VkExtAstcDecodeMode(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_astc_decode_mode"; }
     static std::string str() { return "VK_EXT_astc_decode_mode"; }
     void init(VkDevice handler) override;
@@ -4198,8 +3673,8 @@ public:
 class VkImgExtension69 final : public DeviceExtensionBase { 
 public:
     VkImgExtension69() = default;
-    VkImgExtension69(VkDevice handler)
-;
+    VkImgExtension69(VkDevice handler);
+
     std::string name() const override { return "VK_IMG_extension_69"; }
     static std::string str() { return "VK_IMG_extension_69"; }
     void init(VkDevice handler) override;
@@ -4208,30 +3683,13 @@ public:
 
 #endif //VK_IMG_extension_69
 
-#if defined(VK_KHR_wayland_surface)
-
-class VkKhrWaylandSurface final : public InstanceExtensionBase { 
-public:
-    VkKhrWaylandSurface() = default;
-    VkKhrWaylandSurface(VkInstance handler)
-;
-    std::string name() const override { return "VK_KHR_wayland_surface"; }
-    static std::string str() { return "VK_KHR_wayland_surface"; }
-    void init(VkInstance handler) override;
-public:
-    PFN_vkCreateWaylandSurfaceKHR vkCreateWaylandSurfaceKHR = {};
-    PFN_vkGetPhysicalDeviceWaylandPresentationSupportKHR vkGetPhysicalDeviceWaylandPresentationSupportKHR = {};
-};//class VkKhrWaylandSurface
-
-#endif //VK_KHR_wayland_surface
-
 #if defined(VK_KHR_maintenance1)
 
 class VkKhrMaintenance1 final : public DeviceExtensionBase { 
 public:
     VkKhrMaintenance1() = default;
-    VkKhrMaintenance1(VkDevice handler)
-;
+    VkKhrMaintenance1(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_maintenance1"; }
     static std::string str() { return "VK_KHR_maintenance1"; }
     void init(VkDevice handler) override;
@@ -4241,45 +3699,13 @@ public:
 
 #endif //VK_KHR_maintenance1
 
-#if defined(VK_KHR_device_group_creation)
-
-class VkKhrDeviceGroupCreation final : public InstanceExtensionBase { 
-public:
-    VkKhrDeviceGroupCreation() = default;
-    VkKhrDeviceGroupCreation(VkInstance handler)
-;
-    std::string name() const override { return "VK_KHR_device_group_creation"; }
-    static std::string str() { return "VK_KHR_device_group_creation"; }
-    void init(VkInstance handler) override;
-public:
-    PFN_vkEnumeratePhysicalDeviceGroupsKHR vkEnumeratePhysicalDeviceGroupsKHR = {};
-};//class VkKhrDeviceGroupCreation
-
-#endif //VK_KHR_device_group_creation
-
-#if defined(VK_KHR_external_memory_capabilities)
-
-class VkKhrExternalMemoryCapabilities final : public InstanceExtensionBase { 
-public:
-    VkKhrExternalMemoryCapabilities() = default;
-    VkKhrExternalMemoryCapabilities(VkInstance handler)
-;
-    std::string name() const override { return "VK_KHR_external_memory_capabilities"; }
-    static std::string str() { return "VK_KHR_external_memory_capabilities"; }
-    void init(VkInstance handler) override;
-public:
-    PFN_vkGetPhysicalDeviceExternalBufferPropertiesKHR vkGetPhysicalDeviceExternalBufferPropertiesKHR = {};
-};//class VkKhrExternalMemoryCapabilities
-
-#endif //VK_KHR_external_memory_capabilities
-
 #if defined(VK_KHR_external_memory)
 
 class VkKhrExternalMemory final : public DeviceExtensionBase { 
 public:
     VkKhrExternalMemory() = default;
-    VkKhrExternalMemory(VkDevice handler)
-;
+    VkKhrExternalMemory(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_external_memory"; }
     static std::string str() { return "VK_KHR_external_memory"; }
     void init(VkDevice handler) override;
@@ -4293,8 +3719,8 @@ public:
 class VkKhrExternalMemoryWin32 final : public DeviceExtensionBase { 
 public:
     VkKhrExternalMemoryWin32() = default;
-    VkKhrExternalMemoryWin32(VkDevice handler)
-;
+    VkKhrExternalMemoryWin32(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_external_memory_win32"; }
     static std::string str() { return "VK_KHR_external_memory_win32"; }
     void init(VkDevice handler) override;
@@ -4310,8 +3736,8 @@ public:
 class VkKhrExternalMemoryFd final : public DeviceExtensionBase { 
 public:
     VkKhrExternalMemoryFd() = default;
-    VkKhrExternalMemoryFd(VkDevice handler)
-;
+    VkKhrExternalMemoryFd(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_external_memory_fd"; }
     static std::string str() { return "VK_KHR_external_memory_fd"; }
     void init(VkDevice handler) override;
@@ -4327,8 +3753,8 @@ public:
 class VkKhrWin32KeyedMutex final : public DeviceExtensionBase { 
 public:
     VkKhrWin32KeyedMutex() = default;
-    VkKhrWin32KeyedMutex(VkDevice handler)
-;
+    VkKhrWin32KeyedMutex(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_win32_keyed_mutex"; }
     static std::string str() { return "VK_KHR_win32_keyed_mutex"; }
     void init(VkDevice handler) override;
@@ -4337,29 +3763,13 @@ public:
 
 #endif //VK_KHR_win32_keyed_mutex
 
-#if defined(VK_KHR_external_semaphore_capabilities)
-
-class VkKhrExternalSemaphoreCapabilities final : public InstanceExtensionBase { 
-public:
-    VkKhrExternalSemaphoreCapabilities() = default;
-    VkKhrExternalSemaphoreCapabilities(VkInstance handler)
-;
-    std::string name() const override { return "VK_KHR_external_semaphore_capabilities"; }
-    static std::string str() { return "VK_KHR_external_semaphore_capabilities"; }
-    void init(VkInstance handler) override;
-public:
-    PFN_vkGetPhysicalDeviceExternalSemaphorePropertiesKHR vkGetPhysicalDeviceExternalSemaphorePropertiesKHR = {};
-};//class VkKhrExternalSemaphoreCapabilities
-
-#endif //VK_KHR_external_semaphore_capabilities
-
 #if defined(VK_KHR_external_semaphore)
 
 class VkKhrExternalSemaphore final : public DeviceExtensionBase { 
 public:
     VkKhrExternalSemaphore() = default;
-    VkKhrExternalSemaphore(VkDevice handler)
-;
+    VkKhrExternalSemaphore(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_external_semaphore"; }
     static std::string str() { return "VK_KHR_external_semaphore"; }
     void init(VkDevice handler) override;
@@ -4373,46 +3783,31 @@ public:
 class VkKhrExternalSemaphoreWin32 final : public DeviceExtensionBase { 
 public:
     VkKhrExternalSemaphoreWin32() = default;
-    VkKhrExternalSemaphoreWin32(VkDevice handler)
-;
+    VkKhrExternalSemaphoreWin32(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_external_semaphore_win32"; }
     static std::string str() { return "VK_KHR_external_semaphore_win32"; }
     void init(VkDevice handler) override;
 public:
-    PFN_vkImportSemaphoreWin32HandleKHR vkImportSemaphoreWin32HandleKHR = {};
     PFN_vkGetSemaphoreWin32HandleKHR vkGetSemaphoreWin32HandleKHR = {};
+    PFN_vkImportSemaphoreWin32HandleKHR vkImportSemaphoreWin32HandleKHR = {};
 };//class VkKhrExternalSemaphoreWin32
 
 #endif //VK_KHR_external_semaphore_win32
-
-#if defined(VK_KHR_mir_surface)
-
-class VkKhrMirSurface final : public InstanceExtensionBase { 
-public:
-    VkKhrMirSurface() = default;
-    VkKhrMirSurface(VkInstance handler)
-;
-    std::string name() const override { return "VK_KHR_mir_surface"; }
-    static std::string str() { return "VK_KHR_mir_surface"; }
-    void init(VkInstance handler) override;
-public:
-};//class VkKhrMirSurface
-
-#endif //VK_KHR_mir_surface
 
 #if defined(VK_KHR_external_semaphore_fd)
 
 class VkKhrExternalSemaphoreFd final : public DeviceExtensionBase { 
 public:
     VkKhrExternalSemaphoreFd() = default;
-    VkKhrExternalSemaphoreFd(VkDevice handler)
-;
+    VkKhrExternalSemaphoreFd(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_external_semaphore_fd"; }
     static std::string str() { return "VK_KHR_external_semaphore_fd"; }
     void init(VkDevice handler) override;
 public:
-    PFN_vkGetSemaphoreFdKHR vkGetSemaphoreFdKHR = {};
     PFN_vkImportSemaphoreFdKHR vkImportSemaphoreFdKHR = {};
+    PFN_vkGetSemaphoreFdKHR vkGetSemaphoreFdKHR = {};
 };//class VkKhrExternalSemaphoreFd
 
 #endif //VK_KHR_external_semaphore_fd
@@ -4422,14 +3817,14 @@ public:
 class VkKhrPushDescriptor final : public DeviceExtensionBase { 
 public:
     VkKhrPushDescriptor() = default;
-    VkKhrPushDescriptor(VkDevice handler)
-;
+    VkKhrPushDescriptor(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_push_descriptor"; }
     static std::string str() { return "VK_KHR_push_descriptor"; }
     void init(VkDevice handler) override;
 public:
-    PFN_vkCmdPushDescriptorSetWithTemplateKHR vkCmdPushDescriptorSetWithTemplateKHR = {};
     PFN_vkCmdPushDescriptorSetKHR vkCmdPushDescriptorSetKHR = {};
+    PFN_vkCmdPushDescriptorSetWithTemplateKHR vkCmdPushDescriptorSetWithTemplateKHR = {};
 };//class VkKhrPushDescriptor
 
 #endif //VK_KHR_push_descriptor
@@ -4439,14 +3834,14 @@ public:
 class VkExtConditionalRendering final : public DeviceExtensionBase { 
 public:
     VkExtConditionalRendering() = default;
-    VkExtConditionalRendering(VkDevice handler)
-;
+    VkExtConditionalRendering(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_conditional_rendering"; }
     static std::string str() { return "VK_EXT_conditional_rendering"; }
     void init(VkDevice handler) override;
 public:
-    PFN_vkCmdBeginConditionalRenderingEXT vkCmdBeginConditionalRenderingEXT = {};
     PFN_vkCmdEndConditionalRenderingEXT vkCmdEndConditionalRenderingEXT = {};
+    PFN_vkCmdBeginConditionalRenderingEXT vkCmdBeginConditionalRenderingEXT = {};
 };//class VkExtConditionalRendering
 
 #endif //VK_EXT_conditional_rendering
@@ -4456,8 +3851,8 @@ public:
 class VkKhrShaderFloat16Int8 final : public DeviceExtensionBase { 
 public:
     VkKhrShaderFloat16Int8() = default;
-    VkKhrShaderFloat16Int8(VkDevice handler)
-;
+    VkKhrShaderFloat16Int8(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_shader_float16_int8"; }
     static std::string str() { return "VK_KHR_shader_float16_int8"; }
     void init(VkDevice handler) override;
@@ -4471,8 +3866,8 @@ public:
 class VkKhr16bitStorage final : public DeviceExtensionBase { 
 public:
     VkKhr16bitStorage() = default;
-    VkKhr16bitStorage(VkDevice handler)
-;
+    VkKhr16bitStorage(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_16bit_storage"; }
     static std::string str() { return "VK_KHR_16bit_storage"; }
     void init(VkDevice handler) override;
@@ -4486,8 +3881,8 @@ public:
 class VkKhrIncrementalPresent final : public DeviceExtensionBase { 
 public:
     VkKhrIncrementalPresent() = default;
-    VkKhrIncrementalPresent(VkDevice handler)
-;
+    VkKhrIncrementalPresent(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_incremental_present"; }
     static std::string str() { return "VK_KHR_incremental_present"; }
     void init(VkDevice handler) override;
@@ -4501,16 +3896,16 @@ public:
 class VkKhrDescriptorUpdateTemplate final : public DeviceExtensionBase { 
 public:
     VkKhrDescriptorUpdateTemplate() = default;
-    VkKhrDescriptorUpdateTemplate(VkDevice handler)
-;
+    VkKhrDescriptorUpdateTemplate(VkDevice handler);
+
     std::string name() const override { return "VK_KHR_descriptor_update_template"; }
     static std::string str() { return "VK_KHR_descriptor_update_template"; }
     void init(VkDevice handler) override;
 public:
-    PFN_vkUpdateDescriptorSetWithTemplateKHR vkUpdateDescriptorSetWithTemplateKHR = {};
     PFN_vkCreateDescriptorUpdateTemplateKHR vkCreateDescriptorUpdateTemplateKHR = {};
     PFN_vkDestroyDescriptorUpdateTemplateKHR vkDestroyDescriptorUpdateTemplateKHR = {};
     PFN_vkCmdPushDescriptorSetWithTemplateKHR vkCmdPushDescriptorSetWithTemplateKHR = {};
+    PFN_vkUpdateDescriptorSetWithTemplateKHR vkUpdateDescriptorSetWithTemplateKHR = {};
 };//class VkKhrDescriptorUpdateTemplate
 
 #endif //VK_KHR_descriptor_update_template
@@ -4520,8 +3915,8 @@ public:
 class VkNvxDeviceGeneratedCommands final : public DeviceExtensionBase { 
 public:
     VkNvxDeviceGeneratedCommands() = default;
-    VkNvxDeviceGeneratedCommands(VkDevice handler)
-;
+    VkNvxDeviceGeneratedCommands(VkDevice handler);
+
     std::string name() const override { return "VK_NVX_device_generated_commands"; }
     static std::string str() { return "VK_NVX_device_generated_commands"; }
     void init(VkDevice handler) override;
@@ -4535,8 +3930,8 @@ public:
 class VkNvClipSpaceWScaling final : public DeviceExtensionBase { 
 public:
     VkNvClipSpaceWScaling() = default;
-    VkNvClipSpaceWScaling(VkDevice handler)
-;
+    VkNvClipSpaceWScaling(VkDevice handler);
+
     std::string name() const override { return "VK_NV_clip_space_w_scaling"; }
     static std::string str() { return "VK_NV_clip_space_w_scaling"; }
     void init(VkDevice handler) override;
@@ -4546,85 +3941,20 @@ public:
 
 #endif //VK_NV_clip_space_w_scaling
 
-#if defined(VK_EXT_direct_mode_display)
-
-class VkExtDirectModeDisplay final : public InstanceExtensionBase { 
-public:
-    VkExtDirectModeDisplay() = default;
-    VkExtDirectModeDisplay(VkInstance handler)
-;
-    std::string name() const override { return "VK_EXT_direct_mode_display"; }
-    static std::string str() { return "VK_EXT_direct_mode_display"; }
-    void init(VkInstance handler) override;
-public:
-    PFN_vkReleaseDisplayEXT vkReleaseDisplayEXT = {};
-};//class VkExtDirectModeDisplay
-
-#endif //VK_EXT_direct_mode_display
-
-#if defined(VK_KHR_android_surface)
-
-class VkKhrAndroidSurface final : public InstanceExtensionBase { 
-public:
-    VkKhrAndroidSurface() = default;
-    VkKhrAndroidSurface(VkInstance handler)
-;
-    std::string name() const override { return "VK_KHR_android_surface"; }
-    static std::string str() { return "VK_KHR_android_surface"; }
-    void init(VkInstance handler) override;
-public:
-    PFN_vkCreateAndroidSurfaceKHR vkCreateAndroidSurfaceKHR = {};
-};//class VkKhrAndroidSurface
-
-#endif //VK_KHR_android_surface
-
-#if defined(VK_EXT_acquire_xlib_display)
-
-class VkExtAcquireXlibDisplay final : public InstanceExtensionBase { 
-public:
-    VkExtAcquireXlibDisplay() = default;
-    VkExtAcquireXlibDisplay(VkInstance handler)
-;
-    std::string name() const override { return "VK_EXT_acquire_xlib_display"; }
-    static std::string str() { return "VK_EXT_acquire_xlib_display"; }
-    void init(VkInstance handler) override;
-public:
-    PFN_vkGetRandROutputDisplayEXT vkGetRandROutputDisplayEXT = {};
-    PFN_vkAcquireXlibDisplayEXT vkAcquireXlibDisplayEXT = {};
-};//class VkExtAcquireXlibDisplay
-
-#endif //VK_EXT_acquire_xlib_display
-
-#if defined(VK_EXT_display_surface_counter)
-
-class VkExtDisplaySurfaceCounter final : public InstanceExtensionBase { 
-public:
-    VkExtDisplaySurfaceCounter() = default;
-    VkExtDisplaySurfaceCounter(VkInstance handler)
-;
-    std::string name() const override { return "VK_EXT_display_surface_counter"; }
-    static std::string str() { return "VK_EXT_display_surface_counter"; }
-    void init(VkInstance handler) override;
-public:
-    PFN_vkGetPhysicalDeviceSurfaceCapabilities2EXT vkGetPhysicalDeviceSurfaceCapabilities2EXT = {};
-};//class VkExtDisplaySurfaceCounter
-
-#endif //VK_EXT_display_surface_counter
-
 #if defined(VK_EXT_display_control)
 
 class VkExtDisplayControl final : public DeviceExtensionBase { 
 public:
     VkExtDisplayControl() = default;
-    VkExtDisplayControl(VkDevice handler)
-;
+    VkExtDisplayControl(VkDevice handler);
+
     std::string name() const override { return "VK_EXT_display_control"; }
     static std::string str() { return "VK_EXT_display_control"; }
     void init(VkDevice handler) override;
 public:
-    PFN_vkGetSwapchainCounterEXT vkGetSwapchainCounterEXT = {};
     PFN_vkRegisterDeviceEventEXT vkRegisterDeviceEventEXT = {};
     PFN_vkDisplayPowerControlEXT vkDisplayPowerControlEXT = {};
+    PFN_vkGetSwapchainCounterEXT vkGetSwapchainCounterEXT = {};
     PFN_vkRegisterDisplayEventEXT vkRegisterDisplayEventEXT = {};
 };//class VkExtDisplayControl
 
@@ -4635,14 +3965,14 @@ public:
 class VkGoogleDisplayTiming final : public DeviceExtensionBase { 
 public:
     VkGoogleDisplayTiming() = default;
-    VkGoogleDisplayTiming(VkDevice handler)
-;
+    VkGoogleDisplayTiming(VkDevice handler);
+
     std::string name() const override { return "VK_GOOGLE_display_timing"; }
     static std::string str() { return "VK_GOOGLE_display_timing"; }
     void init(VkDevice handler) override;
 public:
-    PFN_vkGetRefreshCycleDurationGOOGLE vkGetRefreshCycleDurationGOOGLE = {};
     PFN_vkGetPastPresentationTimingGOOGLE vkGetPastPresentationTimingGOOGLE = {};
+    PFN_vkGetRefreshCycleDurationGOOGLE vkGetRefreshCycleDurationGOOGLE = {};
 };//class VkGoogleDisplayTiming
 
 #endif //VK_GOOGLE_display_timing
@@ -4652,8 +3982,8 @@ public:
 class VkNvSampleMaskOverrideCoverage final : public DeviceExtensionBase { 
 public:
     VkNvSampleMaskOverrideCoverage() = default;
-    VkNvSampleMaskOverrideCoverage(VkDevice handler)
-;
+    VkNvSampleMaskOverrideCoverage(VkDevice handler);
+
     std::string name() const override { return "VK_NV_sample_mask_override_coverage"; }
     static std::string str() { return "VK_NV_sample_mask_override_coverage"; }
     void init(VkDevice handler) override;
@@ -4667,8 +3997,8 @@ public:
 class VkNvGeometryShaderPassthrough final : public DeviceExtensionBase { 
 public:
     VkNvGeometryShaderPassthrough() = default;
-    VkNvGeometryShaderPassthrough(VkDevice handler)
-;
+    VkNvGeometryShaderPassthrough(VkDevice handler);
+
     std::string name() const override { return "VK_NV_geometry_shader_passthrough"; }
     static std::string str() { return "VK_NV_geometry_shader_passthrough"; }
     void init(VkDevice handler) override;
@@ -4682,8 +4012,8 @@ public:
 class VkNvViewportArray2 final : public DeviceExtensionBase { 
 public:
     VkNvViewportArray2() = default;
-    VkNvViewportArray2(VkDevice handler)
-;
+    VkNvViewportArray2(VkDevice handler);
+
     std::string name() const override { return "VK_NV_viewport_array2"; }
     static std::string str() { return "VK_NV_viewport_array2"; }
     void init(VkDevice handler) override;
@@ -4697,8 +4027,8 @@ public:
 class VkNvxMultiviewPerViewAttributes final : public DeviceExtensionBase { 
 public:
     VkNvxMultiviewPerViewAttributes() = default;
-    VkNvxMultiviewPerViewAttributes(VkDevice handler)
-;
+    VkNvxMultiviewPerViewAttributes(VkDevice handler);
+
     std::string name() const override { return "VK_NVX_multiview_per_view_attributes"; }
     static std::string str() { return "VK_NVX_multiview_per_view_attributes"; }
     void init(VkDevice handler) override;
@@ -4712,8 +4042,8 @@ public:
 class VkNvViewportSwizzle final : public DeviceExtensionBase { 
 public:
     VkNvViewportSwizzle() = default;
-    VkNvViewportSwizzle(VkDevice handler)
-;
+    VkNvViewportSwizzle(VkDevice handler);
+
     std::string name() const override { return "VK_NV_viewport_swizzle"; }
     static std::string str() { return "VK_NV_viewport_swizzle"; }
     void init(VkDevice handler) override;
@@ -4723,8 +4053,6 @@ public:
 #endif //VK_NV_viewport_swizzle
 
 std::unique_ptr<DeviceExtensionBase> makeDeviceExtension(const std::string &name, VkDevice handle);
-
-std::unique_ptr<InstanceExtensionBase> makeInstanceExtension(const std::string &name, VkInstance handle);
 
 
 }//namespace HLGK

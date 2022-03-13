@@ -1,45 +1,6 @@
-#include <HLGK/Core/Vulkan/gen/extensions.hpp>
+#include <HLGK/Core/Vulkan/gen/DeviceExt.hpp>
 
 namespace HLGK {
-
-#if defined(VK_KHR_surface)
-
-    VkKhrSurface::VkKhrSurface(VkInstance handler)
-        : InstanceExtensionBase(handler) {
-        init(handler);
-    }
-
-    void VkKhrSurface::init(VkInstance handler) 
-    {
-        if (!handler) { return; }
-        m_handler = handler;
-
-        vkGetPhysicalDeviceSurfaceSupportKHR = getProcAddr<PFN_vkGetPhysicalDeviceSurfaceSupportKHR>("vkGetPhysicalDeviceSurfaceSupportKHR");
-        vkGetPhysicalDeviceSurfaceCapabilitiesKHR = getProcAddr<PFN_vkGetPhysicalDeviceSurfaceCapabilitiesKHR>("vkGetPhysicalDeviceSurfaceCapabilitiesKHR");
-        vkDestroySurfaceKHR = getProcAddr<PFN_vkDestroySurfaceKHR>("vkDestroySurfaceKHR");
-        vkGetPhysicalDeviceSurfaceFormatsKHR = getProcAddr<PFN_vkGetPhysicalDeviceSurfaceFormatsKHR>("vkGetPhysicalDeviceSurfaceFormatsKHR");
-        vkGetPhysicalDeviceSurfacePresentModesKHR = getProcAddr<PFN_vkGetPhysicalDeviceSurfacePresentModesKHR>("vkGetPhysicalDeviceSurfacePresentModesKHR");
-    }
-
-#endif //VK_KHR_surface
-
-#if defined(VK_KHR_win32_surface)
-
-    VkKhrWin32Surface::VkKhrWin32Surface(VkInstance handler)
-        : InstanceExtensionBase(handler) {
-        init(handler);
-    }
-
-    void VkKhrWin32Surface::init(VkInstance handler) 
-    {
-        if (!handler) { return; }
-        m_handler = handler;
-
-        vkGetPhysicalDeviceWin32PresentationSupportKHR = getProcAddr<PFN_vkGetPhysicalDeviceWin32PresentationSupportKHR>("vkGetPhysicalDeviceWin32PresentationSupportKHR");
-        vkCreateWin32SurfaceKHR = getProcAddr<PFN_vkCreateWin32SurfaceKHR>("vkCreateWin32SurfaceKHR");
-    }
-
-#endif //VK_KHR_win32_surface
 
 #if defined(VK_EXT_discard_rectangles)
 
@@ -90,22 +51,6 @@ namespace HLGK {
 
 #endif //VK_EXT_depth_clip_enable
 
-#if defined(VK_EXT_swapchain_colorspace)
-
-    VkExtSwapchainColorspace::VkExtSwapchainColorspace(VkInstance handler)
-        : InstanceExtensionBase(handler) {
-        init(handler);
-    }
-
-    void VkExtSwapchainColorspace::init(VkInstance handler) 
-    {
-        if (!handler) { return; }
-        m_handler = handler;
-
-    }
-
-#endif //VK_EXT_swapchain_colorspace
-
 #if defined(VK_EXT_hdr_metadata)
 
     VkExtHdrMetadata::VkExtHdrMetadata(VkDevice handler)
@@ -152,8 +97,8 @@ namespace HLGK {
         m_handler = handler;
 
         vkQueueSignalReleaseImageANDROID = getProcAddr<PFN_vkQueueSignalReleaseImageANDROID>("vkQueueSignalReleaseImageANDROID");
-        vkGetSwapchainGrallocUsage2ANDROID = getProcAddr<PFN_vkGetSwapchainGrallocUsage2ANDROID>("vkGetSwapchainGrallocUsage2ANDROID");
         vkAcquireImageANDROID = getProcAddr<PFN_vkAcquireImageANDROID>("vkAcquireImageANDROID");
+        vkGetSwapchainGrallocUsage2ANDROID = getProcAddr<PFN_vkGetSwapchainGrallocUsage2ANDROID>("vkGetSwapchainGrallocUsage2ANDROID");
         vkGetSwapchainGrallocUsageANDROID = getProcAddr<PFN_vkGetSwapchainGrallocUsageANDROID>("vkGetSwapchainGrallocUsageANDROID");
     }
 
@@ -171,10 +116,10 @@ namespace HLGK {
         if (!handler) { return; }
         m_handler = handler;
 
-        vkCmdBeginRenderPass2KHR = getProcAddr<PFN_vkCmdBeginRenderPass2KHR>("vkCmdBeginRenderPass2KHR");
         vkCmdEndRenderPass2KHR = getProcAddr<PFN_vkCmdEndRenderPass2KHR>("vkCmdEndRenderPass2KHR");
-        vkCmdNextSubpass2KHR = getProcAddr<PFN_vkCmdNextSubpass2KHR>("vkCmdNextSubpass2KHR");
         vkCreateRenderPass2KHR = getProcAddr<PFN_vkCreateRenderPass2KHR>("vkCreateRenderPass2KHR");
+        vkCmdNextSubpass2KHR = getProcAddr<PFN_vkCmdNextSubpass2KHR>("vkCmdNextSubpass2KHR");
+        vkCmdBeginRenderPass2KHR = getProcAddr<PFN_vkCmdBeginRenderPass2KHR>("vkCmdBeginRenderPass2KHR");
     }
 
 #endif //VK_KHR_create_renderpass2
@@ -195,23 +140,6 @@ namespace HLGK {
     }
 
 #endif //VK_KHR_shared_presentable_image
-
-#if defined(VK_KHR_external_fence_capabilities)
-
-    VkKhrExternalFenceCapabilities::VkKhrExternalFenceCapabilities(VkInstance handler)
-        : InstanceExtensionBase(handler) {
-        init(handler);
-    }
-
-    void VkKhrExternalFenceCapabilities::init(VkInstance handler) 
-    {
-        if (!handler) { return; }
-        m_handler = handler;
-
-        vkGetPhysicalDeviceExternalFencePropertiesKHR = getProcAddr<PFN_vkGetPhysicalDeviceExternalFencePropertiesKHR>("vkGetPhysicalDeviceExternalFencePropertiesKHR");
-    }
-
-#endif //VK_KHR_external_fence_capabilities
 
 #if defined(VK_KHR_external_fence)
 
@@ -259,8 +187,8 @@ namespace HLGK {
         if (!handler) { return; }
         m_handler = handler;
 
-        vkGetFenceFdKHR = getProcAddr<PFN_vkGetFenceFdKHR>("vkGetFenceFdKHR");
         vkImportFenceFdKHR = getProcAddr<PFN_vkImportFenceFdKHR>("vkImportFenceFdKHR");
+        vkGetFenceFdKHR = getProcAddr<PFN_vkGetFenceFdKHR>("vkGetFenceFdKHR");
     }
 
 #endif //VK_KHR_external_fence_fd
@@ -278,8 +206,8 @@ namespace HLGK {
         m_handler = handler;
 
         vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR = getProcAddr<PFN_vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR>("vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR");
-        vkReleaseProfilingLockKHR = getProcAddr<PFN_vkReleaseProfilingLockKHR>("vkReleaseProfilingLockKHR");
         vkAcquireProfilingLockKHR = getProcAddr<PFN_vkAcquireProfilingLockKHR>("vkAcquireProfilingLockKHR");
+        vkReleaseProfilingLockKHR = getProcAddr<PFN_vkReleaseProfilingLockKHR>("vkReleaseProfilingLockKHR");
         vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR = getProcAddr<PFN_vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR>("vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR");
     }
 
@@ -301,43 +229,6 @@ namespace HLGK {
 
 #endif //VK_KHR_maintenance2
 
-#if defined(VK_EXT_debug_report)
-
-    VkExtDebugReport::VkExtDebugReport(VkInstance handler)
-        : InstanceExtensionBase(handler) {
-        init(handler);
-    }
-
-    void VkExtDebugReport::init(VkInstance handler) 
-    {
-        if (!handler) { return; }
-        m_handler = handler;
-
-        vkDestroyDebugReportCallbackEXT = getProcAddr<PFN_vkDestroyDebugReportCallbackEXT>("vkDestroyDebugReportCallbackEXT");
-        vkDebugReportMessageEXT = getProcAddr<PFN_vkDebugReportMessageEXT>("vkDebugReportMessageEXT");
-        vkCreateDebugReportCallbackEXT = getProcAddr<PFN_vkCreateDebugReportCallbackEXT>("vkCreateDebugReportCallbackEXT");
-    }
-
-#endif //VK_EXT_debug_report
-
-#if defined(VK_KHR_get_surface_capabilities2)
-
-    VkKhrGetSurfaceCapabilities2::VkKhrGetSurfaceCapabilities2(VkInstance handler)
-        : InstanceExtensionBase(handler) {
-        init(handler);
-    }
-
-    void VkKhrGetSurfaceCapabilities2::init(VkInstance handler) 
-    {
-        if (!handler) { return; }
-        m_handler = handler;
-
-        vkGetPhysicalDeviceSurfaceFormats2KHR = getProcAddr<PFN_vkGetPhysicalDeviceSurfaceFormats2KHR>("vkGetPhysicalDeviceSurfaceFormats2KHR");
-        vkGetPhysicalDeviceSurfaceCapabilities2KHR = getProcAddr<PFN_vkGetPhysicalDeviceSurfaceCapabilities2KHR>("vkGetPhysicalDeviceSurfaceCapabilities2KHR");
-    }
-
-#endif //VK_KHR_get_surface_capabilities2
-
 #if defined(VK_KHR_variable_pointers)
 
     VkKhrVariablePointers::VkKhrVariablePointers(VkDevice handler)
@@ -353,76 +244,6 @@ namespace HLGK {
     }
 
 #endif //VK_KHR_variable_pointers
-
-#if defined(VK_KHR_get_display_properties2)
-
-    VkKhrGetDisplayProperties2::VkKhrGetDisplayProperties2(VkInstance handler)
-        : InstanceExtensionBase(handler) {
-        init(handler);
-    }
-
-    void VkKhrGetDisplayProperties2::init(VkInstance handler) 
-    {
-        if (!handler) { return; }
-        m_handler = handler;
-
-        vkGetPhysicalDeviceDisplayProperties2KHR = getProcAddr<PFN_vkGetPhysicalDeviceDisplayProperties2KHR>("vkGetPhysicalDeviceDisplayProperties2KHR");
-        vkGetPhysicalDeviceDisplayPlaneProperties2KHR = getProcAddr<PFN_vkGetPhysicalDeviceDisplayPlaneProperties2KHR>("vkGetPhysicalDeviceDisplayPlaneProperties2KHR");
-        vkGetDisplayModeProperties2KHR = getProcAddr<PFN_vkGetDisplayModeProperties2KHR>("vkGetDisplayModeProperties2KHR");
-        vkGetDisplayPlaneCapabilities2KHR = getProcAddr<PFN_vkGetDisplayPlaneCapabilities2KHR>("vkGetDisplayPlaneCapabilities2KHR");
-    }
-
-#endif //VK_KHR_get_display_properties2
-
-#if defined(VK_MVK_ios_surface)
-
-    VkMvkIosSurface::VkMvkIosSurface(VkInstance handler)
-        : InstanceExtensionBase(handler) {
-        init(handler);
-    }
-
-    void VkMvkIosSurface::init(VkInstance handler) 
-    {
-        if (!handler) { return; }
-        m_handler = handler;
-
-        vkCreateIOSSurfaceMVK = getProcAddr<PFN_vkCreateIOSSurfaceMVK>("vkCreateIOSSurfaceMVK");
-    }
-
-#endif //VK_MVK_ios_surface
-
-#if defined(VK_MVK_macos_surface)
-
-    VkMvkMacosSurface::VkMvkMacosSurface(VkInstance handler)
-        : InstanceExtensionBase(handler) {
-        init(handler);
-    }
-
-    void VkMvkMacosSurface::init(VkInstance handler) 
-    {
-        if (!handler) { return; }
-        m_handler = handler;
-
-        vkCreateMacOSSurfaceMVK = getProcAddr<PFN_vkCreateMacOSSurfaceMVK>("vkCreateMacOSSurfaceMVK");
-    }
-
-#endif //VK_MVK_macos_surface
-
-#if defined(VK_MVK_moltenvk)
-
-    VkMvkMoltenvk::VkMvkMoltenvk(VkInstance handler)
-        : InstanceExtensionBase(handler) {
-        init(handler);
-    }
-
-    void VkMvkMoltenvk::init(VkInstance handler) 
-    {
-        if (!handler) { return; }
-        m_handler = handler;
-
-    }
-
-#endif //VK_MVK_moltenvk
 
 #if defined(VK_EXT_external_memory_dma_buf)
 
@@ -472,33 +293,6 @@ namespace HLGK {
 
 #endif //VK_KHR_dedicated_allocation
 
-#if defined(VK_EXT_debug_utils)
-
-    VkExtDebugUtils::VkExtDebugUtils(VkInstance handler)
-        : InstanceExtensionBase(handler) {
-        init(handler);
-    }
-
-    void VkExtDebugUtils::init(VkInstance handler) 
-    {
-        if (!handler) { return; }
-        m_handler = handler;
-
-        vkQueueBeginDebugUtilsLabelEXT = getProcAddr<PFN_vkQueueBeginDebugUtilsLabelEXT>("vkQueueBeginDebugUtilsLabelEXT");
-        vkQueueEndDebugUtilsLabelEXT = getProcAddr<PFN_vkQueueEndDebugUtilsLabelEXT>("vkQueueEndDebugUtilsLabelEXT");
-        vkCmdInsertDebugUtilsLabelEXT = getProcAddr<PFN_vkCmdInsertDebugUtilsLabelEXT>("vkCmdInsertDebugUtilsLabelEXT");
-        vkCreateDebugUtilsMessengerEXT = getProcAddr<PFN_vkCreateDebugUtilsMessengerEXT>("vkCreateDebugUtilsMessengerEXT");
-        vkCmdEndDebugUtilsLabelEXT = getProcAddr<PFN_vkCmdEndDebugUtilsLabelEXT>("vkCmdEndDebugUtilsLabelEXT");
-        vkSetDebugUtilsObjectNameEXT = getProcAddr<PFN_vkSetDebugUtilsObjectNameEXT>("vkSetDebugUtilsObjectNameEXT");
-        vkCmdBeginDebugUtilsLabelEXT = getProcAddr<PFN_vkCmdBeginDebugUtilsLabelEXT>("vkCmdBeginDebugUtilsLabelEXT");
-        vkDestroyDebugUtilsMessengerEXT = getProcAddr<PFN_vkDestroyDebugUtilsMessengerEXT>("vkDestroyDebugUtilsMessengerEXT");
-        vkSubmitDebugUtilsMessageEXT = getProcAddr<PFN_vkSubmitDebugUtilsMessageEXT>("vkSubmitDebugUtilsMessageEXT");
-        vkQueueInsertDebugUtilsLabelEXT = getProcAddr<PFN_vkQueueInsertDebugUtilsLabelEXT>("vkQueueInsertDebugUtilsLabelEXT");
-        vkSetDebugUtilsObjectTagEXT = getProcAddr<PFN_vkSetDebugUtilsObjectTagEXT>("vkSetDebugUtilsObjectTagEXT");
-    }
-
-#endif //VK_EXT_debug_utils
-
 #if defined(VK_NV_glsl_shader)
 
     VkNvGlslShader::VkNvGlslShader(VkDevice handler)
@@ -527,8 +321,8 @@ namespace HLGK {
         if (!handler) { return; }
         m_handler = handler;
 
-        vkGetAndroidHardwareBufferPropertiesANDROID = getProcAddr<PFN_vkGetAndroidHardwareBufferPropertiesANDROID>("vkGetAndroidHardwareBufferPropertiesANDROID");
         vkGetMemoryAndroidHardwareBufferANDROID = getProcAddr<PFN_vkGetMemoryAndroidHardwareBufferANDROID>("vkGetMemoryAndroidHardwareBufferANDROID");
+        vkGetAndroidHardwareBufferPropertiesANDROID = getProcAddr<PFN_vkGetAndroidHardwareBufferPropertiesANDROID>("vkGetAndroidHardwareBufferPropertiesANDROID");
     }
 
 #endif //VK_ANDROID_external_memory_android_hardware_buffer
@@ -673,8 +467,8 @@ namespace HLGK {
         if (!handler) { return; }
         m_handler = handler;
 
-        vkCmdSetSampleLocationsEXT = getProcAddr<PFN_vkCmdSetSampleLocationsEXT>("vkCmdSetSampleLocationsEXT");
         vkGetPhysicalDeviceMultisamplePropertiesEXT = getProcAddr<PFN_vkGetPhysicalDeviceMultisamplePropertiesEXT>("vkGetPhysicalDeviceMultisamplePropertiesEXT");
+        vkCmdSetSampleLocationsEXT = getProcAddr<PFN_vkCmdSetSampleLocationsEXT>("vkCmdSetSampleLocationsEXT");
     }
 
 #endif //VK_EXT_sample_locations
@@ -707,9 +501,9 @@ namespace HLGK {
         if (!handler) { return; }
         m_handler = handler;
 
+        vkGetBufferMemoryRequirements2KHR = getProcAddr<PFN_vkGetBufferMemoryRequirements2KHR>("vkGetBufferMemoryRequirements2KHR");
         vkGetImageMemoryRequirements2KHR = getProcAddr<PFN_vkGetImageMemoryRequirements2KHR>("vkGetImageMemoryRequirements2KHR");
         vkGetImageSparseMemoryRequirements2KHR = getProcAddr<PFN_vkGetImageSparseMemoryRequirements2KHR>("vkGetImageSparseMemoryRequirements2KHR");
-        vkGetBufferMemoryRequirements2KHR = getProcAddr<PFN_vkGetBufferMemoryRequirements2KHR>("vkGetBufferMemoryRequirements2KHR");
     }
 
 #endif //VK_KHR_get_memory_requirements2
@@ -790,22 +584,22 @@ namespace HLGK {
         if (!handler) { return; }
         m_handler = handler;
 
-        vkGetAccelerationStructureDeviceAddressKHR = getProcAddr<PFN_vkGetAccelerationStructureDeviceAddressKHR>("vkGetAccelerationStructureDeviceAddressKHR");
         vkCmdCopyMemoryToAccelerationStructureKHR = getProcAddr<PFN_vkCmdCopyMemoryToAccelerationStructureKHR>("vkCmdCopyMemoryToAccelerationStructureKHR");
+        vkDestroyAccelerationStructureKHR = getProcAddr<PFN_vkDestroyAccelerationStructureKHR>("vkDestroyAccelerationStructureKHR");
         vkGetAccelerationStructureBuildSizesKHR = getProcAddr<PFN_vkGetAccelerationStructureBuildSizesKHR>("vkGetAccelerationStructureBuildSizesKHR");
-        vkGetDeviceAccelerationStructureCompatibilityKHR = getProcAddr<PFN_vkGetDeviceAccelerationStructureCompatibilityKHR>("vkGetDeviceAccelerationStructureCompatibilityKHR");
-        vkCmdWriteAccelerationStructuresPropertiesKHR = getProcAddr<PFN_vkCmdWriteAccelerationStructuresPropertiesKHR>("vkCmdWriteAccelerationStructuresPropertiesKHR");
         vkCopyAccelerationStructureKHR = getProcAddr<PFN_vkCopyAccelerationStructureKHR>("vkCopyAccelerationStructureKHR");
-        vkWriteAccelerationStructuresPropertiesKHR = getProcAddr<PFN_vkWriteAccelerationStructuresPropertiesKHR>("vkWriteAccelerationStructuresPropertiesKHR");
-        vkBuildAccelerationStructuresKHR = getProcAddr<PFN_vkBuildAccelerationStructuresKHR>("vkBuildAccelerationStructuresKHR");
-        vkCmdBuildAccelerationStructuresIndirectKHR = getProcAddr<PFN_vkCmdBuildAccelerationStructuresIndirectKHR>("vkCmdBuildAccelerationStructuresIndirectKHR");
-        vkCmdCopyAccelerationStructureKHR = getProcAddr<PFN_vkCmdCopyAccelerationStructureKHR>("vkCmdCopyAccelerationStructureKHR");
+        vkGetDeviceAccelerationStructureCompatibilityKHR = getProcAddr<PFN_vkGetDeviceAccelerationStructureCompatibilityKHR>("vkGetDeviceAccelerationStructureCompatibilityKHR");
+        vkCreateAccelerationStructureKHR = getProcAddr<PFN_vkCreateAccelerationStructureKHR>("vkCreateAccelerationStructureKHR");
+        vkGetAccelerationStructureDeviceAddressKHR = getProcAddr<PFN_vkGetAccelerationStructureDeviceAddressKHR>("vkGetAccelerationStructureDeviceAddressKHR");
         vkCopyAccelerationStructureToMemoryKHR = getProcAddr<PFN_vkCopyAccelerationStructureToMemoryKHR>("vkCopyAccelerationStructureToMemoryKHR");
+        vkCmdCopyAccelerationStructureKHR = getProcAddr<PFN_vkCmdCopyAccelerationStructureKHR>("vkCmdCopyAccelerationStructureKHR");
+        vkBuildAccelerationStructuresKHR = getProcAddr<PFN_vkBuildAccelerationStructuresKHR>("vkBuildAccelerationStructuresKHR");
         vkCmdBuildAccelerationStructuresKHR = getProcAddr<PFN_vkCmdBuildAccelerationStructuresKHR>("vkCmdBuildAccelerationStructuresKHR");
+        vkCmdWriteAccelerationStructuresPropertiesKHR = getProcAddr<PFN_vkCmdWriteAccelerationStructuresPropertiesKHR>("vkCmdWriteAccelerationStructuresPropertiesKHR");
+        vkCmdBuildAccelerationStructuresIndirectKHR = getProcAddr<PFN_vkCmdBuildAccelerationStructuresIndirectKHR>("vkCmdBuildAccelerationStructuresIndirectKHR");
         vkCmdCopyAccelerationStructureToMemoryKHR = getProcAddr<PFN_vkCmdCopyAccelerationStructureToMemoryKHR>("vkCmdCopyAccelerationStructureToMemoryKHR");
         vkCopyMemoryToAccelerationStructureKHR = getProcAddr<PFN_vkCopyMemoryToAccelerationStructureKHR>("vkCopyMemoryToAccelerationStructureKHR");
-        vkDestroyAccelerationStructureKHR = getProcAddr<PFN_vkDestroyAccelerationStructureKHR>("vkDestroyAccelerationStructureKHR");
-        vkCreateAccelerationStructureKHR = getProcAddr<PFN_vkCreateAccelerationStructureKHR>("vkCreateAccelerationStructureKHR");
+        vkWriteAccelerationStructuresPropertiesKHR = getProcAddr<PFN_vkWriteAccelerationStructuresPropertiesKHR>("vkWriteAccelerationStructuresPropertiesKHR");
     }
 
 #endif //VK_KHR_acceleration_structure
@@ -886,8 +680,8 @@ namespace HLGK {
         if (!handler) { return; }
         m_handler = handler;
 
-        vkCreateSamplerYcbcrConversionKHR = getProcAddr<PFN_vkCreateSamplerYcbcrConversionKHR>("vkCreateSamplerYcbcrConversionKHR");
         vkDestroySamplerYcbcrConversionKHR = getProcAddr<PFN_vkDestroySamplerYcbcrConversionKHR>("vkDestroySamplerYcbcrConversionKHR");
+        vkCreateSamplerYcbcrConversionKHR = getProcAddr<PFN_vkCreateSamplerYcbcrConversionKHR>("vkCreateSamplerYcbcrConversionKHR");
     }
 
 #endif //VK_KHR_sampler_ycbcr_conversion
@@ -904,8 +698,8 @@ namespace HLGK {
         if (!handler) { return; }
         m_handler = handler;
 
-        vkBindBufferMemory2KHR = getProcAddr<PFN_vkBindBufferMemory2KHR>("vkBindBufferMemory2KHR");
         vkBindImageMemory2KHR = getProcAddr<PFN_vkBindImageMemory2KHR>("vkBindImageMemory2KHR");
+        vkBindBufferMemory2KHR = getProcAddr<PFN_vkBindBufferMemory2KHR>("vkBindBufferMemory2KHR");
     }
 
 #endif //VK_KHR_bind_memory2
@@ -955,10 +749,10 @@ namespace HLGK {
         if (!handler) { return; }
         m_handler = handler;
 
+        vkMergeValidationCachesEXT = getProcAddr<PFN_vkMergeValidationCachesEXT>("vkMergeValidationCachesEXT");
+        vkDestroyValidationCacheEXT = getProcAddr<PFN_vkDestroyValidationCacheEXT>("vkDestroyValidationCacheEXT");
         vkCreateValidationCacheEXT = getProcAddr<PFN_vkCreateValidationCacheEXT>("vkCreateValidationCacheEXT");
         vkGetValidationCacheDataEXT = getProcAddr<PFN_vkGetValidationCacheDataEXT>("vkGetValidationCacheDataEXT");
-        vkDestroyValidationCacheEXT = getProcAddr<PFN_vkDestroyValidationCacheEXT>("vkDestroyValidationCacheEXT");
-        vkMergeValidationCachesEXT = getProcAddr<PFN_vkMergeValidationCachesEXT>("vkMergeValidationCachesEXT");
     }
 
 #endif //VK_EXT_validation_cache
@@ -1023,8 +817,8 @@ namespace HLGK {
         if (!handler) { return; }
         m_handler = handler;
 
-        vkCmdBindShadingRateImageNV = getProcAddr<PFN_vkCmdBindShadingRateImageNV>("vkCmdBindShadingRateImageNV");
         vkCmdSetCoarseSampleOrderNV = getProcAddr<PFN_vkCmdSetCoarseSampleOrderNV>("vkCmdSetCoarseSampleOrderNV");
+        vkCmdBindShadingRateImageNV = getProcAddr<PFN_vkCmdBindShadingRateImageNV>("vkCmdBindShadingRateImageNV");
         vkCmdSetViewportShadingRatePaletteNV = getProcAddr<PFN_vkCmdSetViewportShadingRatePaletteNV>("vkCmdSetViewportShadingRatePaletteNV");
     }
 
@@ -1043,17 +837,17 @@ namespace HLGK {
         m_handler = handler;
 
         vkDestroyAccelerationStructureNV = getProcAddr<PFN_vkDestroyAccelerationStructureNV>("vkDestroyAccelerationStructureNV");
-        vkCmdBuildAccelerationStructureNV = getProcAddr<PFN_vkCmdBuildAccelerationStructureNV>("vkCmdBuildAccelerationStructureNV");
-        vkCompileDeferredNV = getProcAddr<PFN_vkCompileDeferredNV>("vkCompileDeferredNV");
-        vkGetAccelerationStructureHandleNV = getProcAddr<PFN_vkGetAccelerationStructureHandleNV>("vkGetAccelerationStructureHandleNV");
-        vkGetAccelerationStructureMemoryRequirementsNV = getProcAddr<PFN_vkGetAccelerationStructureMemoryRequirementsNV>("vkGetAccelerationStructureMemoryRequirementsNV");
         vkCreateRayTracingPipelinesNV = getProcAddr<PFN_vkCreateRayTracingPipelinesNV>("vkCreateRayTracingPipelinesNV");
         vkGetRayTracingShaderGroupHandlesNV = getProcAddr<PFN_vkGetRayTracingShaderGroupHandlesNV>("vkGetRayTracingShaderGroupHandlesNV");
         vkCmdWriteAccelerationStructuresPropertiesNV = getProcAddr<PFN_vkCmdWriteAccelerationStructuresPropertiesNV>("vkCmdWriteAccelerationStructuresPropertiesNV");
-        vkBindAccelerationStructureMemoryNV = getProcAddr<PFN_vkBindAccelerationStructureMemoryNV>("vkBindAccelerationStructureMemoryNV");
-        vkCmdTraceRaysNV = getProcAddr<PFN_vkCmdTraceRaysNV>("vkCmdTraceRaysNV");
         vkCreateAccelerationStructureNV = getProcAddr<PFN_vkCreateAccelerationStructureNV>("vkCreateAccelerationStructureNV");
+        vkCompileDeferredNV = getProcAddr<PFN_vkCompileDeferredNV>("vkCompileDeferredNV");
+        vkGetAccelerationStructureHandleNV = getProcAddr<PFN_vkGetAccelerationStructureHandleNV>("vkGetAccelerationStructureHandleNV");
+        vkGetAccelerationStructureMemoryRequirementsNV = getProcAddr<PFN_vkGetAccelerationStructureMemoryRequirementsNV>("vkGetAccelerationStructureMemoryRequirementsNV");
         vkCmdCopyAccelerationStructureNV = getProcAddr<PFN_vkCmdCopyAccelerationStructureNV>("vkCmdCopyAccelerationStructureNV");
+        vkBindAccelerationStructureMemoryNV = getProcAddr<PFN_vkBindAccelerationStructureMemoryNV>("vkBindAccelerationStructureMemoryNV");
+        vkCmdBuildAccelerationStructureNV = getProcAddr<PFN_vkCmdBuildAccelerationStructureNV>("vkCmdBuildAccelerationStructureNV");
+        vkCmdTraceRaysNV = getProcAddr<PFN_vkCmdTraceRaysNV>("vkCmdTraceRaysNV");
     }
 
 #endif //VK_NV_ray_tracing
@@ -1477,15 +1271,15 @@ namespace HLGK {
         if (!handler) { return; }
         m_handler = handler;
 
-        vkGetDeviceGroupPresentCapabilitiesKHR = getProcAddr<PFN_vkGetDeviceGroupPresentCapabilitiesKHR>("vkGetDeviceGroupPresentCapabilitiesKHR");
-        vkCreateSwapchainKHR = getProcAddr<PFN_vkCreateSwapchainKHR>("vkCreateSwapchainKHR");
         vkGetSwapchainImagesKHR = getProcAddr<PFN_vkGetSwapchainImagesKHR>("vkGetSwapchainImagesKHR");
+        vkCreateSwapchainKHR = getProcAddr<PFN_vkCreateSwapchainKHR>("vkCreateSwapchainKHR");
         vkGetPhysicalDevicePresentRectanglesKHR = getProcAddr<PFN_vkGetPhysicalDevicePresentRectanglesKHR>("vkGetPhysicalDevicePresentRectanglesKHR");
-        vkAcquireNextImage2KHR = getProcAddr<PFN_vkAcquireNextImage2KHR>("vkAcquireNextImage2KHR");
-        vkAcquireNextImageKHR = getProcAddr<PFN_vkAcquireNextImageKHR>("vkAcquireNextImageKHR");
-        vkGetDeviceGroupSurfacePresentModesKHR = getProcAddr<PFN_vkGetDeviceGroupSurfacePresentModesKHR>("vkGetDeviceGroupSurfacePresentModesKHR");
-        vkQueuePresentKHR = getProcAddr<PFN_vkQueuePresentKHR>("vkQueuePresentKHR");
         vkDestroySwapchainKHR = getProcAddr<PFN_vkDestroySwapchainKHR>("vkDestroySwapchainKHR");
+        vkQueuePresentKHR = getProcAddr<PFN_vkQueuePresentKHR>("vkQueuePresentKHR");
+        vkGetDeviceGroupSurfacePresentModesKHR = getProcAddr<PFN_vkGetDeviceGroupSurfacePresentModesKHR>("vkGetDeviceGroupSurfacePresentModesKHR");
+        vkAcquireNextImageKHR = getProcAddr<PFN_vkAcquireNextImageKHR>("vkAcquireNextImageKHR");
+        vkAcquireNextImage2KHR = getProcAddr<PFN_vkAcquireNextImage2KHR>("vkAcquireNextImage2KHR");
+        vkGetDeviceGroupPresentCapabilitiesKHR = getProcAddr<PFN_vkGetDeviceGroupPresentCapabilitiesKHR>("vkGetDeviceGroupPresentCapabilitiesKHR");
     }
 
 #endif //VK_KHR_swapchain
@@ -1550,9 +1344,9 @@ namespace HLGK {
         if (!handler) { return; }
         m_handler = handler;
 
-        vkCmdDrawMeshTasksIndirectNV = getProcAddr<PFN_vkCmdDrawMeshTasksIndirectNV>("vkCmdDrawMeshTasksIndirectNV");
-        vkCmdDrawMeshTasksNV = getProcAddr<PFN_vkCmdDrawMeshTasksNV>("vkCmdDrawMeshTasksNV");
         vkCmdDrawMeshTasksIndirectCountNV = getProcAddr<PFN_vkCmdDrawMeshTasksIndirectCountNV>("vkCmdDrawMeshTasksIndirectCountNV");
+        vkCmdDrawMeshTasksNV = getProcAddr<PFN_vkCmdDrawMeshTasksNV>("vkCmdDrawMeshTasksNV");
+        vkCmdDrawMeshTasksIndirectNV = getProcAddr<PFN_vkCmdDrawMeshTasksIndirectNV>("vkCmdDrawMeshTasksIndirectNV");
     }
 
 #endif //VK_NV_mesh_shader
@@ -1636,9 +1430,9 @@ namespace HLGK {
         if (!handler) { return; }
         m_handler = handler;
 
-        vkSignalSemaphoreKHR = getProcAddr<PFN_vkSignalSemaphoreKHR>("vkSignalSemaphoreKHR");
         vkWaitSemaphoresKHR = getProcAddr<PFN_vkWaitSemaphoresKHR>("vkWaitSemaphoresKHR");
         vkGetSemaphoreCounterValueKHR = getProcAddr<PFN_vkGetSemaphoreCounterValueKHR>("vkGetSemaphoreCounterValueKHR");
+        vkSignalSemaphoreKHR = getProcAddr<PFN_vkSignalSemaphoreKHR>("vkSignalSemaphoreKHR");
     }
 
 #endif //VK_KHR_timeline_semaphore
@@ -1704,14 +1498,14 @@ namespace HLGK {
         m_handler = handler;
 
         vkQueueSetPerformanceConfigurationINTEL = getProcAddr<PFN_vkQueueSetPerformanceConfigurationINTEL>("vkQueueSetPerformanceConfigurationINTEL");
-        vkGetPerformanceParameterINTEL = getProcAddr<PFN_vkGetPerformanceParameterINTEL>("vkGetPerformanceParameterINTEL");
-        vkCmdSetPerformanceOverrideINTEL = getProcAddr<PFN_vkCmdSetPerformanceOverrideINTEL>("vkCmdSetPerformanceOverrideINTEL");
-        vkReleasePerformanceConfigurationINTEL = getProcAddr<PFN_vkReleasePerformanceConfigurationINTEL>("vkReleasePerformanceConfigurationINTEL");
         vkAcquirePerformanceConfigurationINTEL = getProcAddr<PFN_vkAcquirePerformanceConfigurationINTEL>("vkAcquirePerformanceConfigurationINTEL");
-        vkUninitializePerformanceApiINTEL = getProcAddr<PFN_vkUninitializePerformanceApiINTEL>("vkUninitializePerformanceApiINTEL");
+        vkReleasePerformanceConfigurationINTEL = getProcAddr<PFN_vkReleasePerformanceConfigurationINTEL>("vkReleasePerformanceConfigurationINTEL");
         vkInitializePerformanceApiINTEL = getProcAddr<PFN_vkInitializePerformanceApiINTEL>("vkInitializePerformanceApiINTEL");
+        vkGetPerformanceParameterINTEL = getProcAddr<PFN_vkGetPerformanceParameterINTEL>("vkGetPerformanceParameterINTEL");
+        vkUninitializePerformanceApiINTEL = getProcAddr<PFN_vkUninitializePerformanceApiINTEL>("vkUninitializePerformanceApiINTEL");
         vkCmdSetPerformanceStreamMarkerINTEL = getProcAddr<PFN_vkCmdSetPerformanceStreamMarkerINTEL>("vkCmdSetPerformanceStreamMarkerINTEL");
         vkCmdSetPerformanceMarkerINTEL = getProcAddr<PFN_vkCmdSetPerformanceMarkerINTEL>("vkCmdSetPerformanceMarkerINTEL");
+        vkCmdSetPerformanceOverrideINTEL = getProcAddr<PFN_vkCmdSetPerformanceOverrideINTEL>("vkCmdSetPerformanceOverrideINTEL");
     }
 
 #endif //VK_INTEL_performance_query
@@ -1765,23 +1559,6 @@ namespace HLGK {
 
 #endif //VK_AMD_display_native_hdr
 
-#if defined(VK_FUCHSIA_imagepipe_surface)
-
-    VkFuchsiaImagepipeSurface::VkFuchsiaImagepipeSurface(VkInstance handler)
-        : InstanceExtensionBase(handler) {
-        init(handler);
-    }
-
-    void VkFuchsiaImagepipeSurface::init(VkInstance handler) 
-    {
-        if (!handler) { return; }
-        m_handler = handler;
-
-        vkCreateImagePipeSurfaceFUCHSIA = getProcAddr<PFN_vkCreateImagePipeSurfaceFUCHSIA>("vkCreateImagePipeSurfaceFUCHSIA");
-    }
-
-#endif //VK_FUCHSIA_imagepipe_surface
-
 #if defined(VK_KHR_shader_terminate_invocation)
 
     VkKhrShaderTerminateInvocation::VkKhrShaderTerminateInvocation(VkDevice handler)
@@ -1797,23 +1574,6 @@ namespace HLGK {
     }
 
 #endif //VK_KHR_shader_terminate_invocation
-
-#if defined(VK_EXT_metal_surface)
-
-    VkExtMetalSurface::VkExtMetalSurface(VkInstance handler)
-        : InstanceExtensionBase(handler) {
-        init(handler);
-    }
-
-    void VkExtMetalSurface::init(VkInstance handler) 
-    {
-        if (!handler) { return; }
-        m_handler = handler;
-
-        vkCreateMetalSurfaceEXT = getProcAddr<PFN_vkCreateMetalSurfaceEXT>("vkCreateMetalSurfaceEXT");
-    }
-
-#endif //VK_EXT_metal_surface
 
 #if defined(VK_EXT_fragment_density_map)
 
@@ -1957,11 +1717,11 @@ namespace HLGK {
         if (!handler) { return; }
         m_handler = handler;
 
+        vkCmdDebugMarkerBeginEXT = getProcAddr<PFN_vkCmdDebugMarkerBeginEXT>("vkCmdDebugMarkerBeginEXT");
         vkCmdDebugMarkerEndEXT = getProcAddr<PFN_vkCmdDebugMarkerEndEXT>("vkCmdDebugMarkerEndEXT");
         vkCmdDebugMarkerInsertEXT = getProcAddr<PFN_vkCmdDebugMarkerInsertEXT>("vkCmdDebugMarkerInsertEXT");
-        vkDebugMarkerSetObjectNameEXT = getProcAddr<PFN_vkDebugMarkerSetObjectNameEXT>("vkDebugMarkerSetObjectNameEXT");
-        vkCmdDebugMarkerBeginEXT = getProcAddr<PFN_vkCmdDebugMarkerBeginEXT>("vkCmdDebugMarkerBeginEXT");
         vkDebugMarkerSetObjectTagEXT = getProcAddr<PFN_vkDebugMarkerSetObjectTagEXT>("vkDebugMarkerSetObjectTagEXT");
+        vkDebugMarkerSetObjectNameEXT = getProcAddr<PFN_vkDebugMarkerSetObjectNameEXT>("vkDebugMarkerSetObjectNameEXT");
     }
 
 #endif //VK_EXT_debug_marker
@@ -2058,37 +1818,21 @@ namespace HLGK {
         if (!handler) { return; }
         m_handler = handler;
 
-        vkCreateVideoSessionParametersKHR = getProcAddr<PFN_vkCreateVideoSessionParametersKHR>("vkCreateVideoSessionParametersKHR");
-        vkDestroyVideoSessionParametersKHR = getProcAddr<PFN_vkDestroyVideoSessionParametersKHR>("vkDestroyVideoSessionParametersKHR");
-        vkCmdEndVideoCodingKHR = getProcAddr<PFN_vkCmdEndVideoCodingKHR>("vkCmdEndVideoCodingKHR");
         vkGetPhysicalDeviceVideoFormatPropertiesKHR = getProcAddr<PFN_vkGetPhysicalDeviceVideoFormatPropertiesKHR>("vkGetPhysicalDeviceVideoFormatPropertiesKHR");
+        vkCmdEndVideoCodingKHR = getProcAddr<PFN_vkCmdEndVideoCodingKHR>("vkCmdEndVideoCodingKHR");
+        vkCmdBeginVideoCodingKHR = getProcAddr<PFN_vkCmdBeginVideoCodingKHR>("vkCmdBeginVideoCodingKHR");
+        vkUpdateVideoSessionParametersKHR = getProcAddr<PFN_vkUpdateVideoSessionParametersKHR>("vkUpdateVideoSessionParametersKHR");
+        vkCreateVideoSessionParametersKHR = getProcAddr<PFN_vkCreateVideoSessionParametersKHR>("vkCreateVideoSessionParametersKHR");
+        vkBindVideoSessionMemoryKHR = getProcAddr<PFN_vkBindVideoSessionMemoryKHR>("vkBindVideoSessionMemoryKHR");
         vkCreateVideoSessionKHR = getProcAddr<PFN_vkCreateVideoSessionKHR>("vkCreateVideoSessionKHR");
         vkGetVideoSessionMemoryRequirementsKHR = getProcAddr<PFN_vkGetVideoSessionMemoryRequirementsKHR>("vkGetVideoSessionMemoryRequirementsKHR");
-        vkUpdateVideoSessionParametersKHR = getProcAddr<PFN_vkUpdateVideoSessionParametersKHR>("vkUpdateVideoSessionParametersKHR");
         vkGetPhysicalDeviceVideoCapabilitiesKHR = getProcAddr<PFN_vkGetPhysicalDeviceVideoCapabilitiesKHR>("vkGetPhysicalDeviceVideoCapabilitiesKHR");
-        vkCmdBeginVideoCodingKHR = getProcAddr<PFN_vkCmdBeginVideoCodingKHR>("vkCmdBeginVideoCodingKHR");
-        vkBindVideoSessionMemoryKHR = getProcAddr<PFN_vkBindVideoSessionMemoryKHR>("vkBindVideoSessionMemoryKHR");
-        vkCmdControlVideoCodingKHR = getProcAddr<PFN_vkCmdControlVideoCodingKHR>("vkCmdControlVideoCodingKHR");
         vkDestroyVideoSessionKHR = getProcAddr<PFN_vkDestroyVideoSessionKHR>("vkDestroyVideoSessionKHR");
+        vkDestroyVideoSessionParametersKHR = getProcAddr<PFN_vkDestroyVideoSessionParametersKHR>("vkDestroyVideoSessionParametersKHR");
+        vkCmdControlVideoCodingKHR = getProcAddr<PFN_vkCmdControlVideoCodingKHR>("vkCmdControlVideoCodingKHR");
     }
 
 #endif //VK_KHR_video_queue
-
-#if defined(VK_KHR_surface_protected_capabilities)
-
-    VkKhrSurfaceProtectedCapabilities::VkKhrSurfaceProtectedCapabilities(VkInstance handler)
-        : InstanceExtensionBase(handler) {
-        init(handler);
-    }
-
-    void VkKhrSurfaceProtectedCapabilities::init(VkInstance handler) 
-    {
-        if (!handler) { return; }
-        m_handler = handler;
-
-    }
-
-#endif //VK_KHR_surface_protected_capabilities
 
 #if defined(VK_NV_dedicated_allocation_image_aliasing)
 
@@ -2171,22 +1915,6 @@ namespace HLGK {
     }
 
 #endif //VK_EXT_separate_stencil_usage
-
-#if defined(VK_EXT_validation_features)
-
-    VkExtValidationFeatures::VkExtValidationFeatures(VkInstance handler)
-        : InstanceExtensionBase(handler) {
-        init(handler);
-    }
-
-    void VkExtValidationFeatures::init(VkInstance handler) 
-    {
-        if (!handler) { return; }
-        m_handler = handler;
-
-    }
-
-#endif //VK_EXT_validation_features
 
 #if defined(VK_KHR_present_wait)
 
@@ -2332,30 +2060,13 @@ namespace HLGK {
         if (!handler) { return; }
         m_handler = handler;
 
-        vkReleaseFullScreenExclusiveModeEXT = getProcAddr<PFN_vkReleaseFullScreenExclusiveModeEXT>("vkReleaseFullScreenExclusiveModeEXT");
-        vkGetPhysicalDeviceSurfacePresentModes2EXT = getProcAddr<PFN_vkGetPhysicalDeviceSurfacePresentModes2EXT>("vkGetPhysicalDeviceSurfacePresentModes2EXT");
         vkAcquireFullScreenExclusiveModeEXT = getProcAddr<PFN_vkAcquireFullScreenExclusiveModeEXT>("vkAcquireFullScreenExclusiveModeEXT");
+        vkGetPhysicalDeviceSurfacePresentModes2EXT = getProcAddr<PFN_vkGetPhysicalDeviceSurfacePresentModes2EXT>("vkGetPhysicalDeviceSurfacePresentModes2EXT");
         vkGetDeviceGroupSurfacePresentModes2EXT = getProcAddr<PFN_vkGetDeviceGroupSurfacePresentModes2EXT>("vkGetDeviceGroupSurfacePresentModes2EXT");
+        vkReleaseFullScreenExclusiveModeEXT = getProcAddr<PFN_vkReleaseFullScreenExclusiveModeEXT>("vkReleaseFullScreenExclusiveModeEXT");
     }
 
 #endif //VK_EXT_full_screen_exclusive
-
-#if defined(VK_EXT_headless_surface)
-
-    VkExtHeadlessSurface::VkExtHeadlessSurface(VkInstance handler)
-        : InstanceExtensionBase(handler) {
-        init(handler);
-    }
-
-    void VkExtHeadlessSurface::init(VkInstance handler) 
-    {
-        if (!handler) { return; }
-        m_handler = handler;
-
-        vkCreateHeadlessSurfaceEXT = getProcAddr<PFN_vkCreateHeadlessSurfaceEXT>("vkCreateHeadlessSurfaceEXT");
-    }
-
-#endif //VK_EXT_headless_surface
 
 #if defined(VK_KHR_buffer_device_address)
 
@@ -2369,8 +2080,8 @@ namespace HLGK {
         if (!handler) { return; }
         m_handler = handler;
 
-        vkGetBufferDeviceAddressKHR = getProcAddr<PFN_vkGetBufferDeviceAddressKHR>("vkGetBufferDeviceAddressKHR");
         vkGetDeviceMemoryOpaqueCaptureAddressKHR = getProcAddr<PFN_vkGetDeviceMemoryOpaqueCaptureAddressKHR>("vkGetDeviceMemoryOpaqueCaptureAddressKHR");
+        vkGetBufferDeviceAddressKHR = getProcAddr<PFN_vkGetBufferDeviceAddressKHR>("vkGetBufferDeviceAddressKHR");
         vkGetBufferOpaqueCaptureAddressKHR = getProcAddr<PFN_vkGetBufferOpaqueCaptureAddressKHR>("vkGetBufferOpaqueCaptureAddressKHR");
     }
 
@@ -2486,18 +2197,18 @@ namespace HLGK {
         if (!handler) { return; }
         m_handler = handler;
 
-        vkCmdSetPrimitiveTopologyEXT = getProcAddr<PFN_vkCmdSetPrimitiveTopologyEXT>("vkCmdSetPrimitiveTopologyEXT");
         vkCmdSetCullModeEXT = getProcAddr<PFN_vkCmdSetCullModeEXT>("vkCmdSetCullModeEXT");
-        vkCmdSetFrontFaceEXT = getProcAddr<PFN_vkCmdSetFrontFaceEXT>("vkCmdSetFrontFaceEXT");
-        vkCmdBindVertexBuffers2EXT = getProcAddr<PFN_vkCmdBindVertexBuffers2EXT>("vkCmdBindVertexBuffers2EXT");
-        vkCmdSetStencilTestEnableEXT = getProcAddr<PFN_vkCmdSetStencilTestEnableEXT>("vkCmdSetStencilTestEnableEXT");
-        vkCmdSetScissorWithCountEXT = getProcAddr<PFN_vkCmdSetScissorWithCountEXT>("vkCmdSetScissorWithCountEXT");
-        vkCmdSetDepthBoundsTestEnableEXT = getProcAddr<PFN_vkCmdSetDepthBoundsTestEnableEXT>("vkCmdSetDepthBoundsTestEnableEXT");
-        vkCmdSetDepthCompareOpEXT = getProcAddr<PFN_vkCmdSetDepthCompareOpEXT>("vkCmdSetDepthCompareOpEXT");
-        vkCmdSetDepthWriteEnableEXT = getProcAddr<PFN_vkCmdSetDepthWriteEnableEXT>("vkCmdSetDepthWriteEnableEXT");
         vkCmdSetDepthTestEnableEXT = getProcAddr<PFN_vkCmdSetDepthTestEnableEXT>("vkCmdSetDepthTestEnableEXT");
-        vkCmdSetStencilOpEXT = getProcAddr<PFN_vkCmdSetStencilOpEXT>("vkCmdSetStencilOpEXT");
         vkCmdSetViewportWithCountEXT = getProcAddr<PFN_vkCmdSetViewportWithCountEXT>("vkCmdSetViewportWithCountEXT");
+        vkCmdSetStencilTestEnableEXT = getProcAddr<PFN_vkCmdSetStencilTestEnableEXT>("vkCmdSetStencilTestEnableEXT");
+        vkCmdSetDepthWriteEnableEXT = getProcAddr<PFN_vkCmdSetDepthWriteEnableEXT>("vkCmdSetDepthWriteEnableEXT");
+        vkCmdSetScissorWithCountEXT = getProcAddr<PFN_vkCmdSetScissorWithCountEXT>("vkCmdSetScissorWithCountEXT");
+        vkCmdSetStencilOpEXT = getProcAddr<PFN_vkCmdSetStencilOpEXT>("vkCmdSetStencilOpEXT");
+        vkCmdSetPrimitiveTopologyEXT = getProcAddr<PFN_vkCmdSetPrimitiveTopologyEXT>("vkCmdSetPrimitiveTopologyEXT");
+        vkCmdSetDepthCompareOpEXT = getProcAddr<PFN_vkCmdSetDepthCompareOpEXT>("vkCmdSetDepthCompareOpEXT");
+        vkCmdBindVertexBuffers2EXT = getProcAddr<PFN_vkCmdBindVertexBuffers2EXT>("vkCmdBindVertexBuffers2EXT");
+        vkCmdSetDepthBoundsTestEnableEXT = getProcAddr<PFN_vkCmdSetDepthBoundsTestEnableEXT>("vkCmdSetDepthBoundsTestEnableEXT");
+        vkCmdSetFrontFaceEXT = getProcAddr<PFN_vkCmdSetFrontFaceEXT>("vkCmdSetFrontFaceEXT");
     }
 
 #endif //VK_EXT_extended_dynamic_state
@@ -2514,11 +2225,11 @@ namespace HLGK {
         if (!handler) { return; }
         m_handler = handler;
 
-        vkDeferredOperationJoinKHR = getProcAddr<PFN_vkDeferredOperationJoinKHR>("vkDeferredOperationJoinKHR");
-        vkCreateDeferredOperationKHR = getProcAddr<PFN_vkCreateDeferredOperationKHR>("vkCreateDeferredOperationKHR");
+        vkDestroyDeferredOperationKHR = getProcAddr<PFN_vkDestroyDeferredOperationKHR>("vkDestroyDeferredOperationKHR");
         vkGetDeferredOperationResultKHR = getProcAddr<PFN_vkGetDeferredOperationResultKHR>("vkGetDeferredOperationResultKHR");
         vkGetDeferredOperationMaxConcurrencyKHR = getProcAddr<PFN_vkGetDeferredOperationMaxConcurrencyKHR>("vkGetDeferredOperationMaxConcurrencyKHR");
-        vkDestroyDeferredOperationKHR = getProcAddr<PFN_vkDestroyDeferredOperationKHR>("vkDestroyDeferredOperationKHR");
+        vkDeferredOperationJoinKHR = getProcAddr<PFN_vkDeferredOperationJoinKHR>("vkDeferredOperationJoinKHR");
+        vkCreateDeferredOperationKHR = getProcAddr<PFN_vkCreateDeferredOperationKHR>("vkCreateDeferredOperationKHR");
     }
 
 #endif //VK_KHR_deferred_host_operations
@@ -2622,22 +2333,6 @@ namespace HLGK {
 
 #endif //VK_EXT_shader_atomic_float2
 
-#if defined(VK_KHR_extension_275)
-
-    VkKhrExtension275::VkKhrExtension275(VkInstance handler)
-        : InstanceExtensionBase(handler) {
-        init(handler);
-    }
-
-    void VkKhrExtension275::init(VkInstance handler) 
-    {
-        if (!handler) { return; }
-        m_handler = handler;
-
-    }
-
-#endif //VK_KHR_extension_275
-
 #if defined(VK_KHR_extension_276)
 
     VkKhrExtension276::VkKhrExtension276(VkDevice handler)
@@ -2682,12 +2377,12 @@ namespace HLGK {
         if (!handler) { return; }
         m_handler = handler;
 
-        vkCmdBindPipelineShaderGroupNV = getProcAddr<PFN_vkCmdBindPipelineShaderGroupNV>("vkCmdBindPipelineShaderGroupNV");
         vkGetGeneratedCommandsMemoryRequirementsNV = getProcAddr<PFN_vkGetGeneratedCommandsMemoryRequirementsNV>("vkGetGeneratedCommandsMemoryRequirementsNV");
-        vkCmdExecuteGeneratedCommandsNV = getProcAddr<PFN_vkCmdExecuteGeneratedCommandsNV>("vkCmdExecuteGeneratedCommandsNV");
         vkDestroyIndirectCommandsLayoutNV = getProcAddr<PFN_vkDestroyIndirectCommandsLayoutNV>("vkDestroyIndirectCommandsLayoutNV");
-        vkCmdPreprocessGeneratedCommandsNV = getProcAddr<PFN_vkCmdPreprocessGeneratedCommandsNV>("vkCmdPreprocessGeneratedCommandsNV");
+        vkCmdExecuteGeneratedCommandsNV = getProcAddr<PFN_vkCmdExecuteGeneratedCommandsNV>("vkCmdExecuteGeneratedCommandsNV");
+        vkCmdBindPipelineShaderGroupNV = getProcAddr<PFN_vkCmdBindPipelineShaderGroupNV>("vkCmdBindPipelineShaderGroupNV");
         vkCreateIndirectCommandsLayoutNV = getProcAddr<PFN_vkCreateIndirectCommandsLayoutNV>("vkCreateIndirectCommandsLayoutNV");
+        vkCmdPreprocessGeneratedCommandsNV = getProcAddr<PFN_vkCmdPreprocessGeneratedCommandsNV>("vkCmdPreprocessGeneratedCommandsNV");
     }
 
 #endif //VK_NV_device_generated_commands
@@ -2804,24 +2499,6 @@ namespace HLGK {
 
 #endif //VK_EXT_device_memory_report
 
-#if defined(VK_EXT_acquire_drm_display)
-
-    VkExtAcquireDrmDisplay::VkExtAcquireDrmDisplay(VkInstance handler)
-        : InstanceExtensionBase(handler) {
-        init(handler);
-    }
-
-    void VkExtAcquireDrmDisplay::init(VkInstance handler) 
-    {
-        if (!handler) { return; }
-        m_handler = handler;
-
-        vkGetDrmDisplayEXT = getProcAddr<PFN_vkGetDrmDisplayEXT>("vkGetDrmDisplayEXT");
-        vkAcquireDrmDisplayEXT = getProcAddr<PFN_vkAcquireDrmDisplayEXT>("vkAcquireDrmDisplayEXT");
-    }
-
-#endif //VK_EXT_acquire_drm_display
-
 #if defined(VK_EXT_robustness2)
 
     VkExtRobustness2::VkExtRobustness2(VkDevice handler)
@@ -2866,12 +2543,12 @@ namespace HLGK {
         if (!handler) { return; }
         m_handler = handler;
 
-        vkCmdBeginQueryIndexedEXT = getProcAddr<PFN_vkCmdBeginQueryIndexedEXT>("vkCmdBeginQueryIndexedEXT");
-        vkCmdEndQueryIndexedEXT = getProcAddr<PFN_vkCmdEndQueryIndexedEXT>("vkCmdEndQueryIndexedEXT");
         vkCmdBindTransformFeedbackBuffersEXT = getProcAddr<PFN_vkCmdBindTransformFeedbackBuffersEXT>("vkCmdBindTransformFeedbackBuffersEXT");
         vkCmdDrawIndirectByteCountEXT = getProcAddr<PFN_vkCmdDrawIndirectByteCountEXT>("vkCmdDrawIndirectByteCountEXT");
+        vkCmdBeginQueryIndexedEXT = getProcAddr<PFN_vkCmdBeginQueryIndexedEXT>("vkCmdBeginQueryIndexedEXT");
         vkCmdEndTransformFeedbackEXT = getProcAddr<PFN_vkCmdEndTransformFeedbackEXT>("vkCmdEndTransformFeedbackEXT");
         vkCmdBeginTransformFeedbackEXT = getProcAddr<PFN_vkCmdBeginTransformFeedbackEXT>("vkCmdBeginTransformFeedbackEXT");
+        vkCmdEndQueryIndexedEXT = getProcAddr<PFN_vkCmdEndQueryIndexedEXT>("vkCmdEndQueryIndexedEXT");
     }
 
 #endif //VK_EXT_transform_feedback
@@ -2952,10 +2629,10 @@ namespace HLGK {
         if (!handler) { return; }
         m_handler = handler;
 
-        vkGetPrivateDataEXT = getProcAddr<PFN_vkGetPrivateDataEXT>("vkGetPrivateDataEXT");
-        vkSetPrivateDataEXT = getProcAddr<PFN_vkSetPrivateDataEXT>("vkSetPrivateDataEXT");
         vkCreatePrivateDataSlotEXT = getProcAddr<PFN_vkCreatePrivateDataSlotEXT>("vkCreatePrivateDataSlotEXT");
         vkDestroyPrivateDataSlotEXT = getProcAddr<PFN_vkDestroyPrivateDataSlotEXT>("vkDestroyPrivateDataSlotEXT");
+        vkGetPrivateDataEXT = getProcAddr<PFN_vkGetPrivateDataEXT>("vkGetPrivateDataEXT");
+        vkSetPrivateDataEXT = getProcAddr<PFN_vkSetPrivateDataEXT>("vkSetPrivateDataEXT");
     }
 
 #endif //VK_EXT_private_data
@@ -2976,29 +2653,6 @@ namespace HLGK {
 
 #endif //VK_EXT_pipeline_creation_cache_control
 
-#if defined(VK_KHR_display)
-
-    VkKhrDisplay::VkKhrDisplay(VkInstance handler)
-        : InstanceExtensionBase(handler) {
-        init(handler);
-    }
-
-    void VkKhrDisplay::init(VkInstance handler) 
-    {
-        if (!handler) { return; }
-        m_handler = handler;
-
-        vkGetDisplayModePropertiesKHR = getProcAddr<PFN_vkGetDisplayModePropertiesKHR>("vkGetDisplayModePropertiesKHR");
-        vkGetDisplayPlaneSupportedDisplaysKHR = getProcAddr<PFN_vkGetDisplayPlaneSupportedDisplaysKHR>("vkGetDisplayPlaneSupportedDisplaysKHR");
-        vkCreateDisplayModeKHR = getProcAddr<PFN_vkCreateDisplayModeKHR>("vkCreateDisplayModeKHR");
-        vkGetDisplayPlaneCapabilitiesKHR = getProcAddr<PFN_vkGetDisplayPlaneCapabilitiesKHR>("vkGetDisplayPlaneCapabilitiesKHR");
-        vkCreateDisplayPlaneSurfaceKHR = getProcAddr<PFN_vkCreateDisplayPlaneSurfaceKHR>("vkCreateDisplayPlaneSurfaceKHR");
-        vkGetPhysicalDeviceDisplayPlanePropertiesKHR = getProcAddr<PFN_vkGetPhysicalDeviceDisplayPlanePropertiesKHR>("vkGetPhysicalDeviceDisplayPlanePropertiesKHR");
-        vkGetPhysicalDeviceDisplayPropertiesKHR = getProcAddr<PFN_vkGetPhysicalDeviceDisplayPropertiesKHR>("vkGetPhysicalDeviceDisplayPropertiesKHR");
-    }
-
-#endif //VK_KHR_display
-
 #if defined(VK_NVX_binary_import)
 
     VkNvxBinaryImport::VkNvxBinaryImport(VkDevice handler)
@@ -3012,10 +2666,10 @@ namespace HLGK {
         m_handler = handler;
 
         vkCreateCuFunctionNVX = getProcAddr<PFN_vkCreateCuFunctionNVX>("vkCreateCuFunctionNVX");
-        vkCmdCuLaunchKernelNVX = getProcAddr<PFN_vkCmdCuLaunchKernelNVX>("vkCmdCuLaunchKernelNVX");
-        vkDestroyCuModuleNVX = getProcAddr<PFN_vkDestroyCuModuleNVX>("vkDestroyCuModuleNVX");
-        vkCreateCuModuleNVX = getProcAddr<PFN_vkCreateCuModuleNVX>("vkCreateCuModuleNVX");
         vkDestroyCuFunctionNVX = getProcAddr<PFN_vkDestroyCuFunctionNVX>("vkDestroyCuFunctionNVX");
+        vkCmdCuLaunchKernelNVX = getProcAddr<PFN_vkCmdCuLaunchKernelNVX>("vkCmdCuLaunchKernelNVX");
+        vkCreateCuModuleNVX = getProcAddr<PFN_vkCreateCuModuleNVX>("vkCreateCuModuleNVX");
+        vkDestroyCuModuleNVX = getProcAddr<PFN_vkDestroyCuModuleNVX>("vkDestroyCuModuleNVX");
     }
 
 #endif //VK_NVX_binary_import
@@ -3116,13 +2770,13 @@ namespace HLGK {
         m_handler = handler;
 
         vkCmdWriteTimestamp2KHR = getProcAddr<PFN_vkCmdWriteTimestamp2KHR>("vkCmdWriteTimestamp2KHR");
-        vkCmdSetEvent2KHR = getProcAddr<PFN_vkCmdSetEvent2KHR>("vkCmdSetEvent2KHR");
-        vkCmdWriteBufferMarker2AMD = getProcAddr<PFN_vkCmdWriteBufferMarker2AMD>("vkCmdWriteBufferMarker2AMD");
-        vkQueueSubmit2KHR = getProcAddr<PFN_vkQueueSubmit2KHR>("vkQueueSubmit2KHR");
-        vkGetQueueCheckpointData2NV = getProcAddr<PFN_vkGetQueueCheckpointData2NV>("vkGetQueueCheckpointData2NV");
-        vkCmdResetEvent2KHR = getProcAddr<PFN_vkCmdResetEvent2KHR>("vkCmdResetEvent2KHR");
         vkCmdWaitEvents2KHR = getProcAddr<PFN_vkCmdWaitEvents2KHR>("vkCmdWaitEvents2KHR");
         vkCmdPipelineBarrier2KHR = getProcAddr<PFN_vkCmdPipelineBarrier2KHR>("vkCmdPipelineBarrier2KHR");
+        vkCmdSetEvent2KHR = getProcAddr<PFN_vkCmdSetEvent2KHR>("vkCmdSetEvent2KHR");
+        vkGetQueueCheckpointData2NV = getProcAddr<PFN_vkGetQueueCheckpointData2NV>("vkGetQueueCheckpointData2NV");
+        vkQueueSubmit2KHR = getProcAddr<PFN_vkQueueSubmit2KHR>("vkQueueSubmit2KHR");
+        vkCmdResetEvent2KHR = getProcAddr<PFN_vkCmdResetEvent2KHR>("vkCmdResetEvent2KHR");
+        vkCmdWriteBufferMarker2AMD = getProcAddr<PFN_vkCmdWriteBufferMarker2AMD>("vkCmdWriteBufferMarker2AMD");
     }
 
 #endif //VK_KHR_synchronization2
@@ -3284,12 +2938,12 @@ namespace HLGK {
         if (!handler) { return; }
         m_handler = handler;
 
+        vkCmdBlitImage2KHR = getProcAddr<PFN_vkCmdBlitImage2KHR>("vkCmdBlitImage2KHR");
+        vkCmdCopyImageToBuffer2KHR = getProcAddr<PFN_vkCmdCopyImageToBuffer2KHR>("vkCmdCopyImageToBuffer2KHR");
         vkCmdResolveImage2KHR = getProcAddr<PFN_vkCmdResolveImage2KHR>("vkCmdResolveImage2KHR");
         vkCmdCopyBufferToImage2KHR = getProcAddr<PFN_vkCmdCopyBufferToImage2KHR>("vkCmdCopyBufferToImage2KHR");
-        vkCmdCopyImage2KHR = getProcAddr<PFN_vkCmdCopyImage2KHR>("vkCmdCopyImage2KHR");
-        vkCmdCopyImageToBuffer2KHR = getProcAddr<PFN_vkCmdCopyImageToBuffer2KHR>("vkCmdCopyImageToBuffer2KHR");
-        vkCmdBlitImage2KHR = getProcAddr<PFN_vkCmdBlitImage2KHR>("vkCmdBlitImage2KHR");
         vkCmdCopyBuffer2KHR = getProcAddr<PFN_vkCmdCopyBuffer2KHR>("vkCmdCopyBuffer2KHR");
+        vkCmdCopyImage2KHR = getProcAddr<PFN_vkCmdCopyImage2KHR>("vkCmdCopyImage2KHR");
     }
 
 #endif //VK_KHR_copy_commands2
@@ -3306,8 +2960,8 @@ namespace HLGK {
         if (!handler) { return; }
         m_handler = handler;
 
-        vkCmdDrawIndirectCountAMD = getProcAddr<PFN_vkCmdDrawIndirectCountAMD>("vkCmdDrawIndirectCountAMD");
         vkCmdDrawIndexedIndirectCountAMD = getProcAddr<PFN_vkCmdDrawIndexedIndirectCountAMD>("vkCmdDrawIndexedIndirectCountAMD");
+        vkCmdDrawIndirectCountAMD = getProcAddr<PFN_vkCmdDrawIndirectCountAMD>("vkCmdDrawIndirectCountAMD");
     }
 
 #endif //VK_AMD_draw_indirect_count
@@ -3372,29 +3026,11 @@ namespace HLGK {
         if (!handler) { return; }
         m_handler = handler;
 
-        vkAcquireWinrtDisplayNV = getProcAddr<PFN_vkAcquireWinrtDisplayNV>("vkAcquireWinrtDisplayNV");
         vkGetWinrtDisplayNV = getProcAddr<PFN_vkGetWinrtDisplayNV>("vkGetWinrtDisplayNV");
+        vkAcquireWinrtDisplayNV = getProcAddr<PFN_vkAcquireWinrtDisplayNV>("vkAcquireWinrtDisplayNV");
     }
 
 #endif //VK_NV_acquire_winrt_display
-
-#if defined(VK_EXT_directfb_surface)
-
-    VkExtDirectfbSurface::VkExtDirectfbSurface(VkInstance handler)
-        : InstanceExtensionBase(handler) {
-        init(handler);
-    }
-
-    void VkExtDirectfbSurface::init(VkInstance handler) 
-    {
-        if (!handler) { return; }
-        m_handler = handler;
-
-        vkGetPhysicalDeviceDirectFBPresentationSupportEXT = getProcAddr<PFN_vkGetPhysicalDeviceDirectFBPresentationSupportEXT>("vkGetPhysicalDeviceDirectFBPresentationSupportEXT");
-        vkCreateDirectFBSurfaceEXT = getProcAddr<PFN_vkCreateDirectFBSurfaceEXT>("vkCreateDirectFBSurfaceEXT");
-    }
-
-#endif //VK_EXT_directfb_surface
 
 #if defined(VK_KHR_ray_tracing_pipeline)
 
@@ -3408,13 +3044,13 @@ namespace HLGK {
         if (!handler) { return; }
         m_handler = handler;
 
-        vkGetRayTracingShaderGroupStackSizeKHR = getProcAddr<PFN_vkGetRayTracingShaderGroupStackSizeKHR>("vkGetRayTracingShaderGroupStackSizeKHR");
+        vkCmdTraceRaysIndirectKHR = getProcAddr<PFN_vkCmdTraceRaysIndirectKHR>("vkCmdTraceRaysIndirectKHR");
         vkCreateRayTracingPipelinesKHR = getProcAddr<PFN_vkCreateRayTracingPipelinesKHR>("vkCreateRayTracingPipelinesKHR");
         vkCmdSetRayTracingPipelineStackSizeKHR = getProcAddr<PFN_vkCmdSetRayTracingPipelineStackSizeKHR>("vkCmdSetRayTracingPipelineStackSizeKHR");
         vkGetRayTracingCaptureReplayShaderGroupHandlesKHR = getProcAddr<PFN_vkGetRayTracingCaptureReplayShaderGroupHandlesKHR>("vkGetRayTracingCaptureReplayShaderGroupHandlesKHR");
-        vkGetRayTracingShaderGroupHandlesKHR = getProcAddr<PFN_vkGetRayTracingShaderGroupHandlesKHR>("vkGetRayTracingShaderGroupHandlesKHR");
+        vkGetRayTracingShaderGroupStackSizeKHR = getProcAddr<PFN_vkGetRayTracingShaderGroupStackSizeKHR>("vkGetRayTracingShaderGroupStackSizeKHR");
         vkCmdTraceRaysKHR = getProcAddr<PFN_vkCmdTraceRaysKHR>("vkCmdTraceRaysKHR");
-        vkCmdTraceRaysIndirectKHR = getProcAddr<PFN_vkCmdTraceRaysIndirectKHR>("vkCmdTraceRaysIndirectKHR");
+        vkGetRayTracingShaderGroupHandlesKHR = getProcAddr<PFN_vkGetRayTracingShaderGroupHandlesKHR>("vkGetRayTracingShaderGroupHandlesKHR");
     }
 
 #endif //VK_KHR_ray_tracing_pipeline
@@ -3560,8 +3196,8 @@ namespace HLGK {
         if (!handler) { return; }
         m_handler = handler;
 
-        vkGetMemoryZirconHandleFUCHSIA = getProcAddr<PFN_vkGetMemoryZirconHandleFUCHSIA>("vkGetMemoryZirconHandleFUCHSIA");
         vkGetMemoryZirconHandlePropertiesFUCHSIA = getProcAddr<PFN_vkGetMemoryZirconHandlePropertiesFUCHSIA>("vkGetMemoryZirconHandlePropertiesFUCHSIA");
+        vkGetMemoryZirconHandleFUCHSIA = getProcAddr<PFN_vkGetMemoryZirconHandleFUCHSIA>("vkGetMemoryZirconHandleFUCHSIA");
     }
 
 #endif //VK_FUCHSIA_external_memory
@@ -3596,11 +3232,11 @@ namespace HLGK {
         if (!handler) { return; }
         m_handler = handler;
 
-        vkSetBufferCollectionImageConstraintsFUCHSIA = getProcAddr<PFN_vkSetBufferCollectionImageConstraintsFUCHSIA>("vkSetBufferCollectionImageConstraintsFUCHSIA");
-        vkSetBufferCollectionBufferConstraintsFUCHSIA = getProcAddr<PFN_vkSetBufferCollectionBufferConstraintsFUCHSIA>("vkSetBufferCollectionBufferConstraintsFUCHSIA");
-        vkCreateBufferCollectionFUCHSIA = getProcAddr<PFN_vkCreateBufferCollectionFUCHSIA>("vkCreateBufferCollectionFUCHSIA");
         vkGetBufferCollectionPropertiesFUCHSIA = getProcAddr<PFN_vkGetBufferCollectionPropertiesFUCHSIA>("vkGetBufferCollectionPropertiesFUCHSIA");
         vkDestroyBufferCollectionFUCHSIA = getProcAddr<PFN_vkDestroyBufferCollectionFUCHSIA>("vkDestroyBufferCollectionFUCHSIA");
+        vkCreateBufferCollectionFUCHSIA = getProcAddr<PFN_vkCreateBufferCollectionFUCHSIA>("vkCreateBufferCollectionFUCHSIA");
+        vkSetBufferCollectionImageConstraintsFUCHSIA = getProcAddr<PFN_vkSetBufferCollectionImageConstraintsFUCHSIA>("vkSetBufferCollectionImageConstraintsFUCHSIA");
+        vkSetBufferCollectionBufferConstraintsFUCHSIA = getProcAddr<PFN_vkSetBufferCollectionBufferConstraintsFUCHSIA>("vkSetBufferCollectionBufferConstraintsFUCHSIA");
     }
 
 #endif //VK_FUCHSIA_buffer_collection
@@ -3633,8 +3269,8 @@ namespace HLGK {
         if (!handler) { return; }
         m_handler = handler;
 
-        vkCmdSubpassShadingHUAWEI = getProcAddr<PFN_vkCmdSubpassShadingHUAWEI>("vkCmdSubpassShadingHUAWEI");
         vkGetDeviceSubpassShadingMaxWorkgroupSizeHUAWEI = getProcAddr<PFN_vkGetDeviceSubpassShadingMaxWorkgroupSizeHUAWEI>("vkGetDeviceSubpassShadingMaxWorkgroupSizeHUAWEI");
+        vkCmdSubpassShadingHUAWEI = getProcAddr<PFN_vkCmdSubpassShadingHUAWEI>("vkCmdSubpassShadingHUAWEI");
     }
 
 #endif //VK_HUAWEI_subpass_shading
@@ -3685,32 +3321,14 @@ namespace HLGK {
         if (!handler) { return; }
         m_handler = handler;
 
+        vkCmdSetPatchControlPointsEXT = getProcAddr<PFN_vkCmdSetPatchControlPointsEXT>("vkCmdSetPatchControlPointsEXT");
         vkCmdSetLogicOpEXT = getProcAddr<PFN_vkCmdSetLogicOpEXT>("vkCmdSetLogicOpEXT");
+        vkCmdSetPrimitiveRestartEnableEXT = getProcAddr<PFN_vkCmdSetPrimitiveRestartEnableEXT>("vkCmdSetPrimitiveRestartEnableEXT");
         vkCmdSetRasterizerDiscardEnableEXT = getProcAddr<PFN_vkCmdSetRasterizerDiscardEnableEXT>("vkCmdSetRasterizerDiscardEnableEXT");
         vkCmdSetDepthBiasEnableEXT = getProcAddr<PFN_vkCmdSetDepthBiasEnableEXT>("vkCmdSetDepthBiasEnableEXT");
-        vkCmdSetPrimitiveRestartEnableEXT = getProcAddr<PFN_vkCmdSetPrimitiveRestartEnableEXT>("vkCmdSetPrimitiveRestartEnableEXT");
-        vkCmdSetPatchControlPointsEXT = getProcAddr<PFN_vkCmdSetPatchControlPointsEXT>("vkCmdSetPatchControlPointsEXT");
     }
 
 #endif //VK_EXT_extended_dynamic_state2
-
-#if defined(VK_QNX_screen_surface)
-
-    VkQnxScreenSurface::VkQnxScreenSurface(VkInstance handler)
-        : InstanceExtensionBase(handler) {
-        init(handler);
-    }
-
-    void VkQnxScreenSurface::init(VkInstance handler) 
-    {
-        if (!handler) { return; }
-        m_handler = handler;
-
-        vkGetPhysicalDeviceScreenPresentationSupportQNX = getProcAddr<PFN_vkGetPhysicalDeviceScreenPresentationSupportQNX>("vkGetPhysicalDeviceScreenPresentationSupportQNX");
-        vkCreateScreenSurfaceQNX = getProcAddr<PFN_vkCreateScreenSurfaceQNX>("vkCreateScreenSurfaceQNX");
-    }
-
-#endif //VK_QNX_screen_surface
 
 #if defined(VK_AMD_shader_ballot)
 
@@ -3744,38 +3362,6 @@ namespace HLGK {
     }
 
 #endif //VK_EXT_color_write_enable
-
-#if defined(VK_EXT_extension_384)
-
-    VkExtExtension384::VkExtExtension384(VkInstance handler)
-        : InstanceExtensionBase(handler) {
-        init(handler);
-    }
-
-    void VkExtExtension384::init(VkInstance handler) 
-    {
-        if (!handler) { return; }
-        m_handler = handler;
-
-    }
-
-#endif //VK_EXT_extension_384
-
-#if defined(VK_MESA_extension_385)
-
-    VkMesaExtension385::VkMesaExtension385(VkInstance handler)
-        : InstanceExtensionBase(handler) {
-        init(handler);
-    }
-
-    void VkMesaExtension385::init(VkInstance handler) 
-    {
-        if (!handler) { return; }
-        m_handler = handler;
-
-    }
-
-#endif //VK_MESA_extension_385
 
 #if defined(VK_EXT_global_priority_query)
 
@@ -3969,9 +3555,9 @@ namespace HLGK {
         if (!handler) { return; }
         m_handler = handler;
 
+        vkGetDeviceImageMemoryRequirementsKHR = getProcAddr<PFN_vkGetDeviceImageMemoryRequirementsKHR>("vkGetDeviceImageMemoryRequirementsKHR");
         vkGetDeviceImageSparseMemoryRequirementsKHR = getProcAddr<PFN_vkGetDeviceImageSparseMemoryRequirementsKHR>("vkGetDeviceImageSparseMemoryRequirementsKHR");
         vkGetDeviceBufferMemoryRequirementsKHR = getProcAddr<PFN_vkGetDeviceBufferMemoryRequirementsKHR>("vkGetDeviceBufferMemoryRequirementsKHR");
-        vkGetDeviceImageMemoryRequirementsKHR = getProcAddr<PFN_vkGetDeviceImageMemoryRequirementsKHR>("vkGetDeviceImageMemoryRequirementsKHR");
     }
 
 #endif //VK_KHR_maintenance4
@@ -4073,22 +3659,6 @@ namespace HLGK {
 
 #endif //VK_NV_linear_color_attachment
 
-#if defined(VK_GOOGLE_surfaceless_query)
-
-    VkGoogleSurfacelessQuery::VkGoogleSurfacelessQuery(VkInstance handler)
-        : InstanceExtensionBase(handler) {
-        init(handler);
-    }
-
-    void VkGoogleSurfacelessQuery::init(VkInstance handler) 
-    {
-        if (!handler) { return; }
-        m_handler = handler;
-
-    }
-
-#endif //VK_GOOGLE_surfaceless_query
-
 #if defined(VK_KHR_dynamic_rendering)
 
     VkKhrDynamicRendering::VkKhrDynamicRendering(VkDevice handler)
@@ -4101,8 +3671,8 @@ namespace HLGK {
         if (!handler) { return; }
         m_handler = handler;
 
-        vkCmdEndRenderingKHR = getProcAddr<PFN_vkCmdEndRenderingKHR>("vkCmdEndRenderingKHR");
         vkCmdBeginRenderingKHR = getProcAddr<PFN_vkCmdBeginRenderingKHR>("vkCmdBeginRenderingKHR");
+        vkCmdEndRenderingKHR = getProcAddr<PFN_vkCmdEndRenderingKHR>("vkCmdEndRenderingKHR");
     }
 
 #endif //VK_KHR_dynamic_rendering
@@ -4122,41 +3692,6 @@ namespace HLGK {
     }
 
 #endif //VK_AMD_shader_image_load_store_lod
-
-#if defined(VK_KHR_xlib_surface)
-
-    VkKhrXlibSurface::VkKhrXlibSurface(VkInstance handler)
-        : InstanceExtensionBase(handler) {
-        init(handler);
-    }
-
-    void VkKhrXlibSurface::init(VkInstance handler) 
-    {
-        if (!handler) { return; }
-        m_handler = handler;
-
-        vkCreateXlibSurfaceKHR = getProcAddr<PFN_vkCreateXlibSurfaceKHR>("vkCreateXlibSurfaceKHR");
-        vkGetPhysicalDeviceXlibPresentationSupportKHR = getProcAddr<PFN_vkGetPhysicalDeviceXlibPresentationSupportKHR>("vkGetPhysicalDeviceXlibPresentationSupportKHR");
-    }
-
-#endif //VK_KHR_xlib_surface
-
-#if defined(VK_GGP_stream_descriptor_surface)
-
-    VkGgpStreamDescriptorSurface::VkGgpStreamDescriptorSurface(VkInstance handler)
-        : InstanceExtensionBase(handler) {
-        init(handler);
-    }
-
-    void VkGgpStreamDescriptorSurface::init(VkInstance handler) 
-    {
-        if (!handler) { return; }
-        m_handler = handler;
-
-        vkCreateStreamDescriptorSurfaceGGP = getProcAddr<PFN_vkCreateStreamDescriptorSurfaceGGP>("vkCreateStreamDescriptorSurfaceGGP");
-    }
-
-#endif //VK_GGP_stream_descriptor_surface
 
 #if defined(VK_NV_corner_sampled_image)
 
@@ -4205,23 +3740,6 @@ namespace HLGK {
     }
 
 #endif //VK_IMG_format_pvrtc
-
-#if defined(VK_NV_external_memory_capabilities)
-
-    VkNvExternalMemoryCapabilities::VkNvExternalMemoryCapabilities(VkInstance handler)
-        : InstanceExtensionBase(handler) {
-        init(handler);
-    }
-
-    void VkNvExternalMemoryCapabilities::init(VkInstance handler) 
-    {
-        if (!handler) { return; }
-        m_handler = handler;
-
-        vkGetPhysicalDeviceExternalImageFormatPropertiesNV = getProcAddr<PFN_vkGetPhysicalDeviceExternalImageFormatPropertiesNV>("vkGetPhysicalDeviceExternalImageFormatPropertiesNV");
-    }
-
-#endif //VK_NV_external_memory_capabilities
 
 #if defined(VK_NV_external_memory)
 
@@ -4272,47 +3790,6 @@ namespace HLGK {
 
 #endif //VK_NV_win32_keyed_mutex
 
-#if defined(VK_KHR_xcb_surface)
-
-    VkKhrXcbSurface::VkKhrXcbSurface(VkInstance handler)
-        : InstanceExtensionBase(handler) {
-        init(handler);
-    }
-
-    void VkKhrXcbSurface::init(VkInstance handler) 
-    {
-        if (!handler) { return; }
-        m_handler = handler;
-
-        vkCreateXcbSurfaceKHR = getProcAddr<PFN_vkCreateXcbSurfaceKHR>("vkCreateXcbSurfaceKHR");
-        vkGetPhysicalDeviceXcbPresentationSupportKHR = getProcAddr<PFN_vkGetPhysicalDeviceXcbPresentationSupportKHR>("vkGetPhysicalDeviceXcbPresentationSupportKHR");
-    }
-
-#endif //VK_KHR_xcb_surface
-
-#if defined(VK_KHR_get_physical_device_properties2)
-
-    VkKhrGetPhysicalDeviceProperties2::VkKhrGetPhysicalDeviceProperties2(VkInstance handler)
-        : InstanceExtensionBase(handler) {
-        init(handler);
-    }
-
-    void VkKhrGetPhysicalDeviceProperties2::init(VkInstance handler) 
-    {
-        if (!handler) { return; }
-        m_handler = handler;
-
-        vkGetPhysicalDeviceImageFormatProperties2KHR = getProcAddr<PFN_vkGetPhysicalDeviceImageFormatProperties2KHR>("vkGetPhysicalDeviceImageFormatProperties2KHR");
-        vkGetPhysicalDeviceQueueFamilyProperties2KHR = getProcAddr<PFN_vkGetPhysicalDeviceQueueFamilyProperties2KHR>("vkGetPhysicalDeviceQueueFamilyProperties2KHR");
-        vkGetPhysicalDeviceMemoryProperties2KHR = getProcAddr<PFN_vkGetPhysicalDeviceMemoryProperties2KHR>("vkGetPhysicalDeviceMemoryProperties2KHR");
-        vkGetPhysicalDeviceFeatures2KHR = getProcAddr<PFN_vkGetPhysicalDeviceFeatures2KHR>("vkGetPhysicalDeviceFeatures2KHR");
-        vkGetPhysicalDeviceProperties2KHR = getProcAddr<PFN_vkGetPhysicalDeviceProperties2KHR>("vkGetPhysicalDeviceProperties2KHR");
-        vkGetPhysicalDeviceFormatProperties2KHR = getProcAddr<PFN_vkGetPhysicalDeviceFormatProperties2KHR>("vkGetPhysicalDeviceFormatProperties2KHR");
-        vkGetPhysicalDeviceSparseImageFormatProperties2KHR = getProcAddr<PFN_vkGetPhysicalDeviceSparseImageFormatProperties2KHR>("vkGetPhysicalDeviceSparseImageFormatProperties2KHR");
-    }
-
-#endif //VK_KHR_get_physical_device_properties2
-
 #if defined(VK_KHR_device_group)
 
     VkKhrDeviceGroup::VkKhrDeviceGroup(VkDevice handler)
@@ -4325,49 +3802,16 @@ namespace HLGK {
         if (!handler) { return; }
         m_handler = handler;
 
-        vkGetDeviceGroupPresentCapabilitiesKHR = getProcAddr<PFN_vkGetDeviceGroupPresentCapabilitiesKHR>("vkGetDeviceGroupPresentCapabilitiesKHR");
-        vkGetDeviceGroupPeerMemoryFeaturesKHR = getProcAddr<PFN_vkGetDeviceGroupPeerMemoryFeaturesKHR>("vkGetDeviceGroupPeerMemoryFeaturesKHR");
         vkGetPhysicalDevicePresentRectanglesKHR = getProcAddr<PFN_vkGetPhysicalDevicePresentRectanglesKHR>("vkGetPhysicalDevicePresentRectanglesKHR");
+        vkGetDeviceGroupSurfacePresentModesKHR = getProcAddr<PFN_vkGetDeviceGroupSurfacePresentModesKHR>("vkGetDeviceGroupSurfacePresentModesKHR");
         vkCmdSetDeviceMaskKHR = getProcAddr<PFN_vkCmdSetDeviceMaskKHR>("vkCmdSetDeviceMaskKHR");
         vkAcquireNextImage2KHR = getProcAddr<PFN_vkAcquireNextImage2KHR>("vkAcquireNextImage2KHR");
-        vkGetDeviceGroupSurfacePresentModesKHR = getProcAddr<PFN_vkGetDeviceGroupSurfacePresentModesKHR>("vkGetDeviceGroupSurfacePresentModesKHR");
         vkCmdDispatchBaseKHR = getProcAddr<PFN_vkCmdDispatchBaseKHR>("vkCmdDispatchBaseKHR");
+        vkGetDeviceGroupPresentCapabilitiesKHR = getProcAddr<PFN_vkGetDeviceGroupPresentCapabilitiesKHR>("vkGetDeviceGroupPresentCapabilitiesKHR");
+        vkGetDeviceGroupPeerMemoryFeaturesKHR = getProcAddr<PFN_vkGetDeviceGroupPeerMemoryFeaturesKHR>("vkGetDeviceGroupPeerMemoryFeaturesKHR");
     }
 
 #endif //VK_KHR_device_group
-
-#if defined(VK_EXT_validation_flags)
-
-    VkExtValidationFlags::VkExtValidationFlags(VkInstance handler)
-        : InstanceExtensionBase(handler) {
-        init(handler);
-    }
-
-    void VkExtValidationFlags::init(VkInstance handler) 
-    {
-        if (!handler) { return; }
-        m_handler = handler;
-
-    }
-
-#endif //VK_EXT_validation_flags
-
-#if defined(VK_NN_vi_surface)
-
-    VkNnViSurface::VkNnViSurface(VkInstance handler)
-        : InstanceExtensionBase(handler) {
-        init(handler);
-    }
-
-    void VkNnViSurface::init(VkInstance handler) 
-    {
-        if (!handler) { return; }
-        m_handler = handler;
-
-        vkCreateViSurfaceNN = getProcAddr<PFN_vkCreateViSurfaceNN>("vkCreateViSurfaceNN");
-    }
-
-#endif //VK_NN_vi_surface
 
 #if defined(VK_KHR_shader_draw_parameters)
 
@@ -4465,24 +3909,6 @@ namespace HLGK {
 
 #endif //VK_IMG_extension_69
 
-#if defined(VK_KHR_wayland_surface)
-
-    VkKhrWaylandSurface::VkKhrWaylandSurface(VkInstance handler)
-        : InstanceExtensionBase(handler) {
-        init(handler);
-    }
-
-    void VkKhrWaylandSurface::init(VkInstance handler) 
-    {
-        if (!handler) { return; }
-        m_handler = handler;
-
-        vkCreateWaylandSurfaceKHR = getProcAddr<PFN_vkCreateWaylandSurfaceKHR>("vkCreateWaylandSurfaceKHR");
-        vkGetPhysicalDeviceWaylandPresentationSupportKHR = getProcAddr<PFN_vkGetPhysicalDeviceWaylandPresentationSupportKHR>("vkGetPhysicalDeviceWaylandPresentationSupportKHR");
-    }
-
-#endif //VK_KHR_wayland_surface
-
 #if defined(VK_KHR_maintenance1)
 
     VkKhrMaintenance1::VkKhrMaintenance1(VkDevice handler)
@@ -4499,40 +3925,6 @@ namespace HLGK {
     }
 
 #endif //VK_KHR_maintenance1
-
-#if defined(VK_KHR_device_group_creation)
-
-    VkKhrDeviceGroupCreation::VkKhrDeviceGroupCreation(VkInstance handler)
-        : InstanceExtensionBase(handler) {
-        init(handler);
-    }
-
-    void VkKhrDeviceGroupCreation::init(VkInstance handler) 
-    {
-        if (!handler) { return; }
-        m_handler = handler;
-
-        vkEnumeratePhysicalDeviceGroupsKHR = getProcAddr<PFN_vkEnumeratePhysicalDeviceGroupsKHR>("vkEnumeratePhysicalDeviceGroupsKHR");
-    }
-
-#endif //VK_KHR_device_group_creation
-
-#if defined(VK_KHR_external_memory_capabilities)
-
-    VkKhrExternalMemoryCapabilities::VkKhrExternalMemoryCapabilities(VkInstance handler)
-        : InstanceExtensionBase(handler) {
-        init(handler);
-    }
-
-    void VkKhrExternalMemoryCapabilities::init(VkInstance handler) 
-    {
-        if (!handler) { return; }
-        m_handler = handler;
-
-        vkGetPhysicalDeviceExternalBufferPropertiesKHR = getProcAddr<PFN_vkGetPhysicalDeviceExternalBufferPropertiesKHR>("vkGetPhysicalDeviceExternalBufferPropertiesKHR");
-    }
-
-#endif //VK_KHR_external_memory_capabilities
 
 #if defined(VK_KHR_external_memory)
 
@@ -4602,23 +3994,6 @@ namespace HLGK {
 
 #endif //VK_KHR_win32_keyed_mutex
 
-#if defined(VK_KHR_external_semaphore_capabilities)
-
-    VkKhrExternalSemaphoreCapabilities::VkKhrExternalSemaphoreCapabilities(VkInstance handler)
-        : InstanceExtensionBase(handler) {
-        init(handler);
-    }
-
-    void VkKhrExternalSemaphoreCapabilities::init(VkInstance handler) 
-    {
-        if (!handler) { return; }
-        m_handler = handler;
-
-        vkGetPhysicalDeviceExternalSemaphorePropertiesKHR = getProcAddr<PFN_vkGetPhysicalDeviceExternalSemaphorePropertiesKHR>("vkGetPhysicalDeviceExternalSemaphorePropertiesKHR");
-    }
-
-#endif //VK_KHR_external_semaphore_capabilities
-
 #if defined(VK_KHR_external_semaphore)
 
     VkKhrExternalSemaphore::VkKhrExternalSemaphore(VkDevice handler)
@@ -4647,27 +4022,11 @@ namespace HLGK {
         if (!handler) { return; }
         m_handler = handler;
 
-        vkImportSemaphoreWin32HandleKHR = getProcAddr<PFN_vkImportSemaphoreWin32HandleKHR>("vkImportSemaphoreWin32HandleKHR");
         vkGetSemaphoreWin32HandleKHR = getProcAddr<PFN_vkGetSemaphoreWin32HandleKHR>("vkGetSemaphoreWin32HandleKHR");
+        vkImportSemaphoreWin32HandleKHR = getProcAddr<PFN_vkImportSemaphoreWin32HandleKHR>("vkImportSemaphoreWin32HandleKHR");
     }
 
 #endif //VK_KHR_external_semaphore_win32
-
-#if defined(VK_KHR_mir_surface)
-
-    VkKhrMirSurface::VkKhrMirSurface(VkInstance handler)
-        : InstanceExtensionBase(handler) {
-        init(handler);
-    }
-
-    void VkKhrMirSurface::init(VkInstance handler) 
-    {
-        if (!handler) { return; }
-        m_handler = handler;
-
-    }
-
-#endif //VK_KHR_mir_surface
 
 #if defined(VK_KHR_external_semaphore_fd)
 
@@ -4681,8 +4040,8 @@ namespace HLGK {
         if (!handler) { return; }
         m_handler = handler;
 
-        vkGetSemaphoreFdKHR = getProcAddr<PFN_vkGetSemaphoreFdKHR>("vkGetSemaphoreFdKHR");
         vkImportSemaphoreFdKHR = getProcAddr<PFN_vkImportSemaphoreFdKHR>("vkImportSemaphoreFdKHR");
+        vkGetSemaphoreFdKHR = getProcAddr<PFN_vkGetSemaphoreFdKHR>("vkGetSemaphoreFdKHR");
     }
 
 #endif //VK_KHR_external_semaphore_fd
@@ -4699,8 +4058,8 @@ namespace HLGK {
         if (!handler) { return; }
         m_handler = handler;
 
-        vkCmdPushDescriptorSetWithTemplateKHR = getProcAddr<PFN_vkCmdPushDescriptorSetWithTemplateKHR>("vkCmdPushDescriptorSetWithTemplateKHR");
         vkCmdPushDescriptorSetKHR = getProcAddr<PFN_vkCmdPushDescriptorSetKHR>("vkCmdPushDescriptorSetKHR");
+        vkCmdPushDescriptorSetWithTemplateKHR = getProcAddr<PFN_vkCmdPushDescriptorSetWithTemplateKHR>("vkCmdPushDescriptorSetWithTemplateKHR");
     }
 
 #endif //VK_KHR_push_descriptor
@@ -4717,8 +4076,8 @@ namespace HLGK {
         if (!handler) { return; }
         m_handler = handler;
 
-        vkCmdBeginConditionalRenderingEXT = getProcAddr<PFN_vkCmdBeginConditionalRenderingEXT>("vkCmdBeginConditionalRenderingEXT");
         vkCmdEndConditionalRenderingEXT = getProcAddr<PFN_vkCmdEndConditionalRenderingEXT>("vkCmdEndConditionalRenderingEXT");
+        vkCmdBeginConditionalRenderingEXT = getProcAddr<PFN_vkCmdBeginConditionalRenderingEXT>("vkCmdBeginConditionalRenderingEXT");
     }
 
 #endif //VK_EXT_conditional_rendering
@@ -4783,10 +4142,10 @@ namespace HLGK {
         if (!handler) { return; }
         m_handler = handler;
 
-        vkUpdateDescriptorSetWithTemplateKHR = getProcAddr<PFN_vkUpdateDescriptorSetWithTemplateKHR>("vkUpdateDescriptorSetWithTemplateKHR");
         vkCreateDescriptorUpdateTemplateKHR = getProcAddr<PFN_vkCreateDescriptorUpdateTemplateKHR>("vkCreateDescriptorUpdateTemplateKHR");
         vkDestroyDescriptorUpdateTemplateKHR = getProcAddr<PFN_vkDestroyDescriptorUpdateTemplateKHR>("vkDestroyDescriptorUpdateTemplateKHR");
         vkCmdPushDescriptorSetWithTemplateKHR = getProcAddr<PFN_vkCmdPushDescriptorSetWithTemplateKHR>("vkCmdPushDescriptorSetWithTemplateKHR");
+        vkUpdateDescriptorSetWithTemplateKHR = getProcAddr<PFN_vkUpdateDescriptorSetWithTemplateKHR>("vkUpdateDescriptorSetWithTemplateKHR");
     }
 
 #endif //VK_KHR_descriptor_update_template
@@ -4824,75 +4183,6 @@ namespace HLGK {
 
 #endif //VK_NV_clip_space_w_scaling
 
-#if defined(VK_EXT_direct_mode_display)
-
-    VkExtDirectModeDisplay::VkExtDirectModeDisplay(VkInstance handler)
-        : InstanceExtensionBase(handler) {
-        init(handler);
-    }
-
-    void VkExtDirectModeDisplay::init(VkInstance handler) 
-    {
-        if (!handler) { return; }
-        m_handler = handler;
-
-        vkReleaseDisplayEXT = getProcAddr<PFN_vkReleaseDisplayEXT>("vkReleaseDisplayEXT");
-    }
-
-#endif //VK_EXT_direct_mode_display
-
-#if defined(VK_KHR_android_surface)
-
-    VkKhrAndroidSurface::VkKhrAndroidSurface(VkInstance handler)
-        : InstanceExtensionBase(handler) {
-        init(handler);
-    }
-
-    void VkKhrAndroidSurface::init(VkInstance handler) 
-    {
-        if (!handler) { return; }
-        m_handler = handler;
-
-        vkCreateAndroidSurfaceKHR = getProcAddr<PFN_vkCreateAndroidSurfaceKHR>("vkCreateAndroidSurfaceKHR");
-    }
-
-#endif //VK_KHR_android_surface
-
-#if defined(VK_EXT_acquire_xlib_display)
-
-    VkExtAcquireXlibDisplay::VkExtAcquireXlibDisplay(VkInstance handler)
-        : InstanceExtensionBase(handler) {
-        init(handler);
-    }
-
-    void VkExtAcquireXlibDisplay::init(VkInstance handler) 
-    {
-        if (!handler) { return; }
-        m_handler = handler;
-
-        vkGetRandROutputDisplayEXT = getProcAddr<PFN_vkGetRandROutputDisplayEXT>("vkGetRandROutputDisplayEXT");
-        vkAcquireXlibDisplayEXT = getProcAddr<PFN_vkAcquireXlibDisplayEXT>("vkAcquireXlibDisplayEXT");
-    }
-
-#endif //VK_EXT_acquire_xlib_display
-
-#if defined(VK_EXT_display_surface_counter)
-
-    VkExtDisplaySurfaceCounter::VkExtDisplaySurfaceCounter(VkInstance handler)
-        : InstanceExtensionBase(handler) {
-        init(handler);
-    }
-
-    void VkExtDisplaySurfaceCounter::init(VkInstance handler) 
-    {
-        if (!handler) { return; }
-        m_handler = handler;
-
-        vkGetPhysicalDeviceSurfaceCapabilities2EXT = getProcAddr<PFN_vkGetPhysicalDeviceSurfaceCapabilities2EXT>("vkGetPhysicalDeviceSurfaceCapabilities2EXT");
-    }
-
-#endif //VK_EXT_display_surface_counter
-
 #if defined(VK_EXT_display_control)
 
     VkExtDisplayControl::VkExtDisplayControl(VkDevice handler)
@@ -4905,9 +4195,9 @@ namespace HLGK {
         if (!handler) { return; }
         m_handler = handler;
 
-        vkGetSwapchainCounterEXT = getProcAddr<PFN_vkGetSwapchainCounterEXT>("vkGetSwapchainCounterEXT");
         vkRegisterDeviceEventEXT = getProcAddr<PFN_vkRegisterDeviceEventEXT>("vkRegisterDeviceEventEXT");
         vkDisplayPowerControlEXT = getProcAddr<PFN_vkDisplayPowerControlEXT>("vkDisplayPowerControlEXT");
+        vkGetSwapchainCounterEXT = getProcAddr<PFN_vkGetSwapchainCounterEXT>("vkGetSwapchainCounterEXT");
         vkRegisterDisplayEventEXT = getProcAddr<PFN_vkRegisterDisplayEventEXT>("vkRegisterDisplayEventEXT");
     }
 
@@ -4925,8 +4215,8 @@ namespace HLGK {
         if (!handler) { return; }
         m_handler = handler;
 
-        vkGetRefreshCycleDurationGOOGLE = getProcAddr<PFN_vkGetRefreshCycleDurationGOOGLE>("vkGetRefreshCycleDurationGOOGLE");
         vkGetPastPresentationTimingGOOGLE = getProcAddr<PFN_vkGetPastPresentationTimingGOOGLE>("vkGetPastPresentationTimingGOOGLE");
+        vkGetRefreshCycleDurationGOOGLE = getProcAddr<PFN_vkGetRefreshCycleDurationGOOGLE>("vkGetRefreshCycleDurationGOOGLE");
     }
 
 #endif //VK_GOOGLE_display_timing
@@ -5768,132 +5058,6 @@ std::unique_ptr<DeviceExtensionBase> makeDeviceExtension(const std::string &name
     #endif
     #if defined(VK_NV_viewport_swizzle)
     if("VK_NV_viewport_swizzle" == name) { return std::make_unique<VkNvViewportSwizzle>(handle); }
-    #endif
-
-    return nullptr;
-}
-
-std::unique_ptr<InstanceExtensionBase> makeInstanceExtension(const std::string &name, VkInstance handle)
-{
-    #if defined(VK_KHR_surface)
-    if("VK_KHR_surface" == name) { return std::make_unique<VkKhrSurface>(handle); }
-    #endif
-    #if defined(VK_KHR_win32_surface)
-    if("VK_KHR_win32_surface" == name) { return std::make_unique<VkKhrWin32Surface>(handle); }
-    #endif
-    #if defined(VK_EXT_swapchain_colorspace)
-    if("VK_EXT_swapchain_colorspace" == name) { return std::make_unique<VkExtSwapchainColorspace>(handle); }
-    #endif
-    #if defined(VK_KHR_external_fence_capabilities)
-    if("VK_KHR_external_fence_capabilities" == name) { return std::make_unique<VkKhrExternalFenceCapabilities>(handle); }
-    #endif
-    #if defined(VK_EXT_debug_report)
-    if("VK_EXT_debug_report" == name) { return std::make_unique<VkExtDebugReport>(handle); }
-    #endif
-    #if defined(VK_KHR_get_surface_capabilities2)
-    if("VK_KHR_get_surface_capabilities2" == name) { return std::make_unique<VkKhrGetSurfaceCapabilities2>(handle); }
-    #endif
-    #if defined(VK_KHR_get_display_properties2)
-    if("VK_KHR_get_display_properties2" == name) { return std::make_unique<VkKhrGetDisplayProperties2>(handle); }
-    #endif
-    #if defined(VK_MVK_ios_surface)
-    if("VK_MVK_ios_surface" == name) { return std::make_unique<VkMvkIosSurface>(handle); }
-    #endif
-    #if defined(VK_MVK_macos_surface)
-    if("VK_MVK_macos_surface" == name) { return std::make_unique<VkMvkMacosSurface>(handle); }
-    #endif
-    #if defined(VK_MVK_moltenvk)
-    if("VK_MVK_moltenvk" == name) { return std::make_unique<VkMvkMoltenvk>(handle); }
-    #endif
-    #if defined(VK_EXT_debug_utils)
-    if("VK_EXT_debug_utils" == name) { return std::make_unique<VkExtDebugUtils>(handle); }
-    #endif
-    #if defined(VK_FUCHSIA_imagepipe_surface)
-    if("VK_FUCHSIA_imagepipe_surface" == name) { return std::make_unique<VkFuchsiaImagepipeSurface>(handle); }
-    #endif
-    #if defined(VK_EXT_metal_surface)
-    if("VK_EXT_metal_surface" == name) { return std::make_unique<VkExtMetalSurface>(handle); }
-    #endif
-    #if defined(VK_KHR_surface_protected_capabilities)
-    if("VK_KHR_surface_protected_capabilities" == name) { return std::make_unique<VkKhrSurfaceProtectedCapabilities>(handle); }
-    #endif
-    #if defined(VK_EXT_validation_features)
-    if("VK_EXT_validation_features" == name) { return std::make_unique<VkExtValidationFeatures>(handle); }
-    #endif
-    #if defined(VK_EXT_headless_surface)
-    if("VK_EXT_headless_surface" == name) { return std::make_unique<VkExtHeadlessSurface>(handle); }
-    #endif
-    #if defined(VK_KHR_extension_275)
-    if("VK_KHR_extension_275" == name) { return std::make_unique<VkKhrExtension275>(handle); }
-    #endif
-    #if defined(VK_EXT_acquire_drm_display)
-    if("VK_EXT_acquire_drm_display" == name) { return std::make_unique<VkExtAcquireDrmDisplay>(handle); }
-    #endif
-    #if defined(VK_KHR_display)
-    if("VK_KHR_display" == name) { return std::make_unique<VkKhrDisplay>(handle); }
-    #endif
-    #if defined(VK_EXT_directfb_surface)
-    if("VK_EXT_directfb_surface" == name) { return std::make_unique<VkExtDirectfbSurface>(handle); }
-    #endif
-    #if defined(VK_QNX_screen_surface)
-    if("VK_QNX_screen_surface" == name) { return std::make_unique<VkQnxScreenSurface>(handle); }
-    #endif
-    #if defined(VK_EXT_extension_384)
-    if("VK_EXT_extension_384" == name) { return std::make_unique<VkExtExtension384>(handle); }
-    #endif
-    #if defined(VK_MESA_extension_385)
-    if("VK_MESA_extension_385" == name) { return std::make_unique<VkMesaExtension385>(handle); }
-    #endif
-    #if defined(VK_GOOGLE_surfaceless_query)
-    if("VK_GOOGLE_surfaceless_query" == name) { return std::make_unique<VkGoogleSurfacelessQuery>(handle); }
-    #endif
-    #if defined(VK_KHR_xlib_surface)
-    if("VK_KHR_xlib_surface" == name) { return std::make_unique<VkKhrXlibSurface>(handle); }
-    #endif
-    #if defined(VK_GGP_stream_descriptor_surface)
-    if("VK_GGP_stream_descriptor_surface" == name) { return std::make_unique<VkGgpStreamDescriptorSurface>(handle); }
-    #endif
-    #if defined(VK_NV_external_memory_capabilities)
-    if("VK_NV_external_memory_capabilities" == name) { return std::make_unique<VkNvExternalMemoryCapabilities>(handle); }
-    #endif
-    #if defined(VK_KHR_xcb_surface)
-    if("VK_KHR_xcb_surface" == name) { return std::make_unique<VkKhrXcbSurface>(handle); }
-    #endif
-    #if defined(VK_KHR_get_physical_device_properties2)
-    if("VK_KHR_get_physical_device_properties2" == name) { return std::make_unique<VkKhrGetPhysicalDeviceProperties2>(handle); }
-    #endif
-    #if defined(VK_EXT_validation_flags)
-    if("VK_EXT_validation_flags" == name) { return std::make_unique<VkExtValidationFlags>(handle); }
-    #endif
-    #if defined(VK_NN_vi_surface)
-    if("VK_NN_vi_surface" == name) { return std::make_unique<VkNnViSurface>(handle); }
-    #endif
-    #if defined(VK_KHR_wayland_surface)
-    if("VK_KHR_wayland_surface" == name) { return std::make_unique<VkKhrWaylandSurface>(handle); }
-    #endif
-    #if defined(VK_KHR_device_group_creation)
-    if("VK_KHR_device_group_creation" == name) { return std::make_unique<VkKhrDeviceGroupCreation>(handle); }
-    #endif
-    #if defined(VK_KHR_external_memory_capabilities)
-    if("VK_KHR_external_memory_capabilities" == name) { return std::make_unique<VkKhrExternalMemoryCapabilities>(handle); }
-    #endif
-    #if defined(VK_KHR_external_semaphore_capabilities)
-    if("VK_KHR_external_semaphore_capabilities" == name) { return std::make_unique<VkKhrExternalSemaphoreCapabilities>(handle); }
-    #endif
-    #if defined(VK_KHR_mir_surface)
-    if("VK_KHR_mir_surface" == name) { return std::make_unique<VkKhrMirSurface>(handle); }
-    #endif
-    #if defined(VK_EXT_direct_mode_display)
-    if("VK_EXT_direct_mode_display" == name) { return std::make_unique<VkExtDirectModeDisplay>(handle); }
-    #endif
-    #if defined(VK_KHR_android_surface)
-    if("VK_KHR_android_surface" == name) { return std::make_unique<VkKhrAndroidSurface>(handle); }
-    #endif
-    #if defined(VK_EXT_acquire_xlib_display)
-    if("VK_EXT_acquire_xlib_display" == name) { return std::make_unique<VkExtAcquireXlibDisplay>(handle); }
-    #endif
-    #if defined(VK_EXT_display_surface_counter)
-    if("VK_EXT_display_surface_counter" == name) { return std::make_unique<VkExtDisplaySurfaceCounter>(handle); }
     #endif
 
     return nullptr;
