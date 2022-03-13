@@ -23,6 +23,7 @@
 #include <HLGK/Core/Vulkan/CommandPool.hpp>
 #include <HLGK/Core/Vulkan/CommandBuffer.hpp>
 #include <HLGK/Core/Vulkan/Synchronization.hpp>
+#include <HLGK/Core/Vulkan/gen/extensions.hpp>
 
 #include <assert.h>
 #include <limits>
@@ -62,6 +63,8 @@ int main(int argc, char* argv[]) {
             "VK_LAYER_KHRONOS_validation"
     };
     HLGK::Instance factory(info, extensions, validationLayers);
+    auto* surfaceExt = dynamic_cast<HLGK::VkKhrSurface *>(factory.getExtension(VK_KHR_SURFACE_EXTENSION_NAME));
+
 
     // FIXME: may be lek of instance
     auto&& surfaceCreator = [w = window.get()](VkInstance instance) {

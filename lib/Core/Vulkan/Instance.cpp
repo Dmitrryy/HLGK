@@ -9,6 +9,7 @@
 
 #include <HLGK/Core/Vulkan/Error.hpp>
 #include <HLGK/Core/Vulkan/Instance.hpp>
+#include <HLGK/Core/Vulkan/gen/extensions.hpp>
 #include <algorithm>
 
 namespace HLGK
@@ -18,8 +19,8 @@ namespace HLGK
                      , const std::vector< std::string > &extensions /*= {}*/
                      , const std::vector< std::string > &layers /*= {}*/
                      , const VkDebugUtilsMessengerCreateInfoEXT &DUMCI /*= {}*/)
-                     : m_extensions(extensions)
-                     , m_layers(layers)
+                     //: m_extensions(extensions)
+                     : m_layers(layers)
     {
         std::vector< const char * > extC, layersC;
         std::transform(extensions.begin(), extensions.end()
@@ -42,6 +43,11 @@ namespace HLGK
         }
 
         VK_CHECK_RESULT(vkCreateInstance(&instInfo, nullptr, &m_instance));
+
+        std::transform(extensions.begin(), extensions.end(), std::inserter(m_extensions, m_extensions.end())
+                       , [handler = m_instance](const std::string &name) {
+            return std::pair(name, makeInstanceExtension(name, handler));
+        });
     }
 
     Instance::~Instance() {

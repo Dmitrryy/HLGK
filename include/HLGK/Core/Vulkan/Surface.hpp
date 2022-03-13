@@ -4,6 +4,7 @@
 #pragma once
 
 #include <vulkan/vulkan.h>
+#include <HLGK/Core/Vulkan/gen/extensions.hpp>
 
 
 namespace HLGK {
@@ -12,6 +13,7 @@ namespace HLGK {
 
     class Surface final {
         VkSurfaceKHR m_vkSurface = {};
+        VkKhrSurface *m_extension = {};
         const Instance &m_instance;
 
     public:
@@ -25,9 +27,7 @@ namespace HLGK {
     protected:
         friend Instance;
 
-        Surface(VkSurfaceKHR surface, const Instance &instance)
-            : m_vkSurface(surface)
-            , m_instance(instance) {}
+        Surface(VkSurfaceKHR surface, const Instance &instance);
 
     public:
         VkSurfaceKHR get() const { return m_vkSurface; }

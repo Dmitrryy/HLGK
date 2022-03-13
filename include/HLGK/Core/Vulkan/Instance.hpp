@@ -17,6 +17,8 @@
 #include <HLGK/Core/Vulkan/PhysicalDevice.hpp>
 #include <HLGK/Core/Vulkan/LogicalDevice.hpp>
 #include <HLGK/Core/Vulkan/Surface.hpp>
+#include <HLGK/Core/Vulkan/ExtensionBase.hpp>
+
 
 #include <vector>
 #include <string>
@@ -24,15 +26,21 @@
 #include <unordered_map>
 #include <map>
 #include <set>
+#include <memory>
 
 namespace HLGK
 {
+    enum class CoreVersion {
+        V1_0,
+        V1_1
+        //TODO to generate
+    };
 
 
     class Instance final {
         VkInstance m_instance = {};
-        const std::vector< std::string > m_extensions;
         const std::vector< std::string > m_layers;
+        std::unordered_map< std::string, std::unique_ptr<InstanceExtensionBase> > m_extensions;
 
     public:
         Instance(const VkApplicationInfo &appInfo
@@ -54,6 +62,9 @@ namespace HLGK
 
         std::vector< PhysicalDevice > getPhysicalDevices() const;
 
+        template< class T = InstanceExtensionBase >
+        T *getExtension(const std::string &name) const { return &(dynamic_cast<T &>(*m_extensions.at(name).get())); }
+
         //InstanceProcAddr support
         //=-----------------------
         /// interface for vkGetInstanceProcAddr
@@ -72,8 +83,8 @@ namespace HLGK
         /// \param f Pointer to the function being called
         /// \param args Arguments passed to the function
         /// \return returns the result of the function being called
-        template< typename Func_T, typename T = void, typename ... Args_T>
-        inline details::function_info_rt<Func_T> callProcAddr(T f, Args_T... args) const {
+        template< typename Func_T, typename ... Args_T>
+        inline details::function_info_rt<Func_T> callProcAddr(Func_T f, Args_T... args) const {
             // Checking whether the first argument is an instance
             if constexpr(std::is_same_v< VkInstance, details::function_info_T0< Func_T > >)
                 return reinterpret_cast<Func_T>(f)(m_instance, args...);
