@@ -15,17 +15,13 @@
 namespace HLGK
 {
 
-    Instance::Instance(const VkApplicationInfo &appInfo
-                     , const std::vector< std::string > &extensions /*= {}*/
-                     , const std::vector< std::string > &layers /*= {}*/
-                     , const VkDebugUtilsMessengerCreateInfoEXT &DUMCI /*= {}*/)
-                     //: m_extensions(extensions)
-                     : m_layers(layers)
-    {
+    InstanceCore::InstanceCore(const VkApplicationInfo &appInfo, const std::vector<std::string> &extensions,
+                               const std::vector<std::string> &layers,
+                               const VkDebugUtilsMessengerCreateInfoEXT &DUMCI) {
         std::vector< const char * > extC, layersC;
         std::transform(extensions.begin(), extensions.end()
-                       , std::back_inserter(extC)
-                       , [](const auto& ext) { return ext.c_str(); });
+                , std::back_inserter(extC)
+                , [](const auto& ext) { return ext.c_str(); });
         std::transform(layers.begin(), layers.end()
                 , std::back_inserter(layersC)
                 , [](const auto& lay) { return lay.c_str(); });
@@ -43,15 +39,23 @@ namespace HLGK
         }
 
         VK_CHECK_RESULT(vkCreateInstance(&instInfo, nullptr, &m_instance));
+    }
 
+    InstanceCore::~InstanceCore() {
+        callInstanceProcAddr(*this, vkDestroyInstance, nullptr);
+    }
+
+    Instance::Instance(const VkApplicationInfo &appInfo
+                     , const std::vector< std::string > &extensions /*= {}*/
+                     , const std::vector< std::string > &layers /*= {}*/
+                     , const VkDebugUtilsMessengerCreateInfoEXT &DUMCI /*= {}*/)
+                     : InstanceCore(appInfo, extensions, layers, DUMCI)
+                     , m_layers(layers)
+    {
         std::transform(extensions.begin(), extensions.end(), std::inserter(m_extensions, m_extensions.end())
                        , [handler = m_instance](const std::string &name) {
             return std::pair(name, makeInstanceExtension(name, handler));
         });
-    }
-
-    Instance::~Instance() {
-        callInstanceProcAddr(*this, vkDestroyInstance, nullptr);
     }
 
 

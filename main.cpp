@@ -63,8 +63,6 @@ int main(int argc, char* argv[]) {
             "VK_LAYER_KHRONOS_validation"
     };
     HLGK::Instance factory(info, extensions, validationLayers);
-    auto* surfaceExt = dynamic_cast<HLGK::VkKhrSurface *>(factory.getExtension(VK_KHR_SURFACE_EXTENSION_NAME));
-
 
     // FIXME: may be lek of instance
     auto&& surfaceCreator = [w = window.get()](VkInstance instance) {

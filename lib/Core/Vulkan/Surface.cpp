@@ -11,13 +11,11 @@ namespace HLGK {
 
     Surface::Surface(VkSurfaceKHR surface, const Instance &instance)
     : m_vkSurface(surface)
-    , m_extension(instance.getExtension<VkKhrSurface>(VkKhrSurface::str()))
+    , m_extension(instance.getExtension<VkKhrSurface>())
     , m_instance(instance) {}
 
     Surface::~Surface() {
         m_instance.callProcAddr(m_extension->vkDestroySurfaceKHR, m_vkSurface, nullptr);
-        //m_instance.callProcAddrName<PFN_vkDestroySurfaceKHR>(
-         //       "vkDestroySurfaceKHR", m_vkSurface, nullptr);
     }
 
     Surface::Properties Surface::getProperties(const PhysicalDevice &physicalDevice) const

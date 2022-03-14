@@ -37,34 +37,24 @@ namespace HLGK
     };
 
 
-    class Instance final {
+    class InstanceCore {
+    protected:
         VkInstance m_instance = {};
-        const std::vector< std::string > m_layers;
-        std::unordered_map< std::string, std::unique_ptr<InstanceExtensionBase> > m_extensions;
 
     public:
-        Instance(const VkApplicationInfo &appInfo
+        InstanceCore(const VkApplicationInfo &appInfo
                 , const std::vector< std::string > &extensions = {}
                 , const std::vector< std::string > &layers = {}
                 , const VkDebugUtilsMessengerCreateInfoEXT &DUMCI = {});
 
-        Instance(const Instance &) = delete;
-        Instance &operator=(const Instance &) = delete;
-        Instance(Instance &&) = delete;
-        Instance &operator=(Instance &&) = delete;
+        InstanceCore(const InstanceCore &) = delete;
+        InstanceCore &operator=(const InstanceCore &) = delete;
+        InstanceCore(InstanceCore &&) = delete;
+        InstanceCore &operator=(InstanceCore &&) = delete;
 
-        ~Instance();
+        ~InstanceCore();
 
     public:
-        // TODO: через функтор возможна утечка указателя на m_instance.
-        // Для создани поверхности нужны дискрипторы окна(платформа зависимо) и знание оконной системы.
-        Surface createSurface(std::function<VkSurfaceKHR (VkInstance)> surfaceCreator) const;
-
-        std::vector< PhysicalDevice > getPhysicalDevices() const;
-
-        template< class T = InstanceExtensionBase >
-        T *getExtension(const std::string &name) const { return &(dynamic_cast<T &>(*m_extensions.at(name).get())); }
-
         //InstanceProcAddr support
         //=-----------------------
         /// interface for vkGetInstanceProcAddr
@@ -100,12 +90,36 @@ namespace HLGK
         inline details::function_info_rt<Func_T> callProcAddrName(const std::string &fName, Args_T... args) const {
             return callProcAddr<Func_T>(getProcAddr<Func_T>(fName), args...);
         }
-/// the abbreviation of function Instance::callProcAddrName,
-/// which allows not to write the name of the called function twice
+
+        /// the abbreviation of function Instance::callProcAddrName,
+        /// which allows not to write the name of the called function twice
 #define callInstanceProcAddr(instance, func, ...) (instance).callProcAddrName<PFN_ ## func>(#func, __VA_ARGS__)
-/// the abbreviation of function Instance::getProcAddr,
-/// which allows not to write the name of the called function twice
+        /// the abbreviation of function Instance::getProcAddr,
+        /// which allows not to write the name of the called function twice
 #define getInstanceProcAddr(instance, func) (instance).getProcAddr<PFN_ ## func>(#func)
+    };//class InstanceCore
+
+
+class Instance final : public InstanceCore {
+        const std::vector< std::string > m_layers;
+        std::unordered_map< std::string, std::unique_ptr<InstanceExtensionBase> > m_extensions;
+
+    public:
+        Instance(const VkApplicationInfo &appInfo
+                , const std::vector< std::string > &extensions = {}
+                , const std::vector< std::string > &layers = {}
+                , const VkDebugUtilsMessengerCreateInfoEXT &DUMCI = {});
+
+    public:
+        // TODO: через функтор возможна утечка8 указателя на m_instance.
+        // Для создани поверхности нужны дискрипторы окна(платформа зависимо) и знание оконной системы.
+        Surface createSurface(std::function<VkSurfaceKHR (VkInstance)> surfaceCreator) const;
+
+        std::vector< PhysicalDevice > getPhysicalDevices() const;
+
+
+        template< class T >
+        T *getExtension() const { return &(dynamic_cast<T &>(*m_extensions.at(T::str()).get())); }
     };// class Instance
 
 } // namespace HLGK

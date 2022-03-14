@@ -156,4 +156,3 @@ if __name__ == '__main__':
             shutil.copy(f[1].name, dir_path[h] + '/' + f[0])
             os.remove(f[1].name)
 
-            
