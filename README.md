@@ -13,9 +13,19 @@ As the development progresses, the folders will be separated into repositories
 | Window   |                              Contains window managers                               |
 | ->glfw   |                                 Wrapper over GLFW3                                  |
 
-## Open issues
-- [ ] the mechanism of forwarding access to the pNext field in structures. (Required when using extensions)
-- [ ] Some classes have a reference/pointer field to device.
-- [ ] Pipeline, Shaders
-- [ ] Memory: buffer, image
-- [ ] ability to create classes that will refer to the same memory area
+## Build
+
+### Unix
+
+`mkdir build & cd build` \
+`cmake ..` \
+`cmake --build .`
+
+### Windows
+
+`mkdir build & cd build` \
+If you have written all the library paths in the PATH with the handles, 
+then you can not specify the `-DCMAKE_TOOLCHAIN_FILE` \
+It is for `glm`, `glfw` \
+`cmake .. -DCMAKE_TOOLCHAIN_FILE=[path to vcpkg]/scripts/buildsystems/vcpkg.cmake` \
+`cmake --build .`

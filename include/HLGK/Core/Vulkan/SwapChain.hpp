@@ -3,6 +3,8 @@
 //
 #pragma once
 
+#include <HLGK/Core/Vulkan/gen/DeviceExt.hpp>
+
 #include <vulkan/vulkan.h>
 
 #include <vector>
@@ -16,10 +18,13 @@ namespace HLGK {
     class Fence;
     class Queue;
 
+
     class SwapChain final {
         const LogicalDevice *m_device = {};
         VkSwapchainKHR m_swapChain = {};
         std::vector<Image> m_swapChainImages;
+
+        VkKhrSwapchain *m_extension = {};
 
         VkSwapchainCreateInfoKHR m_createInfo;
 
@@ -38,6 +43,9 @@ namespace HLGK {
 
     public:
         const std::vector<Image> &getImages() const { return m_swapChainImages; }
+
+        void present(uint32_t imageId, const Queue &queue
+                     , const std::vector< Semaphore *> &waitSemaphores) const;
 
         uint32_t acquireNextImage(const Semaphore &semaphore, const Fence &fence, uint64_t timeout = UINT64_MAX);
     };

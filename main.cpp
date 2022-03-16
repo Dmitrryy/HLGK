@@ -24,10 +24,51 @@
 #include <HLGK/Core/Vulkan/CommandBuffer.hpp>
 #include <HLGK/Core/Vulkan/Synchronization.hpp>
 #include <HLGK/Core/Vulkan/gen/InstanceExt.hpp>
+#include <HLGK/Core/Vulkan/Allocators/IAllocator.hpp>
 
 #include <assert.h>
 #include <limits>
 #include <algorithm>
+#include <glm/glm.hpp>
+
+
+struct Vertex {
+    glm::vec2 pos;
+    glm::vec3 color;
+
+    static VkVertexInputBindingDescription getBindingDescription() {
+        VkVertexInputBindingDescription bindingDescription{};
+        bindingDescription.binding = 0;
+        bindingDescription.stride = sizeof(Vertex);
+        bindingDescription.inputRate = VK_VERTEX_INPUT_RATE_VERTEX;
+
+        return bindingDescription;
+    }
+
+    static std::array<VkVertexInputAttributeDescription, 2> getAttributeDescriptions() {
+        std::array<VkVertexInputAttributeDescription, 2> attributeDescriptions{};
+
+        attributeDescriptions[0].binding = 0;
+        attributeDescriptions[0].location = 0;
+        attributeDescriptions[0].format = VK_FORMAT_R32G32_SFLOAT;
+        attributeDescriptions[0].offset = offsetof(Vertex, pos);
+
+        attributeDescriptions[1].binding = 0;
+        attributeDescriptions[1].location = 1;
+        attributeDescriptions[1].format = VK_FORMAT_R32G32B32_SFLOAT;
+        attributeDescriptions[1].offset = offsetof(Vertex, color);
+
+        return attributeDescriptions;
+    }
+};
+
+const std::vector<Vertex> vertices = {
+        {{0.0f, -0.5f}, {1.0f, 0.0f, 0.0f}},
+        {{0.5f, 0.5f}, {0.0f, 1.0f, 0.0f}},
+        {{-0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}}
+};
+
+
 
 int main(int argc, char* argv[]) {
 
@@ -131,6 +172,22 @@ int main(int argc, char* argv[]) {
     HLGK::LogicalDevice logicalDevice(factory, device, deviceFeatures, device_extensions, deviceQueues);
     auto&& queue = logicalDevice.atQueue(0, 0);
 
+    ///--------------------------------Allocation-----------------------------------------
+    auto&& allocator = logicalDevice.createAllocator();
+
+    VkBufferCreateInfo bufferInfo{};
+    bufferInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
+    bufferInfo.size = 213; //TODO
+    bufferInfo.usage = VK_BUFFER_USAGE_VERTEX_BUFFER_BIT;
+    bufferInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
+    bufferInfo.flags = 0;
+    auto&& buffer = allocator->createBuffer(bufferInfo);
+
+    {
+        int *mapped = (int *) buffer->map();
+        mapped[0] = 10;
+        buffer->unmap();
+    }
     ///--------------------------------SwapChain-----------------------------------------
     auto&& surfaceProp = surface.getProperties(device);
     assert(surfaceProp.surfaceSupport.at(graphicQueue.queueFamilyIndex));
@@ -355,7 +412,8 @@ int main(int argc, char* argv[]) {
             queue.submit({cmdBuffers.at(currentFrame)}, {&imageAvailableSemaphore.at(currentFrame)}, {VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT},
                          {&renderFinishedSemaphore.at(currentFrame)}, inFlightFence.at(currentFrame));
 
-            queue.present({{&swapChain, imageIndex}}, {&renderFinishedSemaphore.at(currentFrame)});
+            swapChain.present(imageIndex, queue, {&renderFinishedSemaphore.at(currentFrame)});
+            //queue.present({{&swapChain, imageIndex}}, {&renderFinishedSemaphore.at(currentFrame)});
 
             currentFrame = (currentFrame + 1) % MAX_FRAMES_IN_FLIGHT;
         }

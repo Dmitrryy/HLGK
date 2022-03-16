@@ -29,6 +29,7 @@ namespace HLGK {
         Queue(const LogicalDevice &device, uint32_t familyIndex, uint32_t queueIndex, float priority);
 
     public:
+        VkQueue get() const { return m_queue; }
 
         void submit(const std::vector< CommandBuffer > &commandBuffers,
                     const std::vector< Semaphore *> &waitSemaphores,

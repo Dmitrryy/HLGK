@@ -55,6 +55,8 @@ namespace HLGK
         ~InstanceCore();
 
     public:
+        VkInstance get() const { return m_instance; }
+
         //InstanceProcAddr support
         //=-----------------------
         /// interface for vkGetInstanceProcAddr
@@ -116,7 +118,6 @@ class Instance final : public InstanceCore {
         Surface createSurface(std::function<VkSurfaceKHR (VkInstance)> surfaceCreator) const;
 
         std::vector< PhysicalDevice > getPhysicalDevices() const;
-
 
         template< class T >
         T *getExtension() const { return &(dynamic_cast<T &>(*m_extensions.at(T::str()).get())); }

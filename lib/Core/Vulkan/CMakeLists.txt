@@ -32,10 +32,11 @@ add_library(${PROJECT_NAME}
 
         gen/DeviceExt.cpp
         gen/InstanceExt.cpp
-        )
+        Allocators/VkAllocator.cpp Allocators/vmaAllocator.cpp)
 target_include_directories(${PROJECT_NAME}
         PUBLIC ../../../include
-        PUBLIC Vulkan::Headers)
+        PUBLIC Vulkan::Headers
+        PUBLIC dependencies/)
 target_link_libraries(${PROJECT_NAME}
         Vulkan::Vulkan
 #        glfw

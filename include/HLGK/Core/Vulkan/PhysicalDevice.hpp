@@ -9,7 +9,6 @@
 
 #pragma once
 
-#include <HLGK/Core/ILogicalDevice.hpp>
 #include <HLGK/Core/Vulkan/Surface.hpp>
 
 

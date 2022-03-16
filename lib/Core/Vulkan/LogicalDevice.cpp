@@ -8,15 +8,19 @@
 #include <HLGK/Core/Vulkan/Queue.hpp>
 #include <utility>
 
+#include <HLGK/Core/Vulkan/gen/DeviceExt.hpp>
+
+#include <HLGK/Core/Vulkan/Allocators/vmaAllocator.hpp>
+
 namespace HLGK {
 
-    LogicalDevice::LogicalDevice(const Instance &instance, const PhysicalDevice &device
-            , const VkPhysicalDeviceFeatures &features_
-            , std::vector< std::string > extensions_
-            , const std::vector< VkDeviceQueueCreateInfo > &queues)
-            : physicalDevice(device)
-            , features(features_)
-            , extensions(std::move(extensions_)) {
+    DeviceCore::~DeviceCore() {
+        callDeviceProcAddr(*this, vkDestroyDevice, nullptr);
+    }
+
+    DeviceCore::DeviceCore(const Instance &instance, const PhysicalDevice &device,
+                           const VkPhysicalDeviceFeatures &features, std::vector<std::string> extensions,
+                           const std::vector<VkDeviceQueueCreateInfo> &queues) {
         std::vector< const char * > extC;
         extC.reserve(extensions.size());
         std::transform(extensions.begin(), extensions.end()
@@ -34,16 +38,31 @@ namespace HLGK {
         };
         VK_CHECK_RESULT(callInstanceProcAddr(instance, vkCreateDevice, device.get(), &createInfo, nullptr, &m_device));
 
+    }
+
+
+    LogicalDevice::LogicalDevice(const Instance &instance, const PhysicalDevice &device
+            , const VkPhysicalDeviceFeatures &features_
+            , const std::vector< std::string > &extensions_
+            , const std::vector< VkDeviceQueueCreateInfo > &queues)
+            : DeviceCore(instance, device, features_, extensions_, queues)
+            , m_instance(&instance)
+            , physicalDevice(device)
+            , features(features_) {
+
         for(auto&& q : queues) {
             for(uint32_t i = 0; i < q.queueCount; ++i) {
                 m_queues.try_emplace(std::pair{q.queueFamilyIndex, i}, Queue(*this, q.queueFamilyIndex, i, q.pQueuePriorities[i]));
             }
         }
+
+        std::transform(extensions_.begin(), extensions_.end()
+                       , std::inserter(m_extensions, m_extensions.end())
+                       , [handler = m_device](const std::string &name) {
+            return std::pair(name, makeDeviceExtension(name, handler));
+        });
     }
 
-    LogicalDevice::~LogicalDevice() {
-        callDeviceProcAddr(*this, vkDestroyDevice, nullptr);
-    }
 
     Queue LogicalDevice::atQueue(uint32_t family, uint32_t index) const {
         return m_queues.at({family, index});
@@ -51,6 +70,10 @@ namespace HLGK {
 
     void LogicalDevice::waitIdle() const {
         VK_CHECK_RESULT(callProcAddrName<PFN_vkDeviceWaitIdle>("vkDeviceWaitIdle"));
+    }
+
+    std::unique_ptr<IAllocator> LogicalDevice::createAllocator() {
+        return std::make_unique<vmaAllocator>(m_instance->get(), physicalDevice.get(), m_device);
     }
 
 }// namespace HLGK
